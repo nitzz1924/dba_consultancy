@@ -1,0 +1,99 @@
+<?php
+#---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏---------------------------”
+use App\Http\Controllers\AdminStores;
+use App\Http\Controllers\AdminViews;
+use App\Http\Controllers\UserStores;
+use App\Http\Controllers\UserViews;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExcelContactSheet;
+use App\Http\Middleware\VerifyCsrfToken;
+
+
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Route::post('/logoutuser', function () {
+    Auth::logout();
+    return redirect()->route('login');
+})->name('logoutuser');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('AdminPanel.dashboard');
+    })->name('dashboard');
+});
+
+
+
+//Admin Panel Routes
+Route::controller(AdminViews::class)->group(function () {
+    Route::get('master', 'master')->name('master');
+    Route::get('submaster', 'submaster')->name('submaster');
+});
+
+Route::controller(AdminStores::class)->group(function () {
+    Route::post('storemaster', 'storemaster')->name('storemaster');
+    Route::post('storesubmaster', 'storesubmaster')->name('storesubmaster');
+    Route::get('getsubmasterajax/{selectedCat}', 'getsubmasterajax')->name('getsubmasterajax');
+    Route::post('updatesubmaster', 'updatesubmaster')->name('updatesubmaster');
+    Route::get('deletemaster/{id}', 'deletemaster')->name('deletemaster');
+
+
+
+});
+
+
+
+
+
+
+//User Panel Routes
+// Route::controller(UserViews::class)->group(function () {
+//     Route::get('user/login', 'userloginpage')->name('userloginpage');
+//     Route::get('userdashboard', 'userdashboard')->name('userdashboard');
+//     Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
+//     Route::get('indexchat', 'indexchat')->name('indexchat');
+//     Route::get('campaignspage', 'campaignspage')->name('campaignspage');
+//     Route::get('addnewcampaign', 'addnewcampaign')->name('addnewcampaign');
+//     Route::get('automationpage', 'automationpage')->name('automationpage');
+//     Route::get('addnewautomation', 'addnewautomation')->name('addnewautomation');
+//     Route::get('analyticspage', 'analyticspage')->name('analyticspage');
+//     Route::get('wahapage', 'wahapage')->name('wahapage');
+//     Route::get('templatespage', 'templatespage')->name('templatespage');
+//     Route::get('groupspage', 'groupspage')->name('groupspage');
+
+//     Route::get('contactspage', 'contactspage')->name('contactspage');
+//     Route::get('/webhook/whatsapp', 'verify')->name('verify')->middleware(VerifyCsrfToken::class);
+//     Route::get('showsentmessage/{phone}', 'showsentmessage')->name('showsentmessage');
+
+// });
+
+
+// Route::controller(UserStores::class)->group(function () {
+//     Route::post('/signup_user_otp', 'signup_user_otp')->name('signup_user_otp');
+//     Route::post('verifyotp', 'verifyotp')->name('verifyotp');
+//     Route::post('insertgroups', 'insertgroups')->name('insertgroups');
+//     Route::get('deletegroup/{id}', 'deletegroup')->name('deletegroup');
+//     Route::post('insertcontacts', 'insertcontacts')->name('insertcontacts');
+//     Route::post('send-message', 'sendmessage')->name('send-message');
+//     Route::get('deletecampaign/{id}', 'deletecampaign')->name('deletecampaign');
+//     Route::get('deletecontact/{id}', 'deletecontact')->name('deletecontact');
+//     Route::post('updatecontact', 'updatecontact')->name('updatecontact');
+//     Route::post('updategroups', 'updategroups')->name('updategroups');
+//     Route::post('sendsinglemessage', 'sendsinglemessage')->name('sendsinglemessage');
+//     Route::post('webhook', 'handleWebhook')->name('handleWebhook');
+//     Route::get('refreshtemplates', 'refreshtemplates')->name('refreshtemplates');
+
+
+// });
+
+
+//Excel Routes
+// Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
+// Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
+
