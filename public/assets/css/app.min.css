@@ -12589,7 +12589,7 @@ span.flatpickr-weekday {
     }
 }
 .auth-one-bg {
-    background-image: linear-gradient(to bottom, #116464, #6e6e6e);
+    background-image: linear-gradient(to bottom, #fa7823, #e03b50);
     background-position: center;
     background-size: cover;
     border: 1px solid green;
@@ -12645,13 +12645,19 @@ span.flatpickr-weekday {
     padding: 2px 16px;
 }
 .auth-bg-cover {
-    background-image: url("/assets/images/whatsacppback.jpg");
-}
-.auth-bg-cover > .bg-overlay {
-    background-image: url(../images/cover-pattern.png);
+    /* background-image: url("/assets/images/login-bg.webp"); */
     background-position: center;
     background-size: cover;
+    background-color: black;
     opacity: 1;
+
+}
+.auth-bg-cover > .bg-overlay {
+    background-image: url("/assets/images/login-bg.webp");
+    background-position: center;
+    background-color: black;
+    background-size: cover;
+    opacity: 0.5;
     background-color: transparent;
 }
 .auth-bg-cover .footer {

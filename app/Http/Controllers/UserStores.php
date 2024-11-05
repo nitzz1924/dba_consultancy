@@ -22,7 +22,7 @@ class UserStores extends Controller
         $data = RegisterUser::where('mobilenumber', '=', $credentials)->first();
         if ($data && Auth::guard('customer')->attempt($credentials)) {
             // dd($data);
-            return redirect()->route('indexchat');
+            return redirect()->route('home');
         }
         return redirect()->route('userloginpage')->with('error', 'Invalid credentials');
     }
@@ -257,7 +257,7 @@ class UserStores extends Controller
             $this->dropMessage($req->phonenumber, $req->template, $bannerimagePath, $req->mediatype, $req->languagetype);
             return back()->with('success', 'Message Sent.!');
         } catch (Exception $e) {
-            return redirect()->route('indexchat')->with('error', $e->getMessage());
+            return redirect()->route('home')->with('error', $e->getMessage());
         }
     }
 
