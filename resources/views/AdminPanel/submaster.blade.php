@@ -43,6 +43,11 @@
                                     <input class="form-control" placeholder="enter value" name="value" type="text"
                                         value="" id="valueval" required>
                                 </div>
+                                <div class="col-lg-2">
+                                    <label for="example-search-input" class="">Service Icon Image</label>
+                                    <input class="form-control" placeholder="enter value" name="iconimage"
+                                        type="file" value="">
+                                </div>
                                 <div class="col-lg-2 d-flex align-items-end">
                                     <button type="submit" class="btn btn-success waves-effect waves-light">Add</button>
                                 </div>
@@ -64,6 +69,7 @@
                                     <th>Type</th>
                                     <th>Label</th>
                                     <th>Value</th>
+                                    <th>Icon-Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -86,7 +92,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <form action="{{ route('updatesubmaster') }}" method="POST">
+                <form action="{{ route('updatesubmaster') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body" id="modalbodyedit">
 
@@ -148,6 +154,9 @@
                             row += '<td>' + element.type + '</td>';
                             row += '<td>' + element.label + '</td>';
                             row += '<td>' + element.value + '</td>';
+                            row += '<td>' + (element.iconimage ?
+                                '<img src="/assets/images/Services/' + element.iconimage +
+                                '" alt="Icon Image" width="60">' : '') + '</td>';
                             row += '<td>' +
                                 '<ul class="list-inline mb-0">' +
                                 '<li class="list-inline-item">' +
@@ -158,7 +167,7 @@
                                 'data-bs-placement="top" data-bs-title="Edit"></i></a>' +
                                 '</li>' +
                                 '<li class="list-inline-item">' +
-                                '<button type="button" class="btn btn-danger waves-effect waves-light btn-sm" ' +
+                                '<button type="button" class="btn btn-danger bg-white border-0 text-danger waves-effect waves-light" ' +
                                 'onclick="confirmDelete(' + element.id + ')">' +
                                 '<i class="ri-delete-bin-fill"></i>' +
                                 '</button>' +
@@ -183,34 +192,41 @@
             const carlist = $(this).data('car-list');
             console.log(carlist);
             $('#modalbodyedit').empty();
+            const imageSrc = carlist.iconimage ? 'assets/images/Services/' + carlist.iconimage : '';
+            console.log(imageSrc);
             const modalbody = `
                     <div class="mb-3 row">
-                <div class="col-lg-4">
+                            <div class="col-lg-6">
                     <div class="mt-2 mb-2">
-                        <label>Select Master Category</label>
-                <select name="type" class="form-select" id="subcategory" required>
-                    <option value="">--select master category--</option>
-                    @foreach ($submasterdata as $row)
-                        <option value="{{ $row->label }}" ${carlist.type === '{{ $row->label }}' ? 'selected' : ''}>{{ $row->label }}</option>
-                    @endforeach
-                </select>
-                </div>
-                </div>
-                <div class="col-lg-4">
+                         <label>Select Master Category</label>
+                    <select name="type" class="form-select" id="subcategory" required>
+                        <option value="">--select master category--</option>
+                        @foreach ($submasterdata as $row)
+                            <option value="{{ $row->label }}" ${carlist.type === '{{ $row->label }}' ? 'selected' : ''}>{{ $row->label }}</option>
+                        @endforeach
+                    </select>
+                    </div>
                     <div class="mt-2 mb-2">
                         <label for="labelval">Label</label>
                         <input class="form-control" placeholder="enter label" name="label" type="text"
                             value="${carlist.label}" id="labelval" onchange="labelValue()" required>
-                            <input type="hidden" name="submasterid" value="${carlist.id}" id="">
+                             <input type="hidden" name="submasterid" value="${carlist.id}" id="">
                     </div>
-                </div>
-                <div class="col-lg-4">
                     <div class="mt-2 mb-2">
                         <label for="valueval">Value</label>
                         <input class="form-control" placeholder="enter value" name="value" type="text"
                             value="${carlist.value}" id="valueval" required>
                     </div>
+                    <div class="mt-2 mb-2">
+                        <label for="iconimage">Icon Image</label>
+                        <input class="form-control" placeholder="enter value" name="iconimage" type="file" value="">
+                    </div>
                 </div>
+                    <div class="col-lg-6">
+                            <div class="img-pre">
+                                <img  src="${imageSrc}" alt="" height="300">
+                            </div>
+                        </div>
             </div>
         `;
             $('#modalbodyedit').append(modalbody);

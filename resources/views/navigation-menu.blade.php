@@ -58,6 +58,12 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('createform') }}">
+                        <i class="bx bxs-window-alt"></i>
+                        <span data-key="t-widgets">Create Forms</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

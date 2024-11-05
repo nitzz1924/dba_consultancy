@@ -34,6 +34,7 @@ Route::middleware([
 Route::controller(AdminViews::class)->group(function () {
     Route::get('master', 'master')->name('master');
     Route::get('submaster', 'submaster')->name('submaster');
+    Route::get('createform', 'createform')->name('createform');
 });
 
 Route::controller(AdminStores::class)->group(function () {
@@ -44,12 +45,25 @@ Route::controller(AdminStores::class)->group(function () {
     Route::get('deletemaster/{id}', 'deletemaster')->name('deletemaster');
     Route::post('updatemaster', 'updatemaster')->name('updatemaster');
     Route::post('updatesubmaster', 'updatesubmaster')->name('updatesubmaster');
-
-
-
-
-
+    Route::get('/filterservice/{selectedtype}', 'filterservice')->name('filterservice');
+    Route::post('insertform', 'insertform')->name('insertform');
+    Route::get('/getattributes/{servicetype}/{servicename}', 'getattributes')->name('getattributes');
+    Route::get('/deleteattribute/{id}', 'deleteattribute')->name('deleteattribute');
+    Route::post('updateattributes', 'updateattributes')->name('updateattributes');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //User Panel Routes
@@ -93,7 +107,7 @@ Route::controller(AdminStores::class)->group(function () {
 // });
 
 
-//Excel Routes
+// //Excel Routes
 // Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
 // Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
 
