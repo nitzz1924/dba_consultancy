@@ -64,6 +64,12 @@
                         <span data-key="t-widgets">Create Forms</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('pricingdetails') }}">
+                        <i class="bx bx-rupee"></i>
+                        <span data-key="t-widgets">Add Pricing Details</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

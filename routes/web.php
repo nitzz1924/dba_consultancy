@@ -35,6 +35,7 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('master', 'master')->name('master');
     Route::get('submaster', 'submaster')->name('submaster');
     Route::get('createform', 'createform')->name('createform');
+    Route::get('pricingdetails', 'pricingdetails')->name('pricingdetails');
 });
 
 Route::controller(AdminStores::class)->group(function () {

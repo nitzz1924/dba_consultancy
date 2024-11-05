@@ -25,4 +25,8 @@ class AdminViews extends Controller
         $attributesdata = Master::where('type','=','Services')->get();
         return view('AdminPanel.createform',compact('masterdata','attributesdata'));
     }
+
+    public function pricingdetails(){
+        return view('AdminPanel.addpricing');
+    }
 }
