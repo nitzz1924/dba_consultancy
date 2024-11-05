@@ -42,14 +42,14 @@ Route::controller(AdminStores::class)->group(function () {
     Route::get('getsubmasterajax/{selectedCat}', 'getsubmasterajax')->name('getsubmasterajax');
     Route::post('updatesubmaster', 'updatesubmaster')->name('updatesubmaster');
     Route::get('deletemaster/{id}', 'deletemaster')->name('deletemaster');
+    Route::post('updatemaster', 'updatemaster')->name('updatemaster');
+    Route::post('updatesubmaster', 'updatesubmaster')->name('updatesubmaster');
+
+
 
 
 
 });
-
-
-
-
 
 
 //User Panel Routes

@@ -72,31 +72,29 @@
                             </thead>
                             <tbody id="table-body">
                                 @foreach ($masterdata as $index => $row)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $row->label }}</td>
-                                        <td>{{ $row->value }}</td>
-                                        <td>{{ $row->type }}</td>
-                                        <td>
-                                            <ul class="list-inline mb-0">
-                                                <li class="list-inline-item">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModaledit"
-                                                        data-car-list="{{ json_encode($row) }}"
-                                                        class="px-2 text-primary editbtnmodal"><i class="ri-edit-2-fill"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            data-bs-title="Edit"></i></a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <button type="button"
-                                                        class="btn btn-danger waves-effect waves-light btn-sm"
-                                                        onclick="confirmDelete('{{ $row->id }}')">
-                                                        <i class="ri-delete-bin-fill"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $row->label }}</td>
+                                    <td>{{ $row->value }}</td>
+                                    <td>{{ $row->type }}</td>
+                                    <td>
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#myModal"
+                                                    data-car-list="{{ json_encode($row) }}"
+                                                    class="px-2 text-primary fs-5 editbtnmodal"><i
+                                                        class="ri-edit-2-fill" data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" data-bs-title="Edit"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <button type="button" class="btn text-danger fs-5"
+                                                    onclick="confirmDelete('{{ $row->id }}')">
+                                                    <i class="ri-delete-bin-5-fill"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -104,24 +102,22 @@
                 </div>
             </div>
         </div>
-
-        <!-- Edit Modal -->
-        <div class="modal fade" id="exampleModaledit" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+        <div id="myModal" class="modal fadeInRight" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content rounded-2">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="myModalLabel fs-5 fw-bold text-black">Edit Master</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
                     </div>
-                    <form action="#" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('updatemaster') }}" method="POST">
                         @csrf
                         <div class="modal-body" id="modalbodyedit">
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Update</button>
+                            <button type="submit" class="btn  text-white rounded-2 waves-effect waves-light"
+                                style="background-color: #222222">Update</button>
                         </div>
                     </form>
                 </div>
@@ -129,38 +125,25 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    @push('scripts')
-        @if (session('success'))
-            <script>
-                swal("Success", "{{ session('success') }}", "success");
-            </script>
-        @endif
-        @if (session('error'))
-            <script>
-                swal("Error", "{{ session('error') }}", "error");
-            </script>
-        @endif
-    @endpush
     <script>
         function confirmDelete(id) {
-            let smiley = '😊';
-            swal({
+            Swal.fire({
                     title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
+                    html: "You want to delete?",
                     icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
+                    showCancelButton: true,
+                    confirmButtonColor: "#222222",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "Cancel"
                 })
-                .then((willDelete) => {
-                    if (willDelete) {
+                .then((result) => {
+                    if (result.isConfirmed) {
                         window.location.href = "/deletemaster/" + id;
-                    } else {
-                        swal("Great Decision....!! Your data is safe! " + smiley);
                     }
                 });
         }
     </script>
-
     <script>
         // DataTable Initialization
         $(document).ready(function() {

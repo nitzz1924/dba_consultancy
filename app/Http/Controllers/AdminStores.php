@@ -62,8 +62,8 @@ class AdminStores extends Controller
             ]);
             return back()->with('success', "Updated..!!!");
         } catch (Exception $e) {
-            //return back()->with('error', $e->getMessage());
-            return back()->with('error', 'Not Updated..Try Again.....');
+            return back()->with('error', $e->getMessage());
+            //return back()->with('error', 'Not Updated..Try Again.....');
         }
     }
 
@@ -74,7 +74,21 @@ class AdminStores extends Controller
             return redirect()->back()->with('error', "Data not found.");
         }
         $data->delete();
-        return redirect()->back()->with('success', "Deleted.>!!!");
+        return redirect()->back()->with('success', "Deleted.!!!");
+    }
+
+    public function updatemaster(Request $request)
+    {
+        try {
+            $carlist = Master::where('id', $request->masterid)->update([
+                'label' => $request->label,
+                'value' => $request->value,
+            ]);
+            return back()->with('success', "Updated..!!!");
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+            //return back()->with('error', 'Not Updated..Try Again.....');
+        }
     }
 
 }
