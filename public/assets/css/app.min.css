@@ -50,7 +50,7 @@
     background-color: #222222;
     -webkit-transition: all 0.1s ease-out;
     transition: all 0.1s ease-out;
-    border-bottom: 1px solid var(--vz-header-border);
+    border-bottom: 0px solid var(--vz-header-border);
 }
 #page-topbar.topbar-shadow {
     -webkit-box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15);
@@ -490,7 +490,8 @@
     }
 }
 .page-content {
-    padding: calc(70px + 1.5rem) calc(1.5rem * 0.5) 60px calc(1.5rem * 0.5);
+    /* padding: calc(70px + 1.5rem) calc(1.5rem * 0.5) 60px calc(1.5rem * 0.5); */
+    padding: calc(45px + 1.5rem) calc(0rem * 0.5) 60px calc(0rem * 0.5);
 }
 .navbar-menu {
     width: var(--vz-vertical-menu-width);

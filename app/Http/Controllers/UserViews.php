@@ -54,6 +54,30 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
+    public function userprofile()
+    {
+        if (Auth::guard('customer')->check()) {
+            return view('UserPanel.userprofile');
+        } else {
+            return view('auth.UserPanel.login');
+        }
+    }
+    public function editprofile()
+    {
+        if (Auth::guard('customer')->check()) {
+            return view('UserPanel.editprofile');
+        } else {
+            return view('auth.UserPanel.login');
+        }
+    }
+    public function allservices()
+    {
+        if (Auth::guard('customer')->check()) {
+            return view('UserPanel.allservices');
+        } else {
+            return view('auth.UserPanel.login');
+        }
+    }
 
     public function automationpage()
     {

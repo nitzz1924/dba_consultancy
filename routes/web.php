@@ -75,6 +75,9 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('home', 'home')->name('home');
     Route::get('wallet', 'wallet')->name('wallet');
     Route::get('servicedetail', 'servicedetail')->name('servicedetail');
+    Route::get('userprofile', 'userprofile')->name('userprofile');
+    Route::get('editprofile', 'editprofile')->name('editprofile');
+    Route::get('allservices', 'allservices')->name('allservices');
 
 });
 

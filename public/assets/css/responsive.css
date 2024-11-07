@@ -1,0 +1,34 @@
+/* Portrait */
+@media (max-width: 768px) and (orientation: portrait) {
+    /* Styles for portrait mode */
+}
+
+/* Landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+    /* Styles for landscape mode */
+}
+@media (min-width: 1400px) {
+    /* Styles for extra extra large devices */
+    .desktop-view {
+        width: 25%;
+    }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+    /* Styles for extra large devices */
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    /* Styles for large devices */
+
+    .desktop-view {
+        width: 40%;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Styles for medium devices */
+}
+@media (min-width: 576px) and (max-width: 767px) {
+    /* Styles for small devices */
+}
+@media (max-width: 576px) {
+    /* Styles for extra small devices */
+}

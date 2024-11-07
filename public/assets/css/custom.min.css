@@ -40,16 +40,16 @@
 .sectionHeading {
     font-size: 20px;
     font-weight: 600;
+    margin-bottom: 10px;
 }
 .serviceHeading {
     font-size: 32px;
     font-weight: 800;
     line-height: 38.73px;
-    background: linear-gradient(180deg, #FE9248 0%, #FE6D7E 100%);
+    background: linear-gradient(180deg, #fe9248 0%, #fe6d7e 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 
 .legal-box {
     background: linear-gradient(180deg, #ff9149, #ff6c7f);
@@ -70,4 +70,31 @@
 
 .icon-bg {
     background: linear-gradient(180deg, #ff9149, #ff6c7f);
+}
+
+.profile-header {
+    background-image: url("/assets/images/userprofile-bg.png");
+    background-size: cover;
+    background-position: bottom;
+    height: 300px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.serviceCard .card {
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(128, 128, 128, 0.132);
+}
+.serviceCard .service-name {
+    transition: all 0.3s ease-in-out; 
+    color: black;
+}
+.serviceCard:hover .card {
+    transform: translateY(-10px);
+    border-color: rgb(255, 94, 0);
+}
+.serviceCard:hover .service-name {
+    color: rgb(255, 94, 0);
 }

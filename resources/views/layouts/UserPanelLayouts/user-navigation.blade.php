@@ -4,20 +4,20 @@
         <!-- Dark Logo-->
         <a href="{{ route('home') }}" class="logo logo-dark">
             <span class="logo-sm p-2">
-                <img class="rounded-pill" src="{{ asset('assets/images/dbalogo.png') }}" alt="" height="50" />
+                <img class="rounded-pill" src="{{ asset('assets/images/dfavicon.png') }}" alt="dfavicon" height="35" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('assets/images/dbalogo.png') }}" alt="" height="100" />
+                <img src="{{ asset('assets/images/dbalogo.png') }}" alt="dbalogo" height="100" />
             </span>
         </a>
         <!-- Light Logo-->
         <a href="{{ route('home') }}" class="logo logo-light py-2">
             <span class="logo-sm p-2">
-                <img class="rounded-pill" src="{{ asset('assets/images/dbalogo.png') }}" alt=""
-                    height="50" />
+                <img class="rounded-pill" src="{{ asset('assets/images/dfavicon.png') }}" alt=""
+                    height="35" />
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('assets/images/dbalogo.png') }}" alt="" height="100" />
+                <img src="{{ asset('assets/images/dbalogo.png') }}" alt="dbalogo" height="100" />
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -39,10 +39,17 @@
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('wallet') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('wallet') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('wallet') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
                         <img class="" src="{{ asset('assets/images/campaign (1).png') }}" alt=""
                             height="25" />&nbsp;<span class="fs-5">Wallet</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('allservices') ? 'active' : '' }}">
+                    <a class="nav-link menu-link" href="{{ route('allservices') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarDashboards">
+                        <img class="" src="{{ asset('assets/images/campaign (1).png') }}" alt="allservices"
+                            height="25" />&nbsp;<span class="fs-5">All Services</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('servicedetail') ? 'active' : '' }}">
@@ -52,7 +59,7 @@
                             height="25" />&nbsp;<span class="fs-5">Service Detail</span>
                     </a>
                 </li>
-                
+
             </ul>
         </div>
     </div>

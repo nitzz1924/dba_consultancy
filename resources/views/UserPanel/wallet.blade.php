@@ -3,7 +3,7 @@
     <title>Wallet | DBA Consultancy</title>
 @endpush
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid  p-4 desktop-view">
         {{-- Header bar --}}
         <div class="row">
             <div class="col-6">

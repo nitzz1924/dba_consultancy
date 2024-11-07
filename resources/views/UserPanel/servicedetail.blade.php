@@ -3,15 +3,15 @@
     <title>Service Detail | DBA Consultancy</title>
 @endpush
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid desktop-view">
         {{-- Header bar --}}
         <div class="row"
             style="
                 background-image: url('/assets/images/service-bg.png');
                 background-size: cover;
-                background-position: center;
+                background-position: bottom;
                 height: 250px;
-                padding: 25px;
+                padding: 15px;
                 display: flex;
                 /* align-items: center; */
             ">
@@ -32,7 +32,7 @@
         </div>
 
         {{-- Wallet box --}}
-        <div class="row my-3 ">
+        <div class="row mt-n5 ">
             <div class="serviceHeading mb-3">
                 Service Name
             </div>
@@ -61,7 +61,9 @@
                 sem semper himenaeos nisi. Senectus maecenas habitant parturient; hac torquent lacus eu. Efficitur sem
                 finibus dis laoreet himenaeos id molestie. Efficitur curae ex vulputate quis inceptos phasellus fames
                 inceptos eu.
-
+                
+            </p>
+            <p>
                 Eros maximus posuere ligula finibus mi torquent; sagittis taciti risus. Massa et vitae tristique faucibus
                 venenatis nisl. Sem class quam dis arcu quam. Vivamus vitae commodo fermentum conubia mus proin. Ullamcorper
                 vitae quis sodales quisque primis facilisi aptent. Pharetra velit dapibus dis sagittis eros; donec aliquam.

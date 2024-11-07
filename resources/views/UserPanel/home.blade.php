@@ -3,14 +3,16 @@
     <title>Home | DBA Consultancy</title>
 @endpush
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid p-4 desktop-view">
         {{-- Header bar --}}
         <div class="row">
             <div class="col-6">
                 <div class="d-flex justify-content-start align-items-center">
-                    <div class="p-2 rounded-pill bg-danger">
-                        <i class='bx bx-user fs-5 text-white'></i>
-                    </div>
+                    <a href="/userprofile">
+                        <div class="p-2 rounded-pill bg-danger">
+                            <i class='bx bx-user fs-5 text-white'></i>
+                        </div>
+                    </a>
                     <div class="ms-1 fs-4">
                         Hello, User
                     </div>
@@ -35,12 +37,12 @@
                     </div>
                 </div>
                 <div class="wallet-actions mt-3 d-flex justify-content-around">
-                    <a href="#">
+                    <a href="/wallet">
                         <div class="btn btn-light rounded-pill fs-6 shadow-lg">
                             <i class='bx bx-minus bg-dark text-white p-2 rounded-pill me-1'></i>Withdraw
                         </div>
                     </a>
-                    <a href="#">
+                    <a href="/wallet">
                         <div class="btn btn-light rounded-pill fs-6 shadow-lg">
                             <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
                         </div>
@@ -56,43 +58,61 @@
                     Legal Services
                 </div>
                 <div>
-                    <a href="#" class="btn btn-outline-dark border-0 fs-6">See more</a>
+                    <a href="/allservices" class="btn btn-outline-dark border-0 fs-6">See more</a>
                 </div>
             </div>
 
-            <div class="col-3 p-3">
-                <div class="d-flex flex-column justify-content-center align-items-center ">
-                    <div class="bg-dark rounded-pill py-2 px-3 ">
-                        <img src="{{ asset('assets/images/GST SVG 1.png') }}" alt="icon">
-                    </div>
-                    <div class="mt-2 text-center">GST</div>
+            <div class="row">
+                <div class="col-3 p-3">
+                    <a href="/servicedetail" class="serviceCard">
+                        <div class="d-flex flex-column justify-content-center align-items-center ">
+                            <div class="card mb-1 rounded-4">
+                                <div class="card-body p-1">
+                                    <img src="{{ asset('assets/images/icons/gst.jpg') }}" alt="icon" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="mt-2 text-center service-name">GST</div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-3 p-3">
-                <div class="d-flex flex-column justify-content-center align-items-center ">
-                    <div class="bg-dark rounded-pill py-2 px-3 ">
-                        <img src="{{ asset('assets/images/GST SVG 1.png') }}" alt="icon">
-                    </div>
-                    <div class="mt-2 text-center">Company
-                        Registration</div>
+                <div class="col-3 p-3">
+                    <a href="/servicedetail" class="serviceCard">
+                        <div class="d-flex flex-column justify-content-center align-items-center ">
+                            <div class="card mb-1 rounded-4">
+                                <div class="card-body p-1">
+                                    <img src="{{ asset('assets/images/icons/registration.jpg') }}" alt="icon"
+                                        class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="mt-2 text-center service-name">Company Registration</div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-3 p-3">
-                <div class="d-flex flex-column justify-content-center align-items-center ">
-                    <div class="bg-dark rounded-pill py-2 px-3 ">
-                        <img src="{{ asset('assets/images/GST SVG 1.png') }}" alt="icon">
-                    </div>
-                    <div class="mt-2 text-center">File
-                        Tax Return</div>
+                <div class="col-3 p-3">
+                    <a href="/servicedetail" class="serviceCard">
+                        <div class="d-flex flex-column justify-content-center align-items-center ">
+                            <div class="card mb-1 rounded-4">
+                                <div class="card-body p-1">
+                                    <img src="{{ asset('assets/images/icons/tax-return.jpg') }}" alt="icon"
+                                        class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="mt-2 text-center service-name">File Tax Return</div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-3 p-3">
-                <div class="d-flex flex-column justify-content-center align-items-center ">
-                    <div class="bg-dark rounded-pill py-2 px-3 ">
-                        <img src="{{ asset('assets/images/GST SVG 1.png') }}" alt="icon">
-                    </div>
-                    <div class="mt-2 text-center">Business
-                        Pan Card</div>
+                <div class="col-3 p-3">
+                    <a href="/servicedetail" class="serviceCard">
+                        <div class="d-flex flex-column justify-content-center align-items-center ">
+                            <div class="card mb-1 rounded-4">
+                                <div class="card-body p-1">
+                                    <img src="{{ asset('assets/images/icons/pcard.jpg') }}" alt="icon"
+                                        class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="mt-2 text-center service-name">Business Pan Card</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -105,7 +125,7 @@
                 </div>
             </div>
 
-            <div class="legal-box d-flex align-items-center">
+            <div class="legal-box d-flex align-items-center justify-content-around">
                 <div class="me-2">
                     <img src="{{ asset('assets/images/Layer 1.png') }}" alt="legal-icon">
                 </div>
@@ -114,6 +134,11 @@
                     <div class="legal-amount">
                         <i class='bx bx-rupee'></i>500
                     </div>
+                </div>
+                <div class="p-3">
+                    <a href="/consultancydetail" class="btn btn-outline-light border-0 fs-1 p-1">
+                        <i class='bx bxs-chevron-right bx-fade-right' ></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -124,9 +149,9 @@
                 <div class="me-2 ">
                     <img class="rounded-4" src="{{ asset('assets/images/refer-bg.png') }}" alt="legal-icon">
                 </div>
-                <div class="fs-4">
+                <div class="fs-4 fw-bold">
                     Refer a friend
-                    <div class="fs-5">
+                    <div class="fs-5 fw-normal">
                         <span class="incentive">10%</span> Lifetime Commission
                     </div>
                 </div>
