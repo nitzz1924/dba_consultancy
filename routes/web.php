@@ -72,44 +72,38 @@ Route::controller(AdminStores::class)->group(function () {
 
 
 //User Panel Routes
-// Route::controller(UserViews::class)->group(function () {
-//     Route::get('user/login', 'userloginpage')->name('userloginpage');
-//     Route::get('userdashboard', 'userdashboard')->name('userdashboard');
-//     Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
-//     Route::get('indexchat', 'indexchat')->name('indexchat');
-//     Route::get('campaignspage', 'campaignspage')->name('campaignspage');
-//     Route::get('addnewcampaign', 'addnewcampaign')->name('addnewcampaign');
-//     Route::get('automationpage', 'automationpage')->name('automationpage');
-//     Route::get('addnewautomation', 'addnewautomation')->name('addnewautomation');
-//     Route::get('analyticspage', 'analyticspage')->name('analyticspage');
-//     Route::get('wahapage', 'wahapage')->name('wahapage');
-//     Route::get('templatespage', 'templatespage')->name('templatespage');
-//     Route::get('groupspage', 'groupspage')->name('groupspage');
+Route::controller(UserViews::class)->group(function () {
+    Route::get('user/login', 'userloginpage')->name('userloginpage');
+    Route::get('user/registration', 'registration')->name('registration');
+    Route::get('userdashboard', 'userdashboard')->name('userdashboard');
+    Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
+    Route::get('home', 'home')->name('home');
+    Route::get('wallet', 'wallet')->name('wallet');
+    Route::get('servicedetail', 'servicedetail')->name('servicedetail');
+    Route::get('userprofile', 'userprofile')->name('userprofile');
+    Route::get('editprofile', 'editprofile')->name('editprofile');
+    Route::get('allservices', 'allservices')->name('allservices');
 
-//     Route::get('contactspage', 'contactspage')->name('contactspage');
-//     Route::get('/webhook/whatsapp', 'verify')->name('verify')->middleware(VerifyCsrfToken::class);
-//     Route::get('showsentmessage/{phone}', 'showsentmessage')->name('showsentmessage');
-
-// });
+});
 
 
-// Route::controller(UserStores::class)->group(function () {
-//     Route::post('/signup_user_otp', 'signup_user_otp')->name('signup_user_otp');
-//     Route::post('verifyotp', 'verifyotp')->name('verifyotp');
-//     Route::post('insertgroups', 'insertgroups')->name('insertgroups');
-//     Route::get('deletegroup/{id}', 'deletegroup')->name('deletegroup');
-//     Route::post('insertcontacts', 'insertcontacts')->name('insertcontacts');
-//     Route::post('send-message', 'sendmessage')->name('send-message');
-//     Route::get('deletecampaign/{id}', 'deletecampaign')->name('deletecampaign');
-//     Route::get('deletecontact/{id}', 'deletecontact')->name('deletecontact');
-//     Route::post('updatecontact', 'updatecontact')->name('updatecontact');
-//     Route::post('updategroups', 'updategroups')->name('updategroups');
-//     Route::post('sendsinglemessage', 'sendsinglemessage')->name('sendsinglemessage');
-//     Route::post('webhook', 'handleWebhook')->name('handleWebhook');
-//     Route::get('refreshtemplates', 'refreshtemplates')->name('refreshtemplates');
+Route::controller(UserStores::class)->group(function () {
+    Route::post('/signup_user_otp', 'signup_user_otp')->name('signup_user_otp');
+    Route::post('verifyotp', 'verifyotp')->name('verifyotp');
+    Route::post('insertgroups', 'insertgroups')->name('insertgroups');
+    Route::get('deletegroup/{id}', 'deletegroup')->name('deletegroup');
+    Route::post('insertcontacts', 'insertcontacts')->name('insertcontacts');
+    Route::post('send-message', 'sendmessage')->name('send-message');
+    Route::get('deletecampaign/{id}', 'deletecampaign')->name('deletecampaign');
+    Route::get('deletecontact/{id}', 'deletecontact')->name('deletecontact');
+    Route::post('updatecontact', 'updatecontact')->name('updatecontact');
+    Route::post('updategroups', 'updategroups')->name('updategroups');
+    Route::post('sendsinglemessage', 'sendsinglemessage')->name('sendsinglemessage');
+    Route::post('webhook', 'handleWebhook')->name('handleWebhook');
+    Route::get('refreshtemplates', 'refreshtemplates')->name('refreshtemplates');
 
 
-// });
+});
 
 
 // //Excel Routes

@@ -31,8 +31,8 @@
                             <div class="col-lg-12 align-content-center">
                                 <div class="p-lg-5 p-4">
                                     <div>
-                                        <h2 class="text-center fw-bold" style="color: #fa7823">Welcome Back !</h2>
-                                        <p class="text-muted text-center">Sign in to continue</p>
+                                        <h2 class="text-center fw-bold" style="color: #fa7823">Register here !</h2>
+                                        <p class="text-muted text-center">Sign up to continue</p>
                                     </div>
                                     @if ($mymess = Session::get('success'))
                                         <div class="alert border-0 alert-success text-center" role="alert"
@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="mt-5 text-center">
                                         <p class="mb-0">Don't have an account ?
-                                            <a href={{ route('registration') }} class="fw-semibold text-decoration-underline"
+                                            <a href="#" class="fw-semibold text-decoration-underline"
                                                 style="color: #fa7823">Signup</a>
                                         </p>
                                     </div>

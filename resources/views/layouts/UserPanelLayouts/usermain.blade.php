@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="DBA Consultancy" name="description" />
     <meta content="Themesbrand" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/Y.png')}}" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/dfavicon.png') }}" />
 
     <!-- jsvectormap css -->
     <link href="{{ asset('assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -26,7 +26,8 @@
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{asset('assets/libs/glightbox/css/glightbox.min.css')}}">
+    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/glightbox/css/glightbox.min.css') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.13.2/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="{{ asset('assets/backend-assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}"
@@ -46,25 +47,29 @@
     <div id="layout-wrapper">
         <header id="page-topbar">
             <div class="layout-width">
-                <div class="navbar-header">
-                    <div class="d-flex">
+                <div class="navbar-header justify-content-between">
+                    <div class="d-flex ">
                         <!-- LOGO -->
                         <div class="navbar-brand-box horizontal-logo">
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="/" class="logo logo-dark">
                                 <span class="logo-sm">
-                                    <img src="{{asset('assets/images/oldlogo.png')}}" alt="" height="22" />
+                                    <img src="{{ asset('assets/images/oldlogo.png') }}" alt=""
+                                        height="22" />
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="{{asset('assets/images/oldlogo.png')}}" alt="" height="17" />
+                                    <img src="{{ asset('assets/images/oldlogo.png') }}" alt=""
+                                        height="17" />
                                 </span>
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
+                            <a href="/" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="{{asset('assets/images/oldlogo.png')}}" alt="" height="22" />
+                                    <img src="{{ asset('assets/images/oldlogo.png') }}" alt=""
+                                        height="22" />
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="{{asset('assets/images/oldlogo.png')}}" alt="" height="17" />
+                                    <img src="{{ asset('assets/images/oldlogo.png') }}" alt=""
+                                        height="17" />
                                 </span>
                             </a>
                         </div>
@@ -80,49 +85,21 @@
                         </button>
                     </div>
 
-                    <div class="d-flex align-items-center">
-                        <div class="dropdown d-md-none topbar-head-dropdown header-item">
-                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                                id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <i class="bx bx-search fs-22"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                                aria-labelledby="page-header-search-dropdown">
-                                <form class="p-3">
-                                    <div class="form-group m-0">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search ..."
-                                                aria-label="Recipient's username" />
-                                            <button class="btn btn-primary" type="submit">
-                                                <i class="mdi mdi-magnify"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="ms-1 header-item d-none d-sm-flex">
-                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                                data-toggle="fullscreen">
-                                <i class="bx bx-fullscreen fs-22"></i>
-                            </button>
-                        </div>
-
-                        {{-- <div class="ms-1 header-item d-none d-sm-flex">
-                            <button type="button"
-                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
-                                <i class="bx bx-moon fs-22"></i>
-                            </button>
-                        </div> --}}
-
+                    <div>
+                        <a href="/home" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="{{ asset('assets/images/dbalogo.png') }}" alt="" height="70" />
+                            </span>
+                            
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
                         <div class="dropdown ms-sm-3 header-item topbar-user">
-                            <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
                                     <img class="rounded-circle header-profile-user"
-                                        src="{{asset('assets/images/defaultuser.png')}}" alt="Header Avatar" />
+                                        src="{{ asset('assets/images/defaultuser.png') }}" alt="Header Avatar" />
                                     <span class="text-start ms-xl-2">
                                         <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
                                             Guest User
@@ -131,10 +108,11 @@
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                {{-- <a class="dropdown-item" href="pages-profile.html"><i
+                                <a class="dropdown-item" href="/userprofile"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
-                                    <span class="align-middle">Profile</span></a> --}}
-                                <form method="GET" action="{{route('logoutuserpanel')}}" x-data>
+                                    <span class="align-middle">Profile</span></a>
+                                <hr>
+                                <form method="GET" action="{{ route('logoutuserpanel') }}" x-data>
                                     @csrf
                                     <button type="submit" class="dropdown-item" href="auth-lockscreen-basic.html"><i
                                             class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
@@ -194,11 +172,11 @@
                             <script>
                                 document.write(new Date().getFullYear());
                             </script>
-                            © YUVMEDIA WHATSAPP MARKETING.
+                            © DBA CONSULTANCY.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by YUVMEDIA
+                                Design & Developed with ❤️ by YUVMEDIA.
                             </div>
                         </div>
                     </div>
@@ -214,14 +192,14 @@
     <script src="{{ asset('assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
     <script src="{{ asset('assets/js/plugins.js') }}"></script>
-    <script src="{{asset('assets/libs/glightbox/js/glightbox.min.js')}}"></script>
-    <script src="{{asset('assets/libs/fg-emoji-picker/fgEmojiPicker.js')}}"></script>
-    <script src="{{asset('assets/js/pages/chat.init.js')}}"></script>
+    <script src="{{ asset('assets/libs/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/fg-emoji-picker/fgEmojiPicker.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/chat.init.js') }}"></script>
 
-    <script src="{{asset('assets/libs/multi.js/multi.min.js')}}"></script>
-    <script src="{{asset('assets/libs/%40tarekraafat/autocomplete.js/autoComplete.min.js')}}"></script>
-    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
-    <script src="{{asset('assets/js/pages/flag-input.init.js')}}"></script>
+    <script src="{{ asset('assets/libs/multi.js/multi.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/%40tarekraafat/autocomplete.js/autoComplete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/flag-input.init.js') }}"></script>
     <!-- apexcharts -->
     <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
@@ -251,8 +229,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.html5.min.js"></script>
     @if (session('success'))
-    <script>
-        // Display SweetAlert for success message
+        <script>
+            // Display SweetAlert for success message
             Swal.fire({
                 title: "Success!",
                 text: "{{ session('success') }}",
@@ -262,12 +240,12 @@
                 showCancelButton: true,
                 showCloseButton: true,
             });
-    </script>
+        </script>
     @endif
 
     @if (session('error'))
-    <script>
-        // Display SweetAlert for error message
+        <script>
+            // Display SweetAlert for error message
             Swal.fire({
                 title: "Error!",
                 text: "{{ session('error') }}",
@@ -276,7 +254,7 @@
                 buttonsStyling: true,
                 showCloseButton: true,
             });
-    </script>
+        </script>
     @endif
 </body>
 
