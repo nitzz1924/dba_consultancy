@@ -70,6 +70,7 @@ Route::controller(AdminStores::class)->group(function () {
 //User Panel Routes
 Route::controller(UserViews::class)->group(function () {
     Route::get('user/login', 'userloginpage')->name('userloginpage');
+    Route::get('user/registration', 'registration')->name('registration');
     Route::get('userdashboard', 'userdashboard')->name('userdashboard');
     Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
     Route::get('home', 'home')->name('home');

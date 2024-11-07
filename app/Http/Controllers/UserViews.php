@@ -20,6 +20,10 @@ class UserViews extends Controller
     {
         return view('auth.UserPanel.login');
     }
+    public function registration()
+    {
+        return view('auth.UserPanel.registration');
+    }
     public function userdashboard()
     {
         return view('UserPanel.userdashboard');
