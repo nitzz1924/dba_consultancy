@@ -51,6 +51,10 @@ Route::controller(AdminStores::class)->group(function () {
     Route::get('/getattributes/{servicetype}/{servicename}', 'getattributes')->name('getattributes');
     Route::get('/deleteattribute/{id}', 'deleteattribute')->name('deleteattribute');
     Route::post('updateattributes', 'updateattributes')->name('updateattributes');
+    Route::post('insertpricingform', 'insertpricingform')->name('insertpricingform');
+    Route::get('/deletepricing/{id}', 'deletepricing')->name('deletepricing');
+    Route::post('updatepricingdetails', 'updatepricingdetails')->name('updatepricingdetails');
+
 });
 
 

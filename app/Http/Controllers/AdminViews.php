@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FormAttribute;
 use App\Models\Master;
+use App\Models\PricingDetail;
 use Illuminate\Http\Request;
 
 class AdminViews extends Controller
@@ -27,6 +28,8 @@ class AdminViews extends Controller
     }
 
     public function pricingdetails(){
-        return view('AdminPanel.addpricing');
+        $masterdata = Master::where('type','=','Documents')->get();
+        $pricingdata = PricingDetail::orderBy('created_at','DESC')->get();
+        return view('AdminPanel.addpricing',compact('masterdata','pricingdata'));
     }
 }

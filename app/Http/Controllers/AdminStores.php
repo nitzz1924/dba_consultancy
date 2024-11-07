@@ -2,6 +2,7 @@
 #{{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏-----------------------------}}
 namespace App\Http\Controllers;
 use App\Models\GroupType;
+use App\Models\PricingDetail;
 use App\Models\RegisterUser;
 use App\Models\FormAttribute;
 use Exception;
@@ -167,6 +168,85 @@ class AdminStores extends Controller
                 'value' => $request->value,
                 'servicename' => $request->servicename,
                 'inputtype' => $request->inputtype,
+            ]);
+            return back()->with('success', "Updated..!!!");
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+            //return back()->with('error', 'Not Updated..Try Again.....');
+        }
+    }
+
+    public function insertpricingform(Request $rq){
+        // dd($rq->all());
+        try {
+            $data = $rq->validate([
+                'title' => 'required',
+                'price' => 'required',
+                'disprice' => 'required',
+                'duration' => 'required',
+                'documents' => 'required',
+            ]);
+            if ($rq->hasFile('coverimage')) {
+                $rq->validate([
+                    'coverimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $file = $rq->file('coverimage');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/images/Services'), $filename);
+            }
+            $data = PricingDetail::create([
+                'title' => $rq->title,
+                'price' => $rq->price,
+                'disprice' => $rq->disprice,
+                'duration' => $rq->duration,
+                'documents' => json_encode($rq->documents),
+                'coverimage' => $filename,
+                'notereq' => $rq->notereq,
+                'details' => $rq->details,
+            ]);
+            //dd($data);
+            return back()->with('success', 'Pricing Added..!!!!');
+
+        } catch (Exception $e) {
+            return redirect()->route('pricingdetails')->with('error', $e->getMessage());
+            //return redirect()->route('pricingdetails')->with('error', 'Not Added Try Again...!!!!');
+        }
+    }
+
+    public function deletepricing($id)
+    {
+        // dd($id);
+        $data = PricingDetail::find($id);
+        if (!$data) {
+            return redirect()->back()->with('error', "Data not found.");
+        }
+        $data->delete();
+        return redirect()->back()->with('success', "Deleted.!!!");
+    }
+
+    public function updatepricingdetails(Request $rq)
+    {
+        // dd($request->all());
+        try {
+            $pricingdata = PricingDetail::find($rq->pricingid);
+            $filename = $pricingdata->coverimage;
+            if ($rq->hasFile('coverimage')) {
+                $rq->validate([
+                    'coverimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $file = $rq->file('coverimage');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/images/Services'), $filename);
+            }
+            $attributes = PricingDetail::where('id', $rq->pricingid)->update([
+                'title' => $rq->title,
+                'price' => $rq->price,
+                'disprice' => $rq->disprice,
+                'duration' => $rq->duration,
+                'documents' => json_encode($rq->documents),
+                'coverimage' => $filename,
+                'notereq' => $rq->notereq,
+                'details' => $rq->details,
             ]);
             return back()->with('success', "Updated..!!!");
         } catch (Exception $e) {
