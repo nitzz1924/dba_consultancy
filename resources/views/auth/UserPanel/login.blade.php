@@ -1,7 +1,7 @@
 {{-- #---------------------------------------------------🙏🔱देवा श्री गणेशा 🔱🙏---------------------------” --}}
 @extends('auth.UserPanel.Layouts.main')
 @push('title')
-    <title>Registration | DBA Consultancy</title>
+    <title>Login | DBA Consultancy</title>
 @endpush
 @section('main-section')
     <div class="auth-page-content overflow-hidden pt-lg-5">
