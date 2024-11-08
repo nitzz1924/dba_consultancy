@@ -23,56 +23,20 @@
 
         {{-- All services --}}
         <div class="row">
+            @foreach ($services as $row)
             <div class="col-3 p-3">
                 <a href="/servicedetail" class="serviceCard">
                     <div class="d-flex flex-column justify-content-center align-items-center ">
                         <div class="card mb-1 rounded-4">
                             <div class="card-body p-1">
-                                <img src="{{ asset('assets/images/icons/gst.jpg') }}" alt="icon" class="img-fluid">
+                                <img src="{{ asset('assets/images/Services/'.$row->iconimage) }}" alt="icon" class="img-fluid">
                             </div>
                         </div>
-                        <div class="mt-2 text-center service-name">GST</div>
+                        <div class="mt-2 text-center service-name">{{$row->label}}</div>
                     </div>
                 </a>
             </div>
-            <div class="col-3 p-3">
-                <a href="/servicedetail" class="serviceCard">
-                    <div class="d-flex flex-column justify-content-center align-items-center ">
-                        <div class="card mb-1 rounded-4">
-                            <div class="card-body p-1">
-                                <img src="{{ asset('assets/images/icons/registration.jpg') }}" alt="icon"
-                                    class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="mt-2 text-center service-name">Company Registration</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 p-3">
-                <a href="/servicedetail" class="serviceCard">
-                    <div class="d-flex flex-column justify-content-center align-items-center ">
-                        <div class="card mb-1 rounded-4">
-                            <div class="card-body p-1">
-                                <img src="{{ asset('assets/images/icons/tax-return.jpg') }}" alt="icon"
-                                    class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="mt-2 text-center service-name">File Tax Return</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-3 p-3">
-                <a href="/servicedetail" class="serviceCard">
-                    <div class="d-flex flex-column justify-content-center align-items-center ">
-                        <div class="card mb-1 rounded-4">
-                            <div class="card-body p-1">
-                                <img src="{{ asset('assets/images/icons/pcard.jpg') }}" alt="icon" class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="mt-2 text-center service-name">Business Pan Card</div>
-                    </div>
-                </a>
-            </div>
+            @endforeach
         </div>
     </div>
 

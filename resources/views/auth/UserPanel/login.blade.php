@@ -1,7 +1,7 @@
-{{-- #---------------------------------------------------🙏🔱देवा श्री गणेशा 🔱🙏---------------------------” --}}
+{{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏-----------------------------}}
 @extends('auth.UserPanel.Layouts.main')
 @push('title')
-<title>Login | DBA Consultancy</title>
+    <title>Login | DBA Consultancy</title>
 @endpush
 @section('main-section')
 <div class="auth-page-content overflow-hidden pt-lg-5">
@@ -77,7 +77,7 @@
                                     <div class="row">
                                         @for ($i = 1; $i <= 6; $i++) <div class="col-2">
                                             <input type="text"
-                                                class="form-control form-control-lg bg-light border-light text-center"
+                                                class="form-control form-control-lg bg-light border-light text-center  otp-input"
                                                 maxlength="1" pattern="[0-9]" name="otptest{{ $i }}"
                                                 title="Please enter a number." required>
                                     </div>
@@ -129,5 +129,25 @@
         setTimeout(function() {
             $('#dangerAlert').fadeOut('slow');
         }, 2000);
+</script>
+<script>
+    //Move to Next Input Functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = document.querySelectorAll('.otp-input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', function () {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus(); // Move to the next input
+                }
+            });
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus(); // Move to the previous input on backspace
+                }
+            });
+        });
+    });
 </script>
 @endsection

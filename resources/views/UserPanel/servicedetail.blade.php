@@ -7,7 +7,7 @@
         {{-- Header bar --}}
         <div class="row"
             style="
-                background-image: url('/assets/images/service-bg.png');
+                background-image: url('asset('assets/images/Services/'.$data->cover)');
                 background-size: cover;
                 background-position: bottom;
                 height: 250px;
@@ -61,7 +61,7 @@
                 sem semper himenaeos nisi. Senectus maecenas habitant parturient; hac torquent lacus eu. Efficitur sem
                 finibus dis laoreet himenaeos id molestie. Efficitur curae ex vulputate quis inceptos phasellus fames
                 inceptos eu.
-                
+
             </p>
             <p>
                 Eros maximus posuere ligula finibus mi torquent; sagittis taciti risus. Massa et vitae tristique faucibus
