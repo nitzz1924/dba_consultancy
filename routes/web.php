@@ -92,6 +92,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('registeruser', 'registeruser')->name('registeruser');
     Route::post('proceedtootp', 'proceedtootp')->name('proceedtootp');
     Route::post('verifyotp', 'verifyotp')->name('verifyotp');
+    Route::post('LoginOtpVerify', 'LoginOtpVerify')->name('LoginOtpVerify');
 
 
 });

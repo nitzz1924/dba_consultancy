@@ -90,7 +90,7 @@
                             <span class="logo-sm">
                                 <img src="{{ asset('assets/images/dbalogo.png') }}" alt="" height="70" />
                             </span>
-                            
+
                         </a>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
@@ -112,7 +112,7 @@
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                                     <span class="align-middle">Profile</span></a>
                                 <hr>
-                                <form method="GET" action="{{ route('logoutuserpanel') }}" x-data>
+                                <form method="GET" action="{{ route('logoutuserpanel') }}">
                                     @csrf
                                     <button type="submit" class="dropdown-item" href="auth-lockscreen-basic.html"><i
                                             class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>

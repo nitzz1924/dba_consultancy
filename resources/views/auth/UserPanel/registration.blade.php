@@ -35,14 +35,16 @@
                                         <div>
                                             <h2 class="text-center fw-bold" style="color: #fa7823">Register here !</h2>
                                             @if ($mymess = Session::get('success'))
-                                                <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
-                                                    <strong>{{ $mymess }}</strong>
-                                                </div>
+                                            <div class="alert border-0 alert-success text-center" role="alert"
+                                                id="successAlert">
+                                                <strong>{{ $mymess }}</strong>
+                                            </div>
                                             @endif
                                             @if ($mymess = Session::get('error'))
-                                                <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
-                                                    <strong>{{ $mymess }}</strong>
-                                                </div>
+                                            <div class="alert border-0 alert-danger text-center" role="alert"
+                                                id="dangerAlert">
+                                                <strong>{{ $mymess }}</strong>
+                                            </div>
                                             @endif
                                             <p class="text-muted text-center">Fill Up Details to continue</p>
                                         </div>
@@ -76,22 +78,26 @@
                                         <div class="mt-5 text-center">
                                             <p class="mb-0">Already have an account ?
                                                 <a href="{{ route('userloginpage')}}"
-                                                    class="fw-semibold text-decoration-underline" style="color: #fa7823">Sign
+                                                    class="fw-semibold text-decoration-underline"
+                                                    style="color: #fa7823">Sign
                                                     In</a>
                                             </p>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form autocomplete="off" action="{{ route('verifyotp') }}"  id="loginformotp" method="POST" style="display: none;">
+                                    <form autocomplete="off" action="{{ route('verifyotp') }}" id="loginformotp"
+                                        method="POST" style="display: none;">
                                         @csrf
                                         <div class="text-muted text-center mb-4 mx-lg-3">
                                             <h2 class="text-center fw-bold" style="color: #fa7823">Verify Yourself</h2>
-                                            <p>Please enter the 6 digit code sent to <span class="fw-semibold">example@abc.com</span></p>
+                                            <p>Please enter the 6 digit code sent to <span
+                                                    class="fw-semibold">example@abc.com</span></p>
                                         </div>
                                         <div class="row">
                                             @for ($i = 1; $i <= 6; $i++) <div class="col-2">
-                                                <input type="text" class="form-control form-control-lg bg-light border-light text-center"
+                                                <input type="text"
+                                                    class="form-control form-control-lg bg-light border-light text-center"
                                                     maxlength="1" pattern="[0-9]" name="otptest{{ $i }}"
                                                     title="Please enter a number." required>
                                         </div>

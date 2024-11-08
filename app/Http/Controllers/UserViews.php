@@ -32,7 +32,7 @@ class UserViews extends Controller
     {
         Session::flush();
         Auth::guard('customer')->logout();
-        return redirect('/user/login');
+        return redirect()->route('userloginpage');
     }
     public function home()
     {
