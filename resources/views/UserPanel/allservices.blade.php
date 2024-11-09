@@ -25,7 +25,7 @@
         <div class="row">
             @foreach ($services as $row)
             <div class="col-3 p-3">
-                <a href="/servicedetail" class="serviceCard">
+                <a href="/servicedetail/{{$row->id}}" class="serviceCard">
                     <div class="d-flex flex-column justify-content-center align-items-center ">
                         <div class="card mb-1 rounded-4">
                             <div class="card-body p-1">

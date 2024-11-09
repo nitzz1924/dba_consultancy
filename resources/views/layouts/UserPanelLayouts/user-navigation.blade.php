@@ -52,13 +52,13 @@
                             height="25" />&nbsp;<span class="fs-5">All Services</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('servicedetail') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('servicedetail') ? 'active' : '' }}">
                     <a class="nav-link menu-link" href="{{ route('servicedetail') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <img class="" src="{{ asset('assets/images/campaign (1).png') }}" alt=""
                             height="25" />&nbsp;<span class="fs-5">Service Detail</span>
                     </a>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

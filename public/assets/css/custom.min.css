@@ -1,3 +1,7 @@
+.page-content {
+    /* padding: calc(70px + 1.5rem) calc(1.5rem* 0.5) 60px calc(1.5rem* 0.5); */
+    padding: calc(45px + 1.5rem) calc(0rem* 0.5) 60px calc(0rem* 0.5);
+}
 .wallet-box {
     background: linear-gradient(180deg, #ff9149, #ff6c7f);
     border-radius: 22px;
@@ -88,7 +92,7 @@
     border: 1px solid rgba(128, 128, 128, 0.132);
 }
 .serviceCard .service-name {
-    transition: all 0.3s ease-in-out; 
+    transition: all 0.3s ease-in-out;
     color: black;
 }
 .serviceCard:hover .card {

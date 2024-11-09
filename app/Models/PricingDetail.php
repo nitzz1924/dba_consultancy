@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PricingDetail extends Model
 {
     protected $fillable = [
-        'title',
+        'serviceid',
         'price',
         'disprice',
         'duration',

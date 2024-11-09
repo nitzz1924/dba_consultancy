@@ -180,7 +180,7 @@ class AdminStores extends Controller
         // dd($rq->all());
         try {
             $data = $rq->validate([
-                'title' => 'required',
+                'serviceid' => 'required',
                 'price' => 'required',
                 'disprice' => 'required',
                 'duration' => 'required',
@@ -195,7 +195,7 @@ class AdminStores extends Controller
                 $file->move(public_path('assets/images/Services'), $filename);
             }
             $data = PricingDetail::create([
-                'title' => $rq->title,
+                'serviceid' => $rq->serviceid,
                 'price' => $rq->price,
                 'disprice' => $rq->disprice,
                 'duration' => $rq->duration,
@@ -239,7 +239,7 @@ class AdminStores extends Controller
                 $file->move(public_path('assets/images/Services'), $filename);
             }
             $attributes = PricingDetail::where('id', $rq->pricingid)->update([
-                'title' => $rq->title,
+                'serviceid' => $rq->serviceid,
                 'price' => $rq->price,
                 'disprice' => $rq->disprice,
                 'duration' => $rq->duration,

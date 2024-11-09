@@ -39,8 +39,8 @@ class UserViews extends Controller
     public function home()
     {
         if (Auth::guard('customer')->check()) {
-            $services = Master::where('type','=','Services')->get();
-            return view('UserPanel.home',compact('services'));
+            $services = Master::where('type', '=', 'Services')->get();
+            return view('UserPanel.home', compact('services'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -56,7 +56,10 @@ class UserViews extends Controller
     public function servicedetail($id)
     {
         if (Auth::guard('customer')->check()) {
-            $data = PricingDetail::where('id',$id)->get();
+            $data = PricingDetail::join('masters','pricing_details.serviceid','=','masters.id')
+            ->select('masters.label as servicename','pricing_details.*')
+            ->where('serviceid',$id)->first();
+            // dd($data);
             return view('UserPanel.servicedetail',compact('data'));
         } else {
             return view('auth.UserPanel.login');
@@ -81,8 +84,8 @@ class UserViews extends Controller
     public function allservices()
     {
         if (Auth::guard('customer')->check()) {
-            $services = Master::where('type','=','Services')->get();
-            return view('UserPanel.allservices',compact('services'));
+            $services = Master::where('type', '=', 'Services')->get();
+            return view('UserPanel.allservices', compact('services'));
         } else {
             return view('auth.UserPanel.login');
         }

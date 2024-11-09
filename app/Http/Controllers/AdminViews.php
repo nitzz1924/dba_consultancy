@@ -29,7 +29,10 @@ class AdminViews extends Controller
 
     public function pricingdetails(){
         $masterdata = Master::where('type','=','Documents')->get();
-        $pricingdata = PricingDetail::orderBy('created_at','DESC')->get();
-        return view('AdminPanel.addpricing',compact('masterdata','pricingdata'));
+        $services = Master::where('type','=','Services')->get();
+        $pricingdata = PricingDetail::join('masters','pricing_details.serviceid','=','masters.id')
+        ->select('masters.label as servicename','pricing_details.*')->get();
+        // dd( $pricingdata);
+        return view('AdminPanel.addpricing',compact('masterdata','pricingdata','services'));
     }
 }

@@ -6,28 +6,30 @@
 <div class="container-fluid p-4 desktop-view">
     {{-- Header bar --}}
     <div class="row">
-        <div class="col-6">
+        <div class="col-8">
             <div class="d-flex justify-content-start align-items-center">
                 <a href="/userprofile">
                     <div class="p-2 rounded-pill bg-danger">
                         <i class='bx bx-user fs-5 text-white'></i>
                     </div>
                 </a>
-                <div class="ms-1 fs-4">
+                <div class="ms-1 fs-5">
                     @if (Auth::guard('customer')->user())
-                     Welcome ,{{ Auth::guard('customer')->user()->username }}
+                     Welcome, {{ Auth::guard('customer')->user()->username }}
                     @else
                         Guest User
                     @endif
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="d-flex justify-content-end">
-                <div class="p-2">
-                    <i class='bx bx-bell fs-2 text-danger'></i>
+        <div class="col-4">
+            <a href="#">
+                <div class="d-flex justify-content-end">
+                    <div class="p-2">
+                        <i class='bx bx-bell fs-2 text-danger'></i>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 

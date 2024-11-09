@@ -36,9 +36,13 @@
                             @csrf
                             <div class="mb-3 row">
                                 <div class="col-lg-2">
-                                    <label for="labelid">Title</label>
-                                    <input class="form-control" placeholder="Enter Title" name="title" type="text"
-                                        id="labelid">
+                                    <label for="labelid">Select Service</label>
+                                    <select name="serviceid" class="form-select" id="subcategory" required>
+                                        <option value="">--select service--</option>
+                                        @foreach ($services as $row)
+                                        <option value="{{ $row->id }}">{{ $row->label }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="labelid">Price</label>
@@ -52,30 +56,32 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="duration">Duration</label>
-                                    <input class="form-control" placeholder="Enter Duration" name="duration"
-                                        type="text" id="valueid" required>
+                                    <input class="form-control" placeholder="Enter Duration" name="duration" type="text"
+                                        id="valueid" required>
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="example-email-input" class="form-label">Upload Cover Image</label>
-                                    <input class="form-control" placeholder="postal code" name="coverimage"
-                                        type="file" value="" id="example-email-input">
+                                    <input class="form-control" placeholder="postal code" name="coverimage" type="file"
+                                        value="" id="example-email-input">
                                 </div>
                                 <div class="col-lg-2">
                                     <label class="form-label">Documets to be Uploaded</label>
                                     <select name="documents[]" class="select2 form-control select2-multiple mb-3"
                                         multiple="multiple" data-placeholder="Choose Documents.......">
                                         @foreach ($masterdata as $value)
-                                            <option value="{{ $value->label }}">{{ $value->label }}</option>
+                                        <option value="{{ $value->label }}">{{ $value->label }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-lg-6 mt-3">
                                     <label for="example-email-input" class="form-label">Details</label>
-                                    <textarea rows="4" name="details" class="form-control resize-none" placeholder="Your Details..."></textarea>
+                                    <textarea rows="4" name="details" class="form-control resize-none"
+                                        placeholder="Your Details..."></textarea>
                                 </div>
                                 <div class="col-lg-6 mt-3">
                                     <label for="example-email-input" class="form-label">Note & Requirement</label>
-                                    <textarea rows="4" name="notereq" class="form-control resize-none" placeholder="Your Notes..."></textarea>
+                                    <textarea rows="4" name="notereq" class="form-control resize-none"
+                                        placeholder="Your Notes..."></textarea>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-end mt-3">
@@ -109,38 +115,38 @@
                             </thead>
                             <tbody id="table-body">
                                 @foreach ($pricingdata as $index => $row)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $row->title }}</td>
-                                        <td><img src="{{ asset('assets/images/Services/' . $row->coverimage) }}"
-                                                alt="Icon Image" width="60"></td>
-                                        <td>{{ $row->price }}</td>
-                                        <td>{{ $row->disprice }}</td>
-                                        <td>{{ $row->duration }}</td>
-                                        <td>{{ implode(', ', json_decode($row->documents)) }}</td>
-                                        <td><button class="bg-transparent border-0" role="button"
-                                                data-bs-toggle="popover" data-bs-trigger="focus" title=""
-                                                data-bs-content="{{ trim($row->details) }}">{{ Str::limit(trim($row->details), 10, '...') }}</button>
-                                        </td>
-                                        <td>
-                                            <ul class="list-inline mb-0">
-                                                <li class="list-inline-item">
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#myModal"
-                                                        data-pricing="{{ json_encode($row) }}"
-                                                        class="px-2 text-primary fs-5 editbtnmodal"><i
-                                                            class="ri-edit-2-fill" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Edit"></i></a>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <button type="button" class="btn text-danger fs-5"
-                                                        onclick="confirmDelete('{{ $row->id }}','{{ $row->title }}')">
-                                                        <i class="ri-delete-bin-5-fill"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $row->servicename }}</td>
+                                    <td><img src="{{ asset('assets/images/Services/' . $row->coverimage) }}"
+                                            alt="Icon Image" width="60"></td>
+                                    <td>{{ $row->price }}</td>
+                                    <td>{{ $row->disprice }}</td>
+                                    <td>{{ $row->duration }}</td>
+                                    <td>{{ implode(', ', json_decode($row->documents)) }}</td>
+                                    <td><button class="bg-transparent border-0" role="button" data-bs-toggle="popover"
+                                            data-bs-trigger="focus" title=""
+                                            data-bs-content="{{ trim($row->details) }}">{{
+                                            Str::limit(trim($row->details), 10, '...') }}</button>
+                                    </td>
+                                    <td>
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#myModal"
+                                                    data-pricing="{{ json_encode($row) }}"
+                                                    class="px-2 text-primary fs-5 editbtnmodal"><i
+                                                        class="ri-edit-2-fill" data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" data-bs-title="Edit"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <button type="button" class="btn text-danger fs-5"
+                                                    onclick="confirmDelete('{{ $row->id }}','{{ $row->servicename }}')">
+                                                    <i class="ri-delete-bin-5-fill"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -148,8 +154,7 @@
                 </div>
             </div>
         </div>
-        <div id="myModal" class="modal fadeInRight" tabindex="-1" aria-labelledby="myModalLabel"
-            aria-hidden="true">
+        <div id="myModal" class="modal fadeInRight" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content rounded-2">
                     <div class="modal-header">
@@ -220,7 +225,7 @@
     <script>
         //Edit Functionality
         var data = @json($masterdata);
-        console.log(data);
+        var services = @json($services);
         $('#table-body').on('click', '.editbtnmodal', function() {
             const pricingdata = $(this).data('pricing');
             console.log(pricingdata);
@@ -234,16 +239,21 @@
             const documentsOptions = data.map(value => `
                     <option value="${value.label}" ${selectedDocuments.includes(value.label) ? 'selected' : ''}>${value.label}</option>
                 `).join('');
-            console.log(documentsOptions);
+
+            //Services Dropdown
+            const servicesdrop = services.map(value => `
+                    <option value="${value.id}" ${value.label == pricingdata.servicename ? 'selected' : ''}>${value.label}</option>
+                `).join('');
 
 
             const modalbody = `
                     <div class="mb-3 row">
                     <div class="col-lg-6">
                             <div class="">
-                                <label for="labelid">Title</label>
-                                <input class="form-control" placeholder="Enter Title" value="${pricingdata.title}" name="title" type="text"
-                                    id="labelid">
+                                <label for="labelid">Select Service</label>
+                                    <select name="serviceid" class="form-select" id="subcategory" required>
+                                         ${servicesdrop}
+                                    </select>
                             </div>
                     <div class="mt-2 mb-2">
                             <label for="labelid">Price</label>
