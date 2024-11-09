@@ -1,11 +1,13 @@
 <?php
-#{{-- #---------------------------------------------------🙏🔱देवा श्री गणेशा 🔱🙏---------------------------” --}}
+#{{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏-----------------------------}}
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Contact;
 use App\Models\GroupType;
 use App\Models\Message;
+use App\Models\Master;
+use App\Models\PricingDetail;
 use App\Models\RegisterUser;
 use App\Models\Template;
 use Illuminate\Http\Request;
@@ -32,12 +34,15 @@ class UserViews extends Controller
     {
         Session::flush();
         Auth::guard('customer')->logout();
-        return redirect('/user/login');
+        return redirect()->route('userloginpage');
     }
     public function home()
     {
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.home');
+            $services = Master::where('type', '=', 'Services')->get();
+            $consulting = Master::join('pricing_details', 'pricing_details.serviceid', '=', 'masters.id')
+                ->select('pricing_details.price as price', 'masters.*')->where('type', '=', 'Consulting')->get();
+            return view('UserPanel.home', compact('services', 'consulting'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -50,10 +55,14 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
-    public function servicedetail()
+    public function servicedetail($id)
     {
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.servicedetail');
+            $data = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
+                ->select('masters.label as servicename', 'pricing_details.*')
+                ->where('serviceid', $id)->first();
+            // dd($data);
+            return view('UserPanel.servicedetail', compact('data'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -77,7 +86,8 @@ class UserViews extends Controller
     public function allservices()
     {
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.allservices');
+            $services = Master::where('type', '=', 'Services')->get();
+            return view('UserPanel.allservices', compact('services'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -90,85 +100,16 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
-
-    public function automationpage()
-    {
-        return view('UserPanel.automations');
-    }
-    public function addnewautomation()
-    {
-        return view('UserPanel.addnewautomation');
-    }
-    public function analyticspage()
+    public function consultingdetails($id)
     {
         if (Auth::guard('customer')->check()) {
-            $sentmsgcount = Message::where('type', '=', 'Sent')->get()->count();
-            $recmsgcount = Message::where('type', '=', 'Recieved')->get()->count();
-            $contactscount = Contact::get()->count();
-            $tempcount = Template::get()->count();
-            $campaignscnt = Campaign::get()->count();
-            $regisusers = RegisterUser::get()->count();
-            $messages = Message::where('type', '=', 'Recieved')->whereDate('created_at', Carbon::today())->get();
-            // dd($messages);
-            return view('UserPanel.analytics', compact('sentmsgcount', 'recmsgcount', 'messages', 'contactscount', 'tempcount', 'campaignscnt', 'regisusers'));
+            $data = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
+                ->select('masters.label as servicename', 'pricing_details.*')
+                ->where('serviceid', $id)->first();
+            // dd($data);
+            return view('UserPanel.consultingdetail', compact('data'));
         } else {
             return view('auth.UserPanel.login');
         }
-    }
-    public function wahapage()
-    {
-        return view('UserPanel.whatsappapi');
-    }
-    public function templatespage()
-    {
-        if (Auth::guard('customer')->check()) {
-            $alltemplates = $this->getTemplateList();
-            //dd($alltemplates);
-            return view('UserPanel.templates', compact('alltemplates'));
-        } else {
-            return view('auth.UserPanel.login');
-        }
-    }
-    public function groupspage()
-    {
-        $groupsdata = GroupType::orderBy('created_at', 'DESC')->get();
-        return view('UserPanel.addgroups', compact('groupsdata'));
-    }
-    public function contactspage()
-    {
-        if (Auth::guard('customer')->check()) {
-            $groupsdata = GroupType::where('type', '=', 'Group')->orderBy('created_at', 'DESC')->get();
-            $contactsdata = Contact::orderBy('created_at', 'DESC')->get();
-            return view('UserPanel.contacts', compact('groupsdata', 'contactsdata'));
-        } else {
-            return view('auth.UserPanel.login');
-        }
-    }
-    function getTemplateList()
-    {
-        $loggedinuser = Auth::guard('customer')->user();
-        $accessToken = $loggedinuser->apptoken;
-        $whatsbusinessid = $loggedinuser->Wabaid;
-        $apiBaseUrl = 'https://graph.facebook.com/';
-
-        $client = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $accessToken,
-        ]);
-
-        $response = $client->get($apiBaseUrl . '/v20.0/' . $whatsbusinessid . '/message_templates');
-        if ($response->successful()) {
-            $templates = $response->json()['data'];
-            return $templates;
-            //dd($templates); // Replace with your desired handling of the template list
-        } else {
-            dd('Error fetching template list: ' . $response->body());
-        }
-    }
-    public function showsentmessage($phone)
-    {
-        $finalphone = str_replace('+', '', $phone);
-        $sentMessage = Message::where('senderid', $finalphone)->orWhere('recievedid', $phone)->get();
-        //dd($sentMessage);
-        return response()->json($sentMessage);
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.UserPanelLayouts.usermain')
 @push('title')
-<title>Service Detail | DBA Consultancy</title>
+<title>Consulting Detail | DBA Consultancy</title>
 @endpush
 @section('content')
 <div class="container-fluid desktop-view">

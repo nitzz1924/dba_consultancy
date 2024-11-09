@@ -32,13 +32,23 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('insertpricingform') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3 row">
                                 <div class="col-lg-2">
-                                    <label for="labelid">Title</label>
-                                    <input class="form-control" placeholder="Enter Title" name="title" type="text"
-                                        id="labelid" required>
+                                    <label for="labelid">Select Service Type</label>
+                                    <select name="servicetype" class="form-select" id="servicetypeid" required>
+                                        <option value="" selected>--select--</option>
+                                        <option value="Services">Services</option>
+                                        <option value="Consulting">Consulting</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="labelid">Select Service</label>
+                                    <select name="serviceid" class="form-select" id="servicemainid" required>
+                                        <option value="">--select service--</option>
+                                        {{-- Appends Here --}}
+                                    </select>
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="labelid">Price</label>
@@ -47,33 +57,37 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="disprice">Discount Price</label>
-                                    <input class="form-control" placeholder="Enter Discount Price" name="disprice" type="text"
-                                        id="labelid" required>
+                                    <input class="form-control" placeholder="Enter Discount Price" name="disprice"
+                                        type="text" id="labelid" required>
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="duration">Duration</label>
-                                    <input class="form-control" placeholder="Enter Duration" name="duration" type="text"
-                                        id="valueid" required>
+                                    <input class="form-control" placeholder="Enter Duration" name="duration"
+                                        type="text" id="valueid" required>
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="example-email-input" class="form-label">Upload Cover Image</label>
-                                    <input class="form-control" placeholder="postal code" name="coverimage" type="file"
-                                    value="" id="example-email-input">
+                                    <input class="form-control" placeholder="postal code" name="coverimage"
+                                        type="file" value="" id="example-email-input">
                                 </div>
-                                <div class="col-lg-2">
-                                    <label for="example-email-input" class="form-label">Select Documents to Upload</label>
-                                    <input class="form-control" placeholder="postal code" name="documents" type="file"
-                                    value="" id="example-email-input" multiple>
+                                <div class="col-lg-2 mt-3">
+                                    <label class="form-label">Documets to be Uploaded</label>
+                                    <select name="documents[]" class="select2 form-control select2-multiple mb-3"
+                                        multiple="multiple" data-placeholder="Choose Documents.......">
+                                        @foreach ($masterdata as $value)
+                                            <option value="{{ $value->label }}">{{ $value->label }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-lg-6 mt-3">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 mt-3">
                                     <label for="example-email-input" class="form-label">Details</label>
-                                        <textarea rows="4" name="details" class="form-control resize-none"
-                                            placeholder="Your Details..."></textarea>
+                                    <textarea rows="4" name="details" class="form-control resize-none" placeholder="Your Details..."></textarea>
                                 </div>
-                                <div class="col-lg-6 mt-3">
+                                <div class="col-lg-12 mt-3">
                                     <label for="example-email-input" class="form-label">Note & Requirement</label>
-                                        <textarea rows="4" name="notereq" class="form-control resize-none"
-                                            placeholder="Your Notes..."></textarea>
+                                    <textarea rows="4" name="notereq" class="form-control resize-none" placeholder="Your Notes..."></textarea>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-end mt-3">
@@ -90,57 +104,74 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body table-responsive">
-                        <table id="example" class="table table-bordered dt-responsive nowrap" style="width: 100%;">
+                        <table id="example" class="table table-bordered border-light hover dt-responsive nowrap"
+                            style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>S.No</th>
-                                    <th>Label</th>
-                                    <th>Value</th>
-                                    <th>Type</th>
+                                    <th>Service Type</th>
+                                    <th>Service Name</th>
+                                    <th>Cover Image</th>
+                                    <th>Price</th>
+                                    <th>Discount Price</th>
+                                    <th>Duration</th>
+                                    <th>Documents</th>
+                                    <th>Details</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
-                                {{-- @foreach ($masterdata as $index => $row)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $row->label }}</td>
-                                    <td>{{ $row->value }}</td>
-                                    <td>{{ $row->type }}</td>
-                                    <td>
-                                        <ul class="list-inline mb-0">
-                                            <li class="list-inline-item">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#myModal"
-                                                    data-car-list="{{ json_encode($row) }}"
-                                                    class="px-2 text-primary fs-5 editbtnmodal"><i
-                                                        class="ri-edit-2-fill" data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" data-bs-title="Edit"></i></a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <button type="button" class="btn text-danger fs-5"
-                                                    onclick="confirmDelete('{{ $row->id }}')">
-                                                    <i class="ri-delete-bin-5-fill"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                @endforeach --}}
+                                @foreach ($pricingdata as $index => $row)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $row->servicetype }}</td>
+                                        <td>{{ $row->servicename }}</td>
+                                        <td><img src="{{ asset('assets/images/Services/' . $row->coverimage) }}"
+                                                alt="Icon Image" width="60"></td>
+                                        <td>{{ $row->price }}</td>
+                                        <td>{{ $row->disprice }}</td>
+                                        <td>{{ $row->duration }}</td>
+                                        <td>{{ implode(', ', json_decode($row->documents)) }}</td>
+                                        <td><button class="bg-transparent border-0" role="button"
+                                                data-bs-toggle="popover" data-bs-trigger="focus" title=""
+                                                data-bs-content="{{ trim($row->details) }}">{{ Str::limit(trim($row->details), 10, '...') }}</button>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline mb-0">
+                                                <li class="list-inline-item">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#myModal"
+                                                        data-pricing="{{ json_encode($row) }}"
+                                                        class="px-2 text-primary fs-5 editbtnmodal"><i
+                                                            class="ri-edit-2-fill" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Edit"></i></a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <button type="button" class="btn text-danger fs-5"
+                                                        onclick="confirmDelete('{{ $row->id }}','{{ $row->servicename }}')">
+                                                        <i class="ri-delete-bin-5-fill"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="myModal" class="modal fadeInRight" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div id="myModal" class="modal fadeInRight" tabindex="-1" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content rounded-2">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel fs-5 fw-bold text-black">Edit Master</h5>
+                        <h5 class="modal-title" id="myModalLabel fs-5 fw-bold text-black">Edit Pricing Details</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
-                    <form action="#" method="POST">
+                    <form action="{{ route('updatepricingdetails') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body" id="modalbodyedit">
 
@@ -156,10 +187,10 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        function confirmDelete(id) {
+        function confirmDelete(id, title) {
             Swal.fire({
                     title: "Are you sure?",
-                    html: "You want to delete?",
+                    html: "You want to delete <strong style='color: red;'>" + title + "'s Pricing</strong>?",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#222222",
@@ -169,12 +200,53 @@
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "/deletemaster/" + id;
+                        window.location.href = "/deletepricing/" + id;
                     }
                 });
         }
     </script>
     <script>
+        //This function is for blade file
+        $(document).on('change', '#servicetypeid', function() {
+            var selectedtype = $(this).val();
+            console.log(selectedtype);
+            $.ajax({
+                url: "/filtertype/" + selectedtype,
+                type: "GET",
+                success: function(data) {
+                    console.log(data);
+                    var dropdown1 = $('#servicemainid');
+                    dropdown1.empty();
+                    dropdown1.append($('<option selected>Choose...</option>'));
+                    data.forEach(function(item) {
+                        dropdown1.append($('<option value="' + item.id + '">' + item.label +
+                            '</option>'));
+                    });
+                }
+            });
+        });
+
+        //This function is for Modal
+        $(document).on('change', '#servicetypeidnew', function() {
+            var selectedtype = $(this).val();
+            console.log(selectedtype);
+            $.ajax({
+                url: "/filtertype/" + selectedtype,
+                type: "GET",
+                success: function(data) {
+                    console.log(data);
+                    var dropdown1 = $('#servicemainidnew');
+                    dropdown1.empty();
+                    dropdown1.append($('<option selected>Choose...</option>'));
+                    data.forEach(function(item) {
+                        dropdown1.append($('<option value="' + item.id + '">' + item.label +
+                            '</option>'));
+                    });
+                }
+            });
+        });
+
+
         // DataTable Initialization
         $(document).ready(function() {
             $('#example').DataTable({
@@ -187,24 +259,105 @@
             });
         });
 
+        //Showing Image Preview after selecting....
+        function readURL(input) {
+            console.log(input);
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagemain').attr('src', e.target.result);
+                };
 
-        // Populate Edit Modal with Data
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <script>
+        //Edit Functionality
+        var data = @json($masterdata);
+        var services = @json($services);
         $('#table-body').on('click', '.editbtnmodal', function() {
-            const carlist = $(this).data('car-list');
-            console.log(carlist);
-            $('#modalbodyedit').html(`
+            const pricingdata = $(this).data('pricing');
+            console.log(pricingdata);
+            const imageSrc = pricingdata.coverimage ? 'assets/images/Services/' + pricingdata.coverimage : '';
+            console.log(imageSrc);
+            const selectedDocuments = JSON.parse(pricingdata.documents || "[]");
+            console.log("Documents : " + selectedDocuments);
+            $('#modalbodyedit').empty();
+
+            // Create documents options with selected values
+            const documentsOptions = data.map(value => `
+                    <option value="${value.label}" ${selectedDocuments.includes(value.label) ? 'selected' : ''}>${value.label}</option>
+                `).join('');
+
+            // //Services Dropdown
+            // const servicesdrop = services.map(value => `
+        //         <option value="${value.id}" ${value.label == pricingdata.servicename ? 'selected' : ''}>${value.label}</option>
+        //     `).join('');
+
+
+            const modalbody = `
                     <div class="mb-3 row">
-                        <div class="col-lg-6">
-                            <label>Label</label>
-                            <input class="form-control" name="label" type="text" value="${carlist.label}" required>
-                            <input type="hidden" name="masterid" value="${carlist.id}">
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Value</label>
-                            <input class="form-control" name="value" type="text" value="${carlist.value}" required>
+                    <div class="col-lg-6">
+                        <div class="">
+                                    <label for="labelid">Select Service Type</label>
+                                    <select name="servicetype" class="form-select" id="servicetypeidnew" required>
+                                        <option value="Services" ${pricingdata.servicetype == 'Services' ?'selected' : '' }>Services</option>
+                                        <option value="Consulting" ${pricingdata.servicetype == 'Consulting' ?'selected' : '' }>Consulting</option>
+                                    </select>
+                                </div>
+                            <div class="mt-3">
+                                <label for="labelid">Select Service</label>
+                                    <select name="serviceid" class="form-select" id="servicemainidnew" required>
+                                          <option value="">--select service--</option>
+                                         <!-- Options will be populated by AJAX call -->
+                                    </select>
+                            </div>
+                    <div class="mt-2 mb-2">
+                            <label for="labelid">Price</label>
+                            <input class="form-control" value="${pricingdata.price}" placeholder="Enter Price" name="price" type="text" id="labelid">
+                             <input type="hidden" name="pricingid" value="${pricingdata.id}" id="">
+                    </div>
+                    <div class="mt-2 mb-2">
+                         <label for="disprice">Discount Price</label>
+                        <input class="form-control" value="${pricingdata.disprice}" placeholder="Enter Discount Price" name="disprice" type="text" id="labelid">
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <label for="duration">Duration</label>
+                        <input class="form-control" value="${pricingdata.duration}" placeholder="Enter Duration" name="duration" type="text" id="valueid">
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <label class="form-label">Documents to be Uploaded</label>
+                        <select name="documents[]" id="documentselect" class="select2 form-control select2-multiple mb-3" multiple="multiple" data-placeholder="Choose Documents...">
+                            ${documentsOptions}
+                        </select>
+                    </div>
+                    <div class="mt-2 mb-2">
+                        <label for="iconimage">Upload Cover Image</label>
+                        <input class="form-control" onchange="readURL(this);" placeholder="enter value" name="coverimage" type="file" value="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                        <div class="img-pre">
+                            <img id="imagemain" class="img-fluid"  src="${imageSrc}" alt="">
                         </div>
                     </div>
-                `);
+            </div>
+            <div class="row">
+                <div class="col-lg-12 mt-2">
+                <label for="example-email-input" class="form-label">Details</label>
+                    <textarea rows="4" name="details" class="form-control resize-none" placeholder="Your Details...">${pricingdata.details}</textarea>
+                </div>
+                <div class="col-lg-12 mt-2">
+                    <label for="example-email-input" class="form-label">Note & Requirement</label>
+                    <textarea rows="4" name="notereq" class="form-control resize-none" placeholder="Your Notes...">${pricingdata.notereq}</textarea>
+                </div>
+            </div>
+        `;
+            $('#modalbodyedit').append(modalbody);
+            setTimeout(function() {
+                $('#documentselect').select2();
+            }, 500);
         });
     </script>
 </x-app-layout>

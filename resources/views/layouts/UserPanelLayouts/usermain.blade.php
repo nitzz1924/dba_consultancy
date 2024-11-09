@@ -90,7 +90,7 @@
                             <span class="logo-sm">
                                 <img src="{{ asset('assets/images/dbalogo.png') }}" alt="" height="70" />
                             </span>
-                            
+
                         </a>
                     </div>
                     <div class="d-flex align-items-center justify-content-between">
@@ -102,7 +102,11 @@
                                         src="{{ asset('assets/images/defaultuser.png') }}" alt="Header Avatar" />
                                     <span class="text-start ms-xl-2">
                                         <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
-                                            Guest User
+                                            @if (Auth::guard('customer')->user())
+                                                {{ Auth::guard('customer')->user()->username }}
+                                            @else
+                                                Guest User
+                                            @endif
                                         </span>
                                     </span>
                                 </span>
@@ -112,7 +116,7 @@
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                                     <span class="align-middle">Profile</span></a>
                                 <hr>
-                                <form method="GET" action="{{ route('logoutuserpanel') }}" x-data>
+                                <form method="GET" action="{{ route('logoutuserpanel') }}">
                                     @csrf
                                     <button type="submit" class="dropdown-item" href="auth-lockscreen-basic.html"><i
                                             class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
