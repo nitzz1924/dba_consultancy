@@ -59,6 +59,13 @@
                             height="25" />&nbsp;<span class="fs-5">Service Detail</span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->routeIs('refer') ? 'active' : '' }}">
+                    <a class="nav-link menu-link" href="{{ route('refer') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarDashboards">
+                        <img class="" src="{{ asset('assets/images/campaign (1).png') }}" alt=""
+                            height="25" />&nbsp;<span class="fs-5">Refer A Friend</span>
+                    </a>
+                </li>
 
             </ul>
         </div>

@@ -79,6 +79,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('userprofile', 'userprofile')->name('userprofile');
     Route::get('editprofile', 'editprofile')->name('editprofile');
     Route::get('allservices', 'allservices')->name('allservices');
+    Route::get('refer', 'refer')->name('refer');
 
 });
 

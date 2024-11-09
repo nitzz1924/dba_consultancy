@@ -82,6 +82,14 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
+    public function refer()
+    {
+        if (Auth::guard('customer')->check()) {
+            return view('UserPanel.refer');
+        } else {
+            return view('auth.UserPanel.login');
+        }
+    }
 
     public function automationpage()
     {
