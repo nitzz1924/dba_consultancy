@@ -15,9 +15,9 @@
                 </a>
                 <div class="ms-1 fs-5">
                     @if (Auth::guard('customer')->user())
-                     Welcome, {{ Auth::guard('customer')->user()->username }}
+                    Welcome, {{ Auth::guard('customer')->user()->username }}
                     @else
-                        Guest User
+                    Guest User
                     @endif
                 </div>
             </div>
@@ -94,23 +94,24 @@
                 Consulting
             </div>
         </div>
-
+        @foreach ($consulting as $row)
         <div class="legal-box d-flex align-items-center justify-content-around">
             <div class="me-2">
-                <img src="{{ asset('assets/images/Layer 1.png') }}" alt="legal-icon">
+                <img src="{{ asset('assets/images/Services/'.$row->iconimage) }}" alt="legal-icon">
             </div>
             <div class="fs-4 text-white">
-                Legal Consulting
+                {{$row->label}}
                 <div class="legal-amount">
-                    <i class='bx bx-rupee'></i>500
+                    <i class='bx bx-rupee'></i>{{$row->price}}
                 </div>
             </div>
             <div class="p-3">
-                <a href="/consultancydetail" class="btn btn-outline-light border-0 fs-1 p-1">
+                <a href="/consultingdetails/{{$row->id}}" class="btn btn-outline-light border-0 fs-1 p-1">
                     <i class='bx bxs-chevron-right bx-fade-right'></i>
                 </a>
             </div>
         </div>
+        @endforeach
     </div>
 
     {{-- Refer --}}

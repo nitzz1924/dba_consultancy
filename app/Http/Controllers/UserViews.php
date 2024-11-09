@@ -40,7 +40,9 @@ class UserViews extends Controller
     {
         if (Auth::guard('customer')->check()) {
             $services = Master::where('type', '=', 'Services')->get();
-            return view('UserPanel.home', compact('services'));
+            $consulting = Master::join('pricing_details', 'pricing_details.serviceid', '=', 'masters.id')
+                ->select('pricing_details.price as price', 'masters.*')->where('type', '=', 'Consulting')->get();
+            return view('UserPanel.home', compact('services', 'consulting'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -56,11 +58,11 @@ class UserViews extends Controller
     public function servicedetail($id)
     {
         if (Auth::guard('customer')->check()) {
-            $data = PricingDetail::join('masters','pricing_details.serviceid','=','masters.id')
-            ->select('masters.label as servicename','pricing_details.*')
-            ->where('serviceid',$id)->first();
+            $data = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
+                ->select('masters.label as servicename', 'pricing_details.*')
+                ->where('serviceid', $id)->first();
             // dd($data);
-            return view('UserPanel.servicedetail',compact('data'));
+            return view('UserPanel.servicedetail', compact('data'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -94,6 +96,18 @@ class UserViews extends Controller
     {
         if (Auth::guard('customer')->check()) {
             return view('UserPanel.refer');
+        } else {
+            return view('auth.UserPanel.login');
+        }
+    }
+    public function consultingdetails($id)
+    {
+        if (Auth::guard('customer')->check()) {
+            $data = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
+                ->select('masters.label as servicename', 'pricing_details.*')
+                ->where('serviceid', $id)->first();
+            // dd($data);
+            return view('UserPanel.consultingdetail', compact('data'));
         } else {
             return view('auth.UserPanel.login');
         }

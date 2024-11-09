@@ -195,6 +195,7 @@ class AdminStores extends Controller
                 $file->move(public_path('assets/images/Services'), $filename);
             }
             $data = PricingDetail::create([
+                'servicetype' => $rq->servicetype,
                 'serviceid' => $rq->serviceid,
                 'price' => $rq->price,
                 'disprice' => $rq->disprice,
@@ -239,6 +240,7 @@ class AdminStores extends Controller
                 $file->move(public_path('assets/images/Services'), $filename);
             }
             $attributes = PricingDetail::where('id', $rq->pricingid)->update([
+                'servicetype' => $rq->servicetype,
                 'serviceid' => $rq->serviceid,
                 'price' => $rq->price,
                 'disprice' => $rq->disprice,
@@ -253,6 +255,20 @@ class AdminStores extends Controller
             return back()->with('error', $e->getMessage());
             //return back()->with('error', 'Not Updated..Try Again.....');
         }
+    }
+
+    public function filtertype($selectedtype)
+    {
+        $masterdata = Master::where('type', $selectedtype)->get();
+        // dd($statedata);
+        return response()->json($masterdata);
+    }
+
+    public function deleteuser($id)
+    {
+        $data = RegisterUser::find($id);
+        $data->delete();
+        return back()->with('success', "Deleted....!!!");
     }
 
 }

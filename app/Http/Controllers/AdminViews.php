@@ -1,10 +1,11 @@
 <?php
-#{{--#---------------------------------------------------🙏🔱देवा श्री गणेशा 🔱🙏---------------------------”--}}
+#{{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏-----------------------------}}
 namespace App\Http\Controllers;
 
 use App\Models\FormAttribute;
 use App\Models\Master;
 use App\Models\PricingDetail;
+use App\Models\RegisterUser;
 use Illuminate\Http\Request;
 
 class AdminViews extends Controller
@@ -34,5 +35,10 @@ class AdminViews extends Controller
         ->select('masters.label as servicename','pricing_details.*')->get();
         // dd( $pricingdata);
         return view('AdminPanel.addpricing',compact('masterdata','pricingdata','services'));
+    }
+
+    public function allcustomers(){
+        $customers =  RegisterUser::orderBy('created_at','Desc')->get();
+        return view('AdminPanel.allcustomers',compact('customers'));
     }
 }

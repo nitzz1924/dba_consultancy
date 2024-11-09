@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 06:54 AM
+-- Generation Time: Nov 09, 2024 at 10:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -158,7 +158,9 @@ INSERT INTO `masters` (`id`, `label`, `value`, `type`, `iconimage`, `created_at`
 (220, 'Bank Passbook', 'Bank Passbook', 'Documents', NULL, '2024-11-07 05:31:18', '2024-11-07 05:31:18'),
 (221, 'PAN Card', 'PAN Card', 'Documents', NULL, '2024-11-07 05:31:26', '2024-11-07 05:31:26'),
 (222, 'Business Pan Card', 'Business Pan Card', 'Services', '1731067538_pcard.jpg', '2024-11-08 12:05:38', '2024-11-08 12:05:38'),
-(223, 'Company Registration', 'Company Registration', 'Services', '1731067597_registration.jpg', '2024-11-08 12:06:37', '2024-11-08 12:06:37');
+(223, 'Company Registration', 'Company Registration', 'Services', '1731067597_registration.jpg', '2024-11-08 12:06:37', '2024-11-08 12:06:37'),
+(224, 'Consulting', 'Consulting', 'Master', NULL, '2024-11-09 05:56:51', '2024-11-09 08:06:14'),
+(225, 'Legal Consulting', 'Legal Consulting', 'Consulting', '1731131847_Layer 1.png', '2024-11-09 05:57:27', '2024-11-09 06:48:09');
 
 -- --------------------------------------------------------
 
@@ -229,6 +231,7 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `pricing_details` (
   `id` int(11) NOT NULL,
+  `servicetype` varchar(255) DEFAULT NULL,
   `serviceid` varchar(255) DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
   `disprice` varchar(255) DEFAULT NULL,
@@ -245,11 +248,12 @@ CREATE TABLE `pricing_details` (
 -- Dumping data for table `pricing_details`
 --
 
-INSERT INTO `pricing_details` (`id`, `serviceid`, `price`, `disprice`, `duration`, `coverimage`, `documents`, `details`, `notereq`, `created_at`, `updated_at`) VALUES
-(6, '214', '7955', '8', '9', 'service-bg.png', '[\"GST\",\"Aadhar Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 04:46:18', '2024-11-09 05:43:39'),
-(9, '222', '60,000', '7500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2024-11-09 05:44:01'),
-(10, '215', '60,0000', '7500', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-11-09 05:44:03'),
-(11, '223', '50000', '988', '55', 'service-bg.png', '[\"Aadhar Card\",\"Bank Passbook\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:53', '2024-11-09 05:44:36');
+INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `disprice`, `duration`, `coverimage`, `documents`, `details`, `notereq`, `created_at`, `updated_at`) VALUES
+(6, 'Services', '214', '7955', '8', '9', 'service-bg.png', '[\"GST\",\"Aadhar Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 04:46:18', '2024-11-09 06:37:15'),
+(9, 'Services', '222', '60,000', '7500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2024-11-09 06:37:17'),
+(10, 'Services', '215', '60,0000', '7500', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-11-09 06:37:19'),
+(11, 'Services', '223', '50000', '988', '55', 'service-bg.png', '[\"Aadhar Card\",\"Bank Passbook\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:53', '2024-11-09 06:37:20'),
+(13, 'Consulting', '225', '75000', '7500', '45', '1731134472_service-bg.png', '[\"Aadhar Card\"]', 'Consulting Services', 'Consulting Services', '2024-11-09 06:41:12', '2024-11-09 07:16:30');
 
 -- --------------------------------------------------------
 
@@ -273,7 +277,6 @@ CREATE TABLE `register_users` (
 --
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `username`) VALUES
-(43, '5458965848', 'testing@gmail.com', '1', '2024-11-07 12:55:34', '2024-11-07 12:55:49', '545174', 'testing'),
 (44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-09 04:21:40', '704551', 'Anshul'),
 (45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-08 12:34:00', '748279', 'Nitzz');
 
@@ -297,7 +300,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('J4nIjzUTnTJfY5rzN6pblm4Wqev1IKDdKqgM3Ci9', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSzhSeFk4eEVWUWhLWFRhbEdDNnoyZmpoOEhkRHAyQmliczF0RDdFVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0NDtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjt9', 1731131259);
+('J4nIjzUTnTJfY5rzN6pblm4Wqev1IKDdKqgM3Ci9', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSzhSeFk4eEVWUWhLWFRhbEdDNnoyZmpoOEhkRHAyQmliczF0RDdFVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hbGxjdXN0b21lcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ0O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1731139604);
 
 -- --------------------------------------------------------
 
@@ -449,7 +452,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `masters`
 --
 ALTER TABLE `masters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -467,7 +470,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `pricing_details`
 --
 ALTER TABLE `pricing_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `register_users`

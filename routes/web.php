@@ -36,6 +36,8 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('submaster', 'submaster')->name('submaster');
     Route::get('createform', 'createform')->name('createform');
     Route::get('pricingdetails', 'pricingdetails')->name('pricingdetails');
+    Route::get('allcustomers', 'allcustomers')->name('allcustomers');
+
 });
 
 Route::controller(AdminStores::class)->group(function () {
@@ -54,6 +56,11 @@ Route::controller(AdminStores::class)->group(function () {
     Route::post('insertpricingform', 'insertpricingform')->name('insertpricingform');
     Route::get('/deletepricing/{id}', 'deletepricing')->name('deletepricing');
     Route::post('updatepricingdetails', 'updatepricingdetails')->name('updatepricingdetails');
+    Route::get('filtertype/{selectedtype}', 'filtertype')->name('filtertype');
+    Route::get('/deleteuser/{id}', 'deleteuser')->name('deleteuser');
+
+
+
 
 });
 
@@ -73,6 +80,8 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('userprofile', 'userprofile')->name('userprofile');
     Route::get('editprofile', 'editprofile')->name('editprofile');
     Route::get('allservices', 'allservices')->name('allservices');
+    Route::get('consultingdetails/{id}', 'consultingdetails')->name('consultingdetails');
+
 
 });
 
