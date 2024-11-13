@@ -66,8 +66,6 @@ Route::controller(AdminStores::class)->group(function () {
 
 
 
-
-
 //User Panel Routes
 Route::controller(UserViews::class)->group(function () {
     Route::get('/', 'userloginpage')->name('userloginpage');
@@ -81,6 +79,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('editprofile', 'editprofile')->name('editprofile');
     Route::get('allservices', 'allservices')->name('allservices');
     Route::get('consultingdetails/{id}', 'consultingdetails')->name('consultingdetails');
+    Route::get('serviceformpage/{id}/{servicename}/{price}', 'serviceformpage')->name('serviceformpage');
 
 
 });
@@ -92,7 +91,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('proceedtootp', 'proceedtootp')->name('proceedtootp');
     Route::post('verifyotp', 'verifyotp')->name('verifyotp');
     Route::post('LoginOtpVerify', 'LoginOtpVerify')->name('LoginOtpVerify');
-
+    Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
 
 });
 

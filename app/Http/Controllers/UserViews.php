@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Contact;
+use App\Models\FormAttribute;
 use App\Models\GroupType;
 use App\Models\Message;
 use App\Models\Master;
@@ -111,5 +112,13 @@ class UserViews extends Controller
         } else {
             return view('auth.UserPanel.login');
         }
+    }
+    public function serviceformpage($id,$service,$price){
+        $servicename = $service;
+        $serviceprice = $price;
+        $serviceid = $id;
+        $formattributes = FormAttribute::where('masterserviceid',$id)->get();
+        $masterdata = Master::where('id',$id)->first();
+        return view('UserPanel.serviceformpage',compact('servicename','serviceprice','formattributes','serviceid','masterdata'));
     }
 }

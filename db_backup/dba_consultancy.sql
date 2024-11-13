@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 10:06 AM
+-- Generation Time: Nov 13, 2024 at 12:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,12 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1731126549),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1731126549;', 1731126549);
+('845d7fe29f4eb7caf751b2dac1a742ed', 'i:1;', 1731476054),
+('845d7fe29f4eb7caf751b2dac1a742ed:timer', 'i:1731476054;', 1731476054),
+('ajkart@gmail.com|127.0.0.1', 'i:1;', 1731476055),
+('ajkart@gmail.com|127.0.0.1:timer', 'i:1731476055;', 1731476055),
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1731476059),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1731476059;', 1731476059);
 
 -- --------------------------------------------------------
 
@@ -79,6 +83,7 @@ CREATE TABLE `form_attributes` (
   `id` int(11) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   `servicename` varchar(255) DEFAULT NULL,
+  `masterserviceid` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   `inputtype` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -89,9 +94,11 @@ CREATE TABLE `form_attributes` (
 -- Dumping data for table `form_attributes`
 --
 
-INSERT INTO `form_attributes` (`id`, `type`, `servicename`, `value`, `inputtype`, `created_at`, `updated_at`) VALUES
-(5, 'Services', 'GST No.', 'GST One', 'email', '2024-11-05 10:31:44', '2024-11-05 12:02:58'),
-(6, 'Services', 'GST No.', 'GST Two', 'text', '2024-11-05 12:02:13', '2024-11-05 12:03:09');
+INSERT INTO `form_attributes` (`id`, `type`, `servicename`, `masterserviceid`, `value`, `inputtype`, `created_at`, `updated_at`) VALUES
+(12, 'Services', 'File Tax Return', '215', 'Name', 'text', '2024-11-13 06:10:25', '2024-11-13 06:10:25'),
+(13, 'Services', 'File Tax Return', '215', 'Email', 'email', '2024-11-13 06:10:37', '2024-11-13 06:10:37'),
+(14, 'Services', 'File Tax Return', '215', 'Amount', 'text', '2024-11-13 06:10:47', '2024-11-13 06:14:03'),
+(15, 'Services', 'File Tax Return', '215', 'Details', 'textarea', '2024-11-13 06:11:03', '2024-11-13 06:11:03');
 
 -- --------------------------------------------------------
 
@@ -258,6 +265,31 @@ INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `dispr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `purchase_services`
+--
+
+CREATE TABLE `purchase_services` (
+  `id` int(11) NOT NULL,
+  `formtype` varchar(255) DEFAULT NULL,
+  `userid` varchar(255) DEFAULT NULL,
+  `servicename` varchar(255) DEFAULT NULL,
+  `servicecharge` varchar(255) DEFAULT NULL,
+  `formdata` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`formdata`)),
+  `status` varchar(255) DEFAULT 'Unpaid',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_services`
+--
+
+INSERT INTO `purchase_services` (`id`, `formtype`, `userid`, `servicename`, `servicecharge`, `formdata`, `status`, `created_at`, `updated_at`) VALUES
+(8, 'Services', '44', 'File Tax Return', '60,0000', '[{\"label\":\"_token\",\"value\":\"jZxAsWZrNelRvOz5sGcT3XkIZfi53tX983RwNhu9\"},{\"label\":\"Name\",\"value\":\"Anshul\"},{\"label\":\"Email\",\"value\":\"ans@gmail.com\"},{\"label\":\"Amount\",\"value\":\"5000\"},{\"label\":\"Details\",\"value\":\"this is final testing\"}]', 'Unpaid', '2024-11-13 11:17:15', '2024-11-13 11:17:15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `register_users`
 --
 
@@ -277,7 +309,7 @@ CREATE TABLE `register_users` (
 --
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `username`) VALUES
-(44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-09 04:21:40', '704551', 'Anshul'),
+(44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-13 04:49:01', '607991', 'Anshul'),
 (45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-08 12:34:00', '748279', 'Nitzz');
 
 -- --------------------------------------------------------
@@ -300,7 +332,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('J4nIjzUTnTJfY5rzN6pblm4Wqev1IKDdKqgM3Ci9', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSzhSeFk4eEVWUWhLWFRhbEdDNnoyZmpoOEhkRHAyQmliczF0RDdFVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hbGxjdXN0b21lcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ0O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1731139604);
+('2wgHdFrjLw1J3c3AejU235bukbomPRLfFtVSbBgC', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoialp4QXNXWnJOZWxSdk96NXNHY1QzWGtJWmZpNTN0WDk4M1J3Tmh1OSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Njk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zZXJ2aWNlZm9ybXBhZ2UvMjE1L0ZpbGUlMjBUYXglMjBSZXR1cm4vNjAsMDAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTU6ImxvZ2luX2N1c3RvbWVyXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NDQ7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRsNi4wM1ViN3pNL2R3TEpYWGhEbjIuU2dzSk04MDR3NlFjajE4L3QxVWlWeG9BZU1zS0ZIaSI7fQ==', 1731496725);
 
 -- --------------------------------------------------------
 
@@ -406,6 +438,12 @@ ALTER TABLE `pricing_details`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `purchase_services`
+--
+ALTER TABLE `purchase_services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `register_users`
 --
 ALTER TABLE `register_users`
@@ -440,7 +478,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `form_attributes`
 --
 ALTER TABLE `form_attributes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -471,6 +509,12 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `pricing_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `purchase_services`
+--
+ALTER TABLE `purchase_services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `register_users`

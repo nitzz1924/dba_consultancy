@@ -6,6 +6,7 @@ use App\Models\Campaign;
 use App\Models\Contact;
 use App\Models\GroupType;
 use App\Models\Message;
+use App\Models\PurchaseService;
 use App\Models\RegisterUser;
 use App\Models\Template;
 use Illuminate\Http\Request;
@@ -108,6 +109,46 @@ class UserStores extends Controller
         } catch (Exception $e) {
             return redirect()->route('userloginpage')->with('error', $e->getMessage());
         }
+    }
+
+    public function insertServiceForm(Request $request)
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        $data = $request->all();
+
+
+        if (isset($data['data'])) {
+            parse_str($data['data'], $decodedData);
+            unset($data['data']);
+        }
+
+        // Merge the decoded data with the rest of the form fields
+        $data = array_merge($data, $decodedData);
+        $formtype = $data['formtype'] ?? null;
+        $servicename = $data['servicename'] ?? null;
+        $servicecharge = $data['amount'] ?? null;
+        unset($data['formtype']);
+        unset($data['servicename']);
+        unset($data['amount']);
+        // dd($data);
+
+
+        $formData = [];
+        foreach ($data as $key => $value) {
+            // Optionally, you can transform the key to be more readable if needed
+            $formData[] = ['label' => $key, 'value' => $value];
+        }
+        // dd($formData);
+
+        //Now save it do the database
+        $finaldata = new PurchaseService();
+        $finaldata->formdata = json_encode($formData);
+        $finaldata->userid = $loggedinuser->id;
+        $finaldata->formtype = $formtype;
+        $finaldata->servicename = $servicename;
+        $finaldata->servicecharge = $servicecharge;
+        $finaldata->save();
+        return back()->with('success', 'Service Purchased..!!!');
     }
 
 }

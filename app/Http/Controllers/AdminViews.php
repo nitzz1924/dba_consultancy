@@ -23,7 +23,9 @@ class AdminViews extends Controller
     }
 
     public function createform(){
-        $masterdata = Master::where('type','=','Master')->get();
+        $masterdata = Master::where('type', '=', 'Master')
+        ->whereIn('value', ['Services', 'Consulting'])
+        ->get();
         $attributesdata = Master::where('type','=','Services')->get();
         return view('AdminPanel.createform',compact('masterdata','attributesdata'));
     }

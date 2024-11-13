@@ -136,6 +136,7 @@ class AdminStores extends Controller
             FormAttribute::create([
                 'type' => $rq->servicetype,
                 'servicename' => $rq->servicename,
+                'masterserviceid' => $rq->masterserviceid,
                 'value' => $rq->value,
                 'inputtype' => $rq->inputtype,
             ]);
