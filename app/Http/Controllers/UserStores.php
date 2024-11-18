@@ -153,9 +153,6 @@ class UserStores extends Controller
                 'type' => $inputType ? $inputType->inputtype : 'text'
             ];
         }
-        // DD(  $formData);
-
-
         //Now save it do the database
         $finaldata = new PurchaseService();
         $finaldata->formdata = json_encode($formData);
@@ -168,6 +165,55 @@ class UserStores extends Controller
         $finaldata->save();
         return back()->with('success', 'Service Purchased..!!!');
     }
+
+    public function updateserviceform(Request $request)
+    {
+        $data = $request->all();
+
+        if (isset($data['data'])) {
+            parse_str($data['data'], $decodedData);
+            unset($data['data']);
+        }
+
+        // Merge the decoded data with the rest of the form fields
+        $data = array_merge($data, $decodedData);
+
+        $formtype = $data['formtype'] ?? null;
+        $servicename = $data['servicename'] ?? null;
+        $servicecharge = $data['amount'] ?? null;
+        $serviceid = $data['serviceid'] ?? null;
+        $discount = $data['discount'] ?? null;
+
+        unset($data['formtype'], $data['servicename'], $data['amount'], $data['serviceid'], $data['discount']);
+
+        $formData = [];
+        foreach ($data as $key => $value) {
+            // dd($key);
+            // Getting Input Types of Form Fields
+            $inputType = FormAttribute::where('masterserviceid', $serviceid)
+                ->where('value', $key)
+                ->first();
+
+            // Inserting Data of Form with Input Types
+            $formData[] = [
+                'label' => $key,
+                'value' => $value,
+                'type' => $inputType ? $inputType->inputtype : 'text',
+            ];
+        }
+
+        // Fetch the existing record to update
+        $finaldata = PurchaseService::where('id', $serviceid)->first();
+        // dd($finaldata);
+        if ($finaldata) {
+            $finaldata->formdata = json_encode($formData);
+            $finaldata->save(); // Save the updated data
+            return back()->with('success', 'Service Updated..!!!');
+        } else {
+            return back()->with('error', 'Service not found..!!!');
+        }
+    }
+
 
 }
 

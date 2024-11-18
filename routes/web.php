@@ -94,6 +94,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('verifyotp', 'verifyotp')->name('verifyotp');
     Route::post('LoginOtpVerify', 'LoginOtpVerify')->name('LoginOtpVerify');
     Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
+    Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
 
 });
 

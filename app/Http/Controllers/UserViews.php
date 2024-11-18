@@ -128,12 +128,13 @@ class UserViews extends Controller
         $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
         ->select('masters.iconimage as iconimage','purchase_services.*')
         ->where('userid',$loggedinuser->id)->orderBy('created_at','Desc')->get();
+        // dd( $purchasedata);
         return view('UserPanel.orderpage',compact('purchasedata'));
     }
     public function orderdetails($id){
         // $loggedinuser = Auth::guard('customer')->user();
         $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
-        ->select('masters.iconimage as iconimage','purchase_services.*')
+        ->select('masters.*','purchase_services.*')
         ->where('purchase_services.id',$id)->first();
 
         // dd( $purchasedata);
