@@ -11,6 +11,8 @@ class PurchaseService extends Model
         'formtype',
         'userid',
         'servicename',
+        'serviceid',
+        'discount',
         'servicecharge',
         'formdata',
         'status',

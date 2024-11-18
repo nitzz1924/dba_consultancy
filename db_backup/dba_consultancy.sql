@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2024 at 12:19 PM
+-- Generation Time: Nov 18, 2024 at 07:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,18 +32,6 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('845d7fe29f4eb7caf751b2dac1a742ed', 'i:1;', 1731476054),
-('845d7fe29f4eb7caf751b2dac1a742ed:timer', 'i:1731476054;', 1731476054),
-('ajkart@gmail.com|127.0.0.1', 'i:1;', 1731476055),
-('ajkart@gmail.com|127.0.0.1:timer', 'i:1731476055;', 1731476055),
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1731476059),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1731476059;', 1731476059);
 
 -- --------------------------------------------------------
 
@@ -258,7 +246,7 @@ CREATE TABLE `pricing_details` (
 INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `disprice`, `duration`, `coverimage`, `documents`, `details`, `notereq`, `created_at`, `updated_at`) VALUES
 (6, 'Services', '214', '7955', '8', '9', 'service-bg.png', '[\"GST\",\"Aadhar Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 04:46:18', '2024-11-09 06:37:15'),
 (9, 'Services', '222', '60,000', '7500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2024-11-09 06:37:17'),
-(10, 'Services', '215', '60,0000', '7500', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-11-09 06:37:19'),
+(10, 'Services', '215', '15000', '7500', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-11-14 05:53:53'),
 (11, 'Services', '223', '50000', '988', '55', 'service-bg.png', '[\"Aadhar Card\",\"Bank Passbook\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:53', '2024-11-09 06:37:20'),
 (13, 'Consulting', '225', '75000', '7500', '45', '1731134472_service-bg.png', '[\"Aadhar Card\"]', 'Consulting Services', 'Consulting Services', '2024-11-09 06:41:12', '2024-11-09 07:16:30');
 
@@ -271,6 +259,8 @@ INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `dispr
 CREATE TABLE `purchase_services` (
   `id` int(11) NOT NULL,
   `formtype` varchar(255) DEFAULT NULL,
+  `serviceid` varchar(255) DEFAULT NULL,
+  `discount` varchar(255) DEFAULT NULL,
   `userid` varchar(255) DEFAULT NULL,
   `servicename` varchar(255) DEFAULT NULL,
   `servicecharge` varchar(255) DEFAULT NULL,
@@ -284,8 +274,9 @@ CREATE TABLE `purchase_services` (
 -- Dumping data for table `purchase_services`
 --
 
-INSERT INTO `purchase_services` (`id`, `formtype`, `userid`, `servicename`, `servicecharge`, `formdata`, `status`, `created_at`, `updated_at`) VALUES
-(8, 'Services', '44', 'File Tax Return', '60,0000', '[{\"label\":\"_token\",\"value\":\"jZxAsWZrNelRvOz5sGcT3XkIZfi53tX983RwNhu9\"},{\"label\":\"Name\",\"value\":\"Anshul\"},{\"label\":\"Email\",\"value\":\"ans@gmail.com\"},{\"label\":\"Amount\",\"value\":\"5000\"},{\"label\":\"Details\",\"value\":\"this is final testing\"}]', 'Unpaid', '2024-11-13 11:17:15', '2024-11-13 11:17:15');
+INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `userid`, `servicename`, `servicecharge`, `formdata`, `status`, `created_at`, `updated_at`) VALUES
+(22, 'Services', '215', '7500', '45', ' File Tax Return', '15000', '[{\"label\":\"_token\",\"value\":\"CtayZjIxuRaXUCHOLVIa61D4LGkzlHKajGwDDYdB\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Amount\",\"value\":\"5000\",\"type\":\"text\"},{\"label\":\"Details\",\"value\":\"ttstst\",\"type\":\"textarea\"}]', 'Unpaid', '2024-11-18 06:04:17', '2024-11-18 06:04:17'),
+(23, 'Services', '215', '7500', '45', ' File Tax Return', '15000', '[{\"label\":\"_token\",\"value\":\"CtayZjIxuRaXUCHOLVIa61D4LGkzlHKajGwDDYdB\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy 2\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Amount\",\"value\":\"67000\",\"type\":\"text\"},{\"label\":\"Details\",\"value\":\"tstst\",\"type\":\"textarea\"}]', 'Unpaid', '2024-11-18 06:04:37', '2024-11-18 06:04:37');
 
 -- --------------------------------------------------------
 
@@ -310,7 +301,7 @@ CREATE TABLE `register_users` (
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `username`) VALUES
 (44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-13 04:49:01', '607991', 'Anshul'),
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-08 12:34:00', '748279', 'Nitzz');
+(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-18 05:09:43', '263980', 'Nitzz');
 
 -- --------------------------------------------------------
 
@@ -332,7 +323,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('2wgHdFrjLw1J3c3AejU235bukbomPRLfFtVSbBgC', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoialp4QXNXWnJOZWxSdk96NXNHY1QzWGtJWmZpNTN0WDk4M1J3Tmh1OSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Njk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zZXJ2aWNlZm9ybXBhZ2UvMjE1L0ZpbGUlMjBUYXglMjBSZXR1cm4vNjAsMDAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTU6ImxvZ2luX2N1c3RvbWVyXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NDQ7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRsNi4wM1ViN3pNL2R3TEpYWGhEbjIuU2dzSk04MDR3NlFjajE4L3QxVWlWeG9BZU1zS0ZIaSI7fQ==', 1731496725);
+('aCEpQsYp6Hjt2KnTlMWnKI75cbaU5mnK9m08hKrf', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ3RheVpqSXh1UmFYVUNIT0xWSWE2MUQ0TEdremxIS2FqR3dERFlkQiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9vcmRlcnBhZ2UiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O30=', 1731909980),
+('IG69jPy86t37gHVmTo7I2gvy9oSLMEcm6OqvGMUF', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZW5qUHN6SlU2Y2FFV096NmkzVUJrcmV0dGxOUVpSNHYwRDZJdWdNViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zZXJ2aWNlZm9ybXBhZ2UvMjE1Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0NTt9', 1731580199),
+('YUuWFJoFbyDLcOkL1x3l3ro30TCtxDXrqo8M699S', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVXg2Y01NUkdTY3ZaclZuVGxpMm10TUw4VnYxTW4yb0JHWXpKd0ZSeSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1731738428);
 
 -- --------------------------------------------------------
 
@@ -514,7 +507,7 @@ ALTER TABLE `pricing_details`
 -- AUTO_INCREMENT for table `purchase_services`
 --
 ALTER TABLE `purchase_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `register_users`

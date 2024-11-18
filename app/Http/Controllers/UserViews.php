@@ -9,6 +9,7 @@ use App\Models\GroupType;
 use App\Models\Message;
 use App\Models\Master;
 use App\Models\PricingDetail;
+use App\Models\PurchaseService;
 use App\Models\RegisterUser;
 use App\Models\Template;
 use Illuminate\Http\Request;
@@ -113,12 +114,29 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
-    public function serviceformpage($id,$service,$price){
-        $servicename = $service;
-        $serviceprice = $price;
+    public function serviceformpage($id){
+        $pricingdata = PricingDetail::join('masters','pricing_details.serviceid','=','masters.id')
+        ->select('masters.value as servicename','pricing_details.*')->
+        where('serviceid',$id)->first();
         $serviceid = $id;
         $formattributes = FormAttribute::where('masterserviceid',$id)->get();
         $masterdata = Master::where('id',$id)->first();
-        return view('UserPanel.serviceformpage',compact('servicename','serviceprice','formattributes','serviceid','masterdata'));
+        return view('UserPanel.serviceformpage',compact('formattributes','serviceid','masterdata','pricingdata'));
+    }
+    public function orderpage(){
+        $loggedinuser = Auth::guard('customer')->user();
+        $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
+        ->select('masters.iconimage as iconimage','purchase_services.*')
+        ->where('userid',$loggedinuser->id)->orderBy('created_at','Desc')->get();
+        return view('UserPanel.orderpage',compact('purchasedata'));
+    }
+    public function orderdetails($id){
+        // $loggedinuser = Auth::guard('customer')->user();
+        $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
+        ->select('masters.iconimage as iconimage','purchase_services.*')
+        ->where('purchase_services.id',$id)->first();
+
+        // dd( $purchasedata);
+        return view('UserPanel.orderdetails',compact('purchasedata'));
     }
 }

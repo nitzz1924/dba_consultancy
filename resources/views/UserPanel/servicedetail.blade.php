@@ -43,7 +43,7 @@
         </div>
         <div class="col-6 text-center">
             <a
-                href="{{ route('serviceformpage',  ['id' => $data->serviceid, 'servicename' => $data->servicename, 'price' => $data->price]) }}">
+                href="{{ route('serviceformpage',  ['id' => $data->serviceid]) }}">
                 <div class="btn btn-light rounded-pill fs-6 shadow-lg">
                     <i class='bx bx-plus icon-bg text-white p-2 rounded-pill me-1'></i>Buy Now
                 </div>

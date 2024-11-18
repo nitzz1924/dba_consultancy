@@ -79,7 +79,9 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('editprofile', 'editprofile')->name('editprofile');
     Route::get('allservices', 'allservices')->name('allservices');
     Route::get('consultingdetails/{id}', 'consultingdetails')->name('consultingdetails');
-    Route::get('serviceformpage/{id}/{servicename}/{price}', 'serviceformpage')->name('serviceformpage');
+    Route::get('serviceformpage/{id}', 'serviceformpage')->name('serviceformpage');
+    Route::get('orderpage', 'orderpage')->name('orderpage');
+    Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
 
 
 });

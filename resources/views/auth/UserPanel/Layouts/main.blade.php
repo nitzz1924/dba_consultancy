@@ -3,12 +3,12 @@
     data-sidebar-image="none" data-preloader="disable">
 <head>
     <meta charset="utf-8" />
-    <title>User Login | YUVMEDIA - WHATSAPP MARKETING</title>
+    <title>User Login | | DBA Consultancy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{asset('assets/images/Y.png')}}" />
+    <link rel="shortcut icon" href="{{asset('assets/images/dfavicon.png')}}" />
     <script src="{{asset('assets/js/layout.js')}}"></script>
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />

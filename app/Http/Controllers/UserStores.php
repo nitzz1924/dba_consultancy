@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Contact;
+use App\Models\FormAttribute;
 use App\Models\GroupType;
 use App\Models\Message;
 use App\Models\PurchaseService;
@@ -85,7 +86,7 @@ class UserStores extends Controller
             $data->update([
                 'otp' => $otp,
             ]);
-            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id]]);
+            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp, 'mobilenumber' => $credentials]]);
         } else {
             return redirect()->route('userloginpage')->with('error', 'Invalid credentials');
         }
@@ -116,7 +117,6 @@ class UserStores extends Controller
         $loggedinuser = Auth::guard('customer')->user();
         $data = $request->all();
 
-
         if (isset($data['data'])) {
             parse_str($data['data'], $decodedData);
             unset($data['data']);
@@ -124,27 +124,45 @@ class UserStores extends Controller
 
         // Merge the decoded data with the rest of the form fields
         $data = array_merge($data, $decodedData);
+
         $formtype = $data['formtype'] ?? null;
         $servicename = $data['servicename'] ?? null;
         $servicecharge = $data['amount'] ?? null;
+        $serviceid = $data['serviceid'] ?? null;
+        $discount = $data['discount'] ?? null;
         unset($data['formtype']);
         unset($data['servicename']);
         unset($data['amount']);
-        // dd($data);
+        unset($data['serviceid']);
+        unset($data['discount']);
 
 
         $formData = [];
         foreach ($data as $key => $value) {
-            // Optionally, you can transform the key to be more readable if needed
-            $formData[] = ['label' => $key, 'value' => $value];
+
+            //Getting Input Types of Form Fields
+            $inputType = FormAttribute::where('masterserviceid', $serviceid)
+                ->where('value', $key)
+                ->first();
+
+
+            //Inserting Data of Form with Input Types
+            $formData[] = [
+                'label' => $key,
+                'value' => $value,
+                'type' => $inputType ? $inputType->inputtype : 'text'
+            ];
         }
-        // dd($formData);
+        // DD(  $formData);
+
 
         //Now save it do the database
         $finaldata = new PurchaseService();
         $finaldata->formdata = json_encode($formData);
         $finaldata->userid = $loggedinuser->id;
         $finaldata->formtype = $formtype;
+        $finaldata->serviceid = $serviceid;
+        $finaldata->discount = $discount;
         $finaldata->servicename = $servicename;
         $finaldata->servicecharge = $servicecharge;
         $finaldata->save();

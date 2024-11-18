@@ -52,13 +52,13 @@
                             height="25" />&nbsp;<span class="fs-5">All Services</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item {{ request()->routeIs('servicedetail') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('servicedetail') }}" role="button"
+                <li class="nav-item {{ request()->routeIs('orderpage') ? 'active' : '' }}">
+                    <a class="nav-link menu-link" href="{{ route('orderpage') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <img class="" src="{{ asset('assets/images/campaign (1).png') }}" alt=""
-                            height="25" />&nbsp;<span class="fs-5">Service Detail</span>
+                            height="25" />&nbsp;<span class="fs-5">My Orders</span>
                     </a>
-                </li> --}}
+                </li>
 
             </ul>
         </div>

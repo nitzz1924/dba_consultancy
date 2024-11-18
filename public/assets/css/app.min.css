@@ -522,7 +522,7 @@
 }
 .navbar-menu .navbar-nav .nav-item.active a {
     color: var(--vz-vertical-menu-item-active-color);
-    background-color: #02352f;
+    background-color: #141515;
 }
 .navbar-menu .navbar-nav .nav-link:hover {
     color: var(--vz-vertical-menu-item-hover-color);
