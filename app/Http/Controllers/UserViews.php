@@ -136,7 +136,6 @@ class UserViews extends Controller
         $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
         ->select('masters.*','purchase_services.*')
         ->where('purchase_services.id',$id)->first();
-
         // dd( $purchasedata);
         return view('UserPanel.orderdetails',compact('purchasedata'));
     }

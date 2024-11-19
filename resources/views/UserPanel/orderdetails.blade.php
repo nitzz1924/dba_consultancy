@@ -94,7 +94,7 @@
                             Services</button></a>
                 </div>
                 @else
-                <form id="originalform">
+                <form id="originalform" enctype="multipart/form-data">
                     @csrf
                     @php
                     $formdata = json_decode($purchasedata->formdata, true);
@@ -117,17 +117,18 @@
                     <div class="mb-3 text-center">
                         <label for="{{ $data['label'] }}" class="form-label">{{ $data['label'] }}</label>
                         <input class="form-control form-control-lg" name="{{ $data['label'] }}"
-                            id="{{ $data['label'] }}" type="file" accept="image/*" onchange="previewImage(event)">
+                            id="{{ $data['label'] }}" type="file" onchange="previewImage(event)" value="{{ $data['value'] }}">
+                            <input type="hidden" name="file_{{ $data['label'] }}" value="{{$data['value']}}">
                     </div>
                     <div class="text-center mb-3">
-                        <img id="imagePreview" src="/assets/images/users/user-dummy-img.jpg" alt="Profile Image Preview"
-                            class="border"
-                            style="display: none; width: 100%;  border-radius: 5%; object-fit: cover; margin-inline: auto;">
+                        <img id="imagePreview" src="{{ asset('assets/images/users/' . $data['value']) }}"
+                            alt="Profile Image Preview" class="border"
+                            style="display: {{ !empty($data['value']) ? 'block' : 'none' }}; width: 100%; border-radius: 5%; object-fit: cover; margin-inline: auto;">
                     </div>
                     @else
                     <div class="form-floating mb-3">
                         <textarea class="form-control" placeholder="Enter your address" id="{{ $data['label'] }}"
-                            name="{{ $data['value'] }}" style="height: 100px">{{ $data['value'] }}</textarea>
+                        name="{{ $data['label'] }}" style="height: 100px">{{ $data['value'] }}</textarea>
                         <label for="{{ $data['label'] }}">{{ $data['label'] }}</label>
                     </div>
                     @endif
@@ -135,6 +136,7 @@
                     @endforeach
 
                     <!--Sending Necessary Things in form-->
+
                     <input type="hidden" name="formtype" id="formtype" value="{{ $purchasedata->type }}">
                     <input type="hidden" name="serviceid" id="formtype" value="{{ $purchasedata->id }}">
                     <input type="hidden" name="servicename" id="servicename" value=" {{ $purchasedata->servicename }}">
@@ -171,7 +173,7 @@
             $('#dangerAlert').fadeOut('slow');
         }, 2000);
 </script>
-{{-- Submitting Form by AJAX --}}
+{{-- Updating Form by AJAX --}}
 <script>
     function confirmInsert(servicename) {
             Swal.fire({
@@ -190,19 +192,20 @@
                         const formtype = $('#formtype').val();
                         const servicename = $('#servicename').val();
                         const amount = $('#amount').val();
-
+                        var formData = new FormData(document.getElementById('originalform'));
+                        formData.append('formtype', formtype);
+                        formData.append('servicename', servicename);
+                        formData.append('amount', amount);
+                        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
                         jQuery.ajax({
                             url: "{{ url('updateserviceform') }}",
                             type: 'post',
-                            data: {
-                                data: jQuery('#originalform').serialize(),
-                                formtype: formtype,
-                                servicename: servicename,
-                                amount: amount,
-                                _token: $('meta[name="csrf-token"]').attr('content')
-                            },
+                            data: formData,
+                            processData: false, // this is to be false in case of form data
+                            contentType: false,
                             success: function(data) {
                                 if (data) {
+                                    console.log(data);
                                     Swal.fire({
                                         title: "Success!",
                                         text: "Service Updated..!",

@@ -117,19 +117,13 @@ class UserStores extends Controller
         $loggedinuser = Auth::guard('customer')->user();
         $data = $request->all();
 
-        if (isset($data['data'])) {
-            parse_str($data['data'], $decodedData);
-            unset($data['data']);
-        }
-
-        // Merge the decoded data with the rest of the form fields
-        $data = array_merge($data, $decodedData);
-
         $formtype = $data['formtype'] ?? null;
         $servicename = $data['servicename'] ?? null;
         $servicecharge = $data['amount'] ?? null;
         $serviceid = $data['serviceid'] ?? null;
         $discount = $data['discount'] ?? null;
+
+        //Removing these from my array
         unset($data['formtype']);
         unset($data['servicename']);
         unset($data['amount']);
@@ -145,14 +139,28 @@ class UserStores extends Controller
                 ->where('value', $key)
                 ->first();
 
+            if ($request->hasFile($key)) {
+                $file = $request->file($key);
+                $request->validate([
+                    $key => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+                ]);
 
-            //Inserting Data of Form with Input Types
-            $formData[] = [
-                'label' => $key,
-                'value' => $value,
-                'type' => $inputType ? $inputType->inputtype : 'text'
-            ];
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/images/users'), $filename);
+                $formData[] = [
+                    'label' => $key,
+                    'value' => $filename,
+                    'type' => 'file'
+                ];
+            } else {
+                $formData[] = [
+                    'label' => $key,
+                    'value' => $value,
+                    'type' => $inputType ? $inputType->inputtype : 'text'
+                ];
+            }
         }
+        // dd($formData);
         //Now save it do the database
         $finaldata = new PurchaseService();
         $finaldata->formdata = json_encode($formData);
@@ -168,52 +176,90 @@ class UserStores extends Controller
 
     public function updateserviceform(Request $request)
     {
-        $data = $request->all();
+        try {
+            // Fetch the existing service record
+            $finaldata = PurchaseService::find($request->serviceid);
+            if (!$finaldata) {
+                return back()->with('error', 'Service not found.');
+            }
 
-        if (isset($data['data'])) {
-            parse_str($data['data'], $decodedData);
-            unset($data['data']);
-        }
+            $data = $request->all();
+            unset($data['formtype'], $data['previousimage'], $data['servicename'], $data['amount'], $data['serviceid'], $data['discount']);
 
-        // Merge the decoded data with the rest of the form fields
-        $data = array_merge($data, $decodedData);
+            // Initialize an array to store form data
+            $formData = [];
+            foreach ($data as $key => $value) {
+                // Get input types for form fields from the database
+                $inputType = FormAttribute::where('masterserviceid', $finaldata->serviceid)
+                    ->where('value', str_replace('file_', '', $key)) // Remove 'file_' prefix from key
+                    ->first();
 
-        $formtype = $data['formtype'] ?? null;
-        $servicename = $data['servicename'] ?? null;
-        $servicecharge = $data['amount'] ?? null;
-        $serviceid = $data['serviceid'] ?? null;
-        $discount = $data['discount'] ?? null;
+                // Check if the input field contains a file
+                if ($request->hasFile($key)) {
+                    // Handle the uploaded file
+                    $file = $request->file($key);
 
-        unset($data['formtype'], $data['servicename'], $data['amount'], $data['serviceid'], $data['discount']);
+                    // Validate and store the file
+                    $request->validate([
+                        $key => 'required|file|mimes:jpeg,png,jpg,pdf,docx|max:2048',
+                    ]);
 
-        $formData = [];
-        foreach ($data as $key => $value) {
-            // dd($key);
-            // Getting Input Types of Form Fields
-            $inputType = FormAttribute::where('masterserviceid', $serviceid)
-                ->where('value', $key)
-                ->first();
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('assets/images/users'), $filename);
 
-            // Inserting Data of Form with Input Types
-            $formData[] = [
-                'label' => $key,
-                'value' => $value,
-                'type' => $inputType ? $inputType->inputtype : 'text',
-            ];
-        }
+                    // Prevent duplicates and add the uploaded file details to form data
+                    $foundKey = false;
+                    foreach ($formData as &$dataEntry) {
+                        if ($dataEntry['label'] == str_replace('file_', '', $key)) {
+                            $dataEntry['value'] = $filename;  // Update the value for the existing key
+                            $foundKey = true;
+                            break;
+                        }
+                    }
 
-        // Fetch the existing record to update
-        $finaldata = PurchaseService::where('id', $serviceid)->first();
-        // dd($finaldata);
-        if ($finaldata) {
+                    if (!$foundKey) {
+                        $formData[] = [
+                            'label' => str_replace('file_', '', $key), // Cleaned field key
+                            'value' => $filename,
+                            'type' => 'file',
+                        ];
+                    }
+
+                } else {
+                    // If no file is uploaded, retain the previous image or fallback to the current value
+                    $foundKey = false;
+                    foreach ($formData as &$dataEntry) {
+                        if ($dataEntry['label'] == str_replace('file_', '', $key)) {
+                            // If the field is a 'file' input, use the previous image or current value
+                            $dataEntry['value'] = $value;
+                            $foundKey = true;
+                            break;
+                        }
+                    }
+
+                    // If the key doesn't exist yet, add it to form data
+                    if (!$foundKey) {
+                        $formData[] = [
+                            'label' => str_replace('file_', '', $key), // Cleaned field key
+                            'value' => $value, // Use the form's value (could be the previous image name)
+                            'type' => $inputType ? $inputType->inputtype : 'text',
+                        ];
+                    }
+                }
+            }
+
+            // Debug output for form data (optional)
+            // dd($formData);
+
+            // Update the formdata field with the new data and save it to the database
             $finaldata->formdata = json_encode($formData);
-            $finaldata->save(); // Save the updated data
-            return back()->with('success', 'Service Updated..!!!');
-        } else {
-            return back()->with('error', 'Service not found..!!!');
+            $finaldata->save();
+
+            return back()->with('success', 'Form data updated successfully!');
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
-
 
 }
 
