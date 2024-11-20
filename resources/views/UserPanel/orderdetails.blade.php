@@ -117,8 +117,9 @@
                     <div class="mb-3 text-center">
                         <label for="{{ $data['label'] }}" class="form-label">{{ $data['label'] }}</label>
                         <input class="form-control form-control-lg" name="{{ $data['label'] }}"
-                            id="{{ $data['label'] }}" type="file" onchange="previewImage(event)" value="{{ $data['value'] }}">
-                            <input type="hidden" name="file_{{ $data['label'] }}" value="{{$data['value']}}">
+                            id="{{ $data['label'] }}" type="file" onchange="previewImage(event)"
+                            value="{{ $data['value'] }}">
+                        <input type="hidden" name="file_{{ $data['label'] }}" value="{{$data['value']}}">
                     </div>
                     <div class="text-center mb-3">
                         <img id="imagePreview" src="{{ asset('assets/images/users/' . $data['value']) }}"
@@ -128,7 +129,7 @@
                     @else
                     <div class="form-floating mb-3">
                         <textarea class="form-control" placeholder="Enter your address" id="{{ $data['label'] }}"
-                        name="{{ $data['label'] }}" style="height: 100px">{{ $data['value'] }}</textarea>
+                            name="{{ $data['label'] }}" style="height: 100px">{{ $data['value'] }}</textarea>
                         <label for="{{ $data['label'] }}">{{ $data['label'] }}</label>
                     </div>
                     @endif

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2024 at 07:06 AM
+-- Generation Time: Nov 20, 2024 at 08:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,18 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('aa751c21deabda4c1c5d8416de3e13bd', 'i:1;', 1732077209),
+('aa751c21deabda4c1c5d8416de3e13bd:timer', 'i:1732077209;', 1732077209),
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1732077217),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1732077217;', 1732077217),
+('nitzz@gmail.com|127.0.0.1', 'i:1;', 1732077210),
+('nitzz@gmail.com|127.0.0.1:timer', 'i:1732077210;', 1732077210);
 
 -- --------------------------------------------------------
 
@@ -86,7 +98,8 @@ INSERT INTO `form_attributes` (`id`, `type`, `servicename`, `masterserviceid`, `
 (12, 'Services', 'File Tax Return', '215', 'Name', 'text', '2024-11-13 06:10:25', '2024-11-13 06:10:25'),
 (13, 'Services', 'File Tax Return', '215', 'Email', 'email', '2024-11-13 06:10:37', '2024-11-13 06:10:37'),
 (14, 'Services', 'File Tax Return', '215', 'Amount', 'text', '2024-11-13 06:10:47', '2024-11-13 06:14:03'),
-(15, 'Services', 'File Tax Return', '215', 'Details', 'textarea', '2024-11-13 06:11:03', '2024-11-13 06:11:03');
+(15, 'Services', 'File Tax Return', '215', 'Details', 'textarea', '2024-11-13 06:11:03', '2024-11-13 06:11:03'),
+(19, 'Services', 'File Tax Return', '215', 'Profile', 'file', '2024-11-18 07:34:52', '2024-11-18 07:34:52');
 
 -- --------------------------------------------------------
 
@@ -275,8 +288,7 @@ CREATE TABLE `purchase_services` (
 --
 
 INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `userid`, `servicename`, `servicecharge`, `formdata`, `status`, `created_at`, `updated_at`) VALUES
-(22, 'Services', '215', '7500', '45', ' File Tax Return', '15000', '[{\"label\":\"_token\",\"value\":\"CtayZjIxuRaXUCHOLVIa61D4LGkzlHKajGwDDYdB\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Amount\",\"value\":\"5000\",\"type\":\"text\"},{\"label\":\"Details\",\"value\":\"ttstst\",\"type\":\"textarea\"}]', 'Unpaid', '2024-11-18 06:04:17', '2024-11-18 06:04:17'),
-(23, 'Services', '215', '7500', '45', ' File Tax Return', '15000', '[{\"label\":\"_token\",\"value\":\"CtayZjIxuRaXUCHOLVIa61D4LGkzlHKajGwDDYdB\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy 2\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Amount\",\"value\":\"67000\",\"type\":\"text\"},{\"label\":\"Details\",\"value\":\"tstst\",\"type\":\"textarea\"}]', 'Unpaid', '2024-11-18 06:04:37', '2024-11-18 06:04:37');
+(30, 'Services', '215', '7500', '45', 'File Tax Return', '15000', '[{\"label\":\"_token\",\"value\":\"rJ2U1WuFsTI7i34q1Gyc1l9lXMmvq5cuwvaEfiTP\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Sneha\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"sn@gmail.com\",\"type\":\"email\"},{\"label\":\"Amount\",\"value\":\"8000\",\"type\":\"text\"},{\"label\":\"Details\",\"value\":\"This is Sneha\",\"type\":\"textarea\"},{\"label\":\"Profile\",\"value\":\"1732021052_Anurag09.jpg\",\"type\":\"file\"}]', 'Unpaid', '2024-11-19 07:45:14', '2024-11-20 07:52:49');
 
 -- --------------------------------------------------------
 
@@ -301,7 +313,7 @@ CREATE TABLE `register_users` (
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `username`) VALUES
 (44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-13 04:49:01', '607991', 'Anshul'),
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-18 05:09:43', '263980', 'Nitzz');
+(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-20 04:30:03', '455064', 'Nitzz');
 
 -- --------------------------------------------------------
 
@@ -323,9 +335,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('aCEpQsYp6Hjt2KnTlMWnKI75cbaU5mnK9m08hKrf', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ3RheVpqSXh1UmFYVUNIT0xWSWE2MUQ0TEdremxIS2FqR3dERFlkQiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9vcmRlcnBhZ2UiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O30=', 1731909980),
-('IG69jPy86t37gHVmTo7I2gvy9oSLMEcm6OqvGMUF', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZW5qUHN6SlU2Y2FFV096NmkzVUJrcmV0dGxOUVpSNHYwRDZJdWdNViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zZXJ2aWNlZm9ybXBhZ2UvMjE1Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0NTt9', 1731580199),
-('YUuWFJoFbyDLcOkL1x3l3ro30TCtxDXrqo8M699S', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiVXg2Y01NUkdTY3ZaclZuVGxpMm10TUw4VnYxTW4yb0JHWXpKd0ZSeSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1731738428);
+('U9e2YqMVjSedliOrgjQVAej3WHWv8FQfsGm25STx', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQWpiTUw5dTM3Zk1DYko5VVNUdmc2VHJpYWlRek5yM3B6ZmpEdU9MViI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jdXN0b21lcnNvcmRlcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1732089270);
 
 -- --------------------------------------------------------
 
@@ -471,7 +481,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `form_attributes`
 --
 ALTER TABLE `form_attributes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -507,7 +517,7 @@ ALTER TABLE `pricing_details`
 -- AUTO_INCREMENT for table `purchase_services`
 --
 ALTER TABLE `purchase_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `register_users`

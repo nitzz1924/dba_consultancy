@@ -37,6 +37,8 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('createform', 'createform')->name('createform');
     Route::get('pricingdetails', 'pricingdetails')->name('pricingdetails');
     Route::get('allcustomers', 'allcustomers')->name('allcustomers');
+    Route::get('customersorders', 'customersorders')->name('customersorders');
+    Route::get('admin/orderdetails/{id}', 'orderdetailsadmin')->name('orderdetailsadmin');
 
 });
 
@@ -58,11 +60,19 @@ Route::controller(AdminStores::class)->group(function () {
     Route::post('updatepricingdetails', 'updatepricingdetails')->name('updatepricingdetails');
     Route::get('filtertype/{selectedtype}', 'filtertype')->name('filtertype');
     Route::get('/deleteuser/{id}', 'deleteuser')->name('deleteuser');
-
-
+    Route::get('/deleteorder/{id}', 'deleteorder')->name('deleteorder');
+    Route::post('/updateorderstatus', 'updateorderstatus')->name('updateorderstatus');
 
 
 });
+
+
+
+
+
+
+
+
 
 
 
