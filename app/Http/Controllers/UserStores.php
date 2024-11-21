@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\FormAttribute;
 use App\Models\GroupType;
 use App\Models\Message;
+use App\Models\Wallet;
 use App\Models\PurchaseService;
 use App\Models\RegisterUser;
 use App\Models\Template;
@@ -258,6 +259,23 @@ class UserStores extends Controller
             return back()->with('success', 'Form data updated successfully!');
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function insertwallet(Request $request)
+    {
+        try {
+            $loggedinuser = Auth::guard('customer')->user();
+            $walletdata = new Wallet();
+            $walletdata->userid = $loggedinuser->id;
+            $walletdata->transactiontype = $request->input('transactiontype');
+            $walletdata->paymenttype = $request->input('paymenttype');
+            $walletdata->amount = $request->input('walletamount');
+            $walletdata->status = 0;
+            $walletdata->save();
+            return back()->with('success', 'Wallet Recharged.');
+        } catch (Exception $e) {
+            return redirect()->route('wallet')->with('error', $e->getMessage());
         }
     }
 

@@ -92,6 +92,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('serviceformpage/{id}', 'serviceformpage')->name('serviceformpage');
     Route::get('orderpage', 'orderpage')->name('orderpage');
     Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
+    Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
 
 
 });
@@ -105,6 +106,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('LoginOtpVerify', 'LoginOtpVerify')->name('LoginOtpVerify');
     Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
     Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
+    Route::post('insertwallet', 'insertwallet')->name('insertwallet');
 
 });
 

@@ -3,6 +3,7 @@
 <title>Home | DBA Consultancy</title>
 @endpush
 @section('content')
+
 <div class="container-fluid p-4 desktop-view">
     {{-- Header bar --}}
     <div class="row">
@@ -37,9 +38,9 @@
     <div class="row my-3">
         <div class="wallet-box">
             <div class="balance text-white">
-                Balance
+                Current Balance
                 <div class="wallet-amount">
-                    <i class='bx bx-rupee'></i>20,000
+                    <i class='bx bx-rupee'></i>{{$walletamount}}
                 </div>
             </div>
             <div class="wallet-actions mt-3 d-flex justify-content-around">
