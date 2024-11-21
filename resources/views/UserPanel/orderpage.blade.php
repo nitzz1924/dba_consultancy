@@ -51,80 +51,84 @@
             <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
                 tabindex="0">
                 @foreach ($purchasedata as $value)
-                    @if($value->status == 'Unpaid')
-                    <a href="{{ route('orderdetails', ['id' => $value->id]) }}" class="text-decoration-none">
-                        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="me-2">
-                                    <img src="{{ asset('assets/images/Services/' . $value->iconimage) }}" class="rounded-4" alt="icon" height="50" width="50">
-                                </div>
-                                <div class="fs-5 text-dark">
-                                    {{$value->servicename}}
-                                    <div class="">
-                                        <div class="text-muted fs-6">
-                                            {{ $value->created_at->diffForHumans()}}
-                                        </div>
+                @if($value->status == 'Unpaid')
+                <a href="{{ route('orderdetails', ['id' => $value->id]) }}" class="text-decoration-none">
+                    <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2">
+                                <img src="{{ asset('assets/images/Services/' . $value->iconimage) }}" class="rounded-4"
+                                    alt="icon" height="50" width="50">
+                            </div>
+                            <div class="fs-5 text-dark">
+                                {{$value->servicename}}
+                                <div class="">
+                                    <div class="text-muted fs-6">
+                                        {{ $value->created_at->diffForHumans()}}
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="badge rounded-pill bg-danger-subtle text-danger">{{$value->status}}</span>
-                            </div>
                         </div>
-                    </a>
-                    @endif
+                        <div>
+                            <span class="badge rounded-pill bg-danger-subtle text-danger">{{$value->status}}</span>
+                        </div>
+                    </div>
+                </a>
+                @endif
                 @endforeach
             </div>
-            <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                tabindex="0">
                 @foreach ($purchasedata as $value)
-                    @if($value->status == 'Processing')
-                    <a href="#" class="text-decoration-none">
-                        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="me-2">
-                                    <img src="{{ asset('assets/images/Services/' . $value->iconimage) }}" class="rounded-4" alt="icon" height="50" width="50">
-                                </div>
-                                <div class="fs-5 text-dark">
-                                    {{$value->servicename}}
-                                    <div class="">
-                                        <div class="text-muted fs-6">
-                                            {{ $value->created_at->diffForHumans()}}
-                                        </div>
+                @if($value->status == 'Processing')
+                <a href="#" class="text-decoration-none">
+                    <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2">
+                                <img src="{{ asset('assets/images/Services/' . $value->iconimage) }}" class="rounded-4"
+                                    alt="icon" height="50" width="50">
+                            </div>
+                            <div class="fs-5 text-dark">
+                                {{$value->servicename}}
+                                <div class="">
+                                    <div class="text-muted fs-6">
+                                        {{ $value->created_at->diffForHumans()}}
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="badge rounded-pill bg-info-subtle text-info">{{$value->status}}</span>
-                            </div>
                         </div>
-                    </a>
-                    @endif
+                        <div>
+                            <span class="badge rounded-pill bg-info-subtle text-info">{{$value->status}}</span>
+                        </div>
+                    </div>
+                </a>
+                @endif
                 @endforeach
             </div>
             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 @foreach ($purchasedata as $value)
-                    @if($value->status == 'Completed')
-                    <a href="#" class="text-decoration-none">
-                        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="me-2">
-                                    <img src="{{ asset('assets/images/Services/' . $value->iconimage) }}" class="rounded-4" alt="icon" height="50" width="50">
-                                </div>
-                                <div class="fs-5 text-dark">
-                                    {{$value->servicename}}
-                                    <div class="">
-                                        <div class="text-muted fs-6">
-                                            {{ $value->created_at->diffForHumans()}}
-                                        </div>
+                @if($value->status == 'Completed')
+                <a href="#" class="text-decoration-none">
+                    <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="me-2">
+                                <img src="{{ asset('assets/images/Services/' . $value->iconimage) }}" class="rounded-4"
+                                    alt="icon" height="50" width="50">
+                            </div>
+                            <div class="fs-5 text-dark">
+                                {{$value->servicename}}
+                                <div class="">
+                                    <div class="text-muted fs-6">
+                                        {{ $value->created_at->diffForHumans()}}
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="badge rounded-pill bg-success-subtle text-success">{{$value->status}}</span>
-                            </div>
                         </div>
-                    </a>
-                    @endif
+                        <div>
+                            <span class="badge rounded-pill bg-success-subtle text-success">{{$value->status}}</span>
+                        </div>
+                    </div>
+                </a>
+                @endif
                 @endforeach
             </div>
         </div>

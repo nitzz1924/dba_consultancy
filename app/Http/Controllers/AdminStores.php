@@ -282,7 +282,7 @@ class AdminStores extends Controller
 
     public function updateorderstatus(Request $req)
     {
-        $orderstauts = PurchaseService::where('userid',$req->record_id)->first();
+        $orderstauts = PurchaseService::where('id',$req->record_id)->first();
         if ($orderstauts) {
             $orderstauts->status = $req->status;
             $orderstauts->save();

@@ -114,29 +114,68 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
-    public function serviceformpage($id){
-        $pricingdata = PricingDetail::join('masters','pricing_details.serviceid','=','masters.id')
-        ->select('masters.value as servicename','pricing_details.*')->
-        where('serviceid',$id)->first();
+    public function serviceformpage($id)
+    {
+        $pricingdata = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
+            ->select('masters.value as servicename', 'pricing_details.*')->
+            where('serviceid', $id)->first();
         $serviceid = $id;
-        $formattributes = FormAttribute::where('masterserviceid',$id)->get();
-        $masterdata = Master::where('id',$id)->first();
-        return view('UserPanel.serviceformpage',compact('formattributes','serviceid','masterdata','pricingdata'));
+        $formattributes = FormAttribute::where('masterserviceid', $id)->get();
+
+        $masterdata = Master::where('id', $id)->first();
+        return view('UserPanel.serviceformpage', compact('formattributes', 'serviceid', 'masterdata', 'pricingdata'));
     }
-    public function orderpage(){
+    public function orderpage()
+    {
         $loggedinuser = Auth::guard('customer')->user();
-        $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
-        ->select('masters.iconimage as iconimage','purchase_services.*')
-        ->where('userid',$loggedinuser->id)->orderBy('created_at','Desc')->get();
+        $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
+            ->select('masters.iconimage as iconimage', 'purchase_services.*')
+            ->where('userid', $loggedinuser->id)->orderBy('created_at', 'Desc')->get();
         // dd( $purchasedata);
-        return view('UserPanel.orderpage',compact('purchasedata'));
+        return view('UserPanel.orderpage', compact('purchasedata'));
     }
-    public function orderdetails($id){
-        // $loggedinuser = Auth::guard('customer')->user();
-        $purchasedata = PurchaseService::join('masters','purchase_services.serviceid','=','masters.id')
-        ->select('masters.*','purchase_services.*')
-        ->where('purchase_services.id',$id)->first();
-        // dd( $purchasedata);
-        return view('UserPanel.orderdetails',compact('purchasedata'));
+    public function orderdetails($id)
+    {
+        // Fetch purchased data
+        $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
+            ->select('masters.*', 'purchase_services.*')
+            ->where('purchase_services.id', $id)
+            ->first();
+
+        // Decode JSON data
+        $olddata = json_decode($purchasedata->formdata, true);
+        // dd($olddata);
+
+        $newformattributes = PurchaseService::join('form_attributes', 'form_attributes.masterserviceid', '=', 'purchase_services.serviceid')
+            ->select('form_attributes.value as label', 'form_attributes.inputtype')
+            ->where('purchase_services.id', $id)
+            ->get()
+            ->toArray();
+        // dd($newformattributes);
+
+
+        // Create a map of existing labels in $olddata for easy lookup
+        $existingLabels = array_column($olddata, 'label');
+
+        // Build the final JSON
+        $finalData = $olddata;
+
+        foreach ($newformattributes as $attribute) {
+            if (!in_array($attribute['label'], $existingLabels)) {
+                // Append missing attributes from $newformattributes
+                $finalData[] = [
+                    'label' => $attribute['label'],
+                    'value' => '',
+                    'type' => $attribute['inputtype'],
+                ];
+            }
+        }
+
+        // Convert the final data back to JSON
+        $finalJson = json_encode($finalData);
+
+        // dd($finalJson); // Debug output
+        return view('UserPanel.orderdetails', compact('purchasedata', 'finalJson'));
     }
+
 }

@@ -54,7 +54,8 @@ class AdminViews extends Controller
     public function orderdetailsadmin($id){
         $orderdetails =  PurchaseService::join('register_users','purchase_services.userid','=','register_users.id')
         ->join('masters','masters.id','=','purchase_services.serviceid')
-        ->select('register_users.*','purchase_services.*','masters.iconimage as serviceimage')->first();
+        ->select('register_users.*','purchase_services.*','masters.iconimage as serviceimage')
+        ->where('purchase_services.id',$id)->first();
         //dd($orderdetails);
         return view('AdminPanel.orderdetails',compact('orderdetails'));
     }

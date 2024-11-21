@@ -97,8 +97,8 @@
                 <form id="originalform" enctype="multipart/form-data">
                     @csrf
                     @php
-                    $formdata = json_decode($purchasedata->formdata, true);
-                    // dd($formdata);
+                    $formdata = json_decode($finalJson, true);
+                    //dd($formdata);
                     @endphp
                     @foreach ($formdata as $data)
                     @if ($data['label'] !== '_token')
@@ -117,14 +117,25 @@
                     <div class="mb-3 text-center">
                         <label for="{{ $data['label'] }}" class="form-label">{{ $data['label'] }}</label>
                         <input class="form-control form-control-lg" name="{{ $data['label'] }}"
-                            id="{{ $data['label'] }}" type="file" onchange="previewImage(event)"
+                            id="{{ $data['label'] }}" type="file" onchange="previewFile(event)"
                             value="{{ $data['value'] }}">
-                        <input type="hidden" name="file_{{ $data['label'] }}" value="{{$data['value']}}">
+                        <input type="hidden" name="file_{{ $data['label'] }}" value="{{ $data['value'] }}">
                     </div>
                     <div class="text-center mb-3">
+                        <!-- Image Preview -->
                         <img id="imagePreview" src="{{ asset('assets/images/users/' . $data['value']) }}"
-                            alt="Profile Image Preview" class="border"
-                            style="display: {{ !empty($data['value']) ? 'block' : 'none' }}; width: 100%; border-radius: 5%; object-fit: cover; margin-inline: auto;">
+                            alt="Profile Image Preview" class="border" style="display: {{ !empty($data['value']) && in_array(pathinfo($data['value'], PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']) ? 'block' : 'none' }};
+                                    width: 100%;
+                                    border-radius: 5%;
+                                    object-fit: cover;
+                                    margin-inline: auto;">
+
+                        <!-- Document Preview -->
+                        <iframe id="docPreview" src="{{ asset('assets/images/users/' . $data['value']) }}" style="display: {{ !empty($data['value']) && pathinfo($data['value'], PATHINFO_EXTENSION) === 'pdf' ? 'block' : 'none' }};
+                                       width: 100%;
+                                       height: 200px;
+                                       border: none;">
+                        </iframe>
                     </div>
                     @else
                     <div class="form-floating mb-3">
@@ -154,14 +165,35 @@
 
 {{-- JavaScript for Image Preview --}}
 <script>
-    function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('imagePreview');
-                output.src = reader.result;
-                output.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
+    function previewFile(event) {
+            const file = event.target.files[0];
+            const imagePreview = document.getElementById('imagePreview');
+            const docPreview = document.getElementById('docPreview');
+
+            // Reset previews
+            imagePreview.style.display = 'none';
+            docPreview.style.display = 'none';
+
+            if (!file) return;
+
+            const fileType = file.type;
+
+            if (fileType.startsWith('image/')) {
+                // Handle image preview
+                const reader = new FileReader();
+                reader.onload = function() {
+                    imagePreview.src = reader.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else if (fileType === 'application/pdf') {
+                // Handle PDF preview
+                const url = URL.createObjectURL(file);
+                docPreview.src = url;
+                docPreview.style.display = 'block';
+            } else {
+                alert('Unsupported file type. Please upload an image or a PDF.');
+            }
         }
 </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

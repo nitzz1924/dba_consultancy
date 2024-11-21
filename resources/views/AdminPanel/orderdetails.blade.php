@@ -58,9 +58,9 @@
                                                 <div class="flex-grow-1 ms-3">
                                                     <h5 class="fs-14 text-body">{{ $orderdetails->servicename }}</h5>
                                                     <p class="text-muted mb-0">{{ $orderdetails->formtype }}</p>
-                                                    <span
-                                                        class="text-muted mb-0">{{ $orderdetails->created_at->format('d
-                                                                                                                M Y') }}</span>
+                                                    <span class="text-muted mb-0">{{
+                                                        $orderdetails->created_at->format('d
+                                                        M Y') }}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -105,29 +105,43 @@
                     </div>
                     <div class="card-body">
                         @php
-                            $formdata = json_decode($orderdetails->formdata, true);
+                        $formdata = json_decode($orderdetails->formdata, true);
                         @endphp
                         <table class="table table-bordered border-light">
 
                             <tbody>
                                 @foreach ($formdata as $data)
-                                    @if ($data['label'] !== '_token')
-                                        <tr>
-                                            <td>{{ $data['label'] }}</td>
-                                            <td>
-                                                @if ($data['type'] === 'file')
-                                                    <a href="{{ asset('assets/images/users/' . $data['value']) }}"
-                                                        download="{{ $data['value'] }}">
-                                                        <img src="{{ asset('assets/images/users/' . $data['value']) }}"
-                                                            alt="{{ $data['label'] }}"
-                                                            style="width: 100px; height: 100px; object-fit: cover;">
-                                                    </a>
-                                                @else
-                                                    {{ $data['value'] }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endif
+                                @if ($data['label'] !== '_token')
+                                <tr>
+                                    <td>{{ $data['label'] }}</td>
+                                    <td>
+                                        @php
+                                        $filePath = asset('assets/images/users/' . $data['value']);
+                                        $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
+                                        $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                                        @endphp
+
+                                        @if (in_array(strtolower($fileExtension), $imageExtensions))
+                                        <div>
+                                            <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
+                                                style="width: 100px; height: 100px; object-fit: cover;">
+
+                                        </div>
+                                        <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                            class="btn btn-dark btn-sm mt-2">Download</a>
+                                        @elseif (strtolower($fileExtension) === 'pdf')
+                                        <!-- Display PDF in iframe with download link -->
+                                        <iframe src="{{ $filePath }}"
+                                            style="width: 100%; height: 200px; border: none;"></iframe>
+                                        <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                            class="btn btn-dark btn-sm mt-2">Download PDF</a>
+                                        @else
+                                        {{ $data['value'] }}
+                                        @endif
+                                    </td>
+
+                                </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -159,8 +173,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><i
-                                    class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $orderdetails->email }}
+                            <li><i class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $orderdetails->email
+                                }}
                             </li>
                             <li><i class="ri-phone-line me-2 align-middle text-muted fs-16"></i>+(91)
                                 {{ $orderdetails->mobilenumber }}</li>
@@ -176,17 +190,14 @@
                     <div class="card-body">
                         <select class="form-select orderstatus mb-3" aria-label="Default select example">
                             <option>--select to change--</option>
-                            <option value="Unpaid"
-                                {{ $orderdetails->status == 'Unpaid' ? 'selected' : '' }}>
+                            <option value="Unpaid" {{ $orderdetails->status == 'Unpaid' ? 'selected' : '' }}>
                                 Unpaid</option>
                             <option value="Processing" {{ $orderdetails->status == 'Processing' ? 'selected' : '' }}>
                                 Processing</option>
-                            <option value="Completed"
-                                {{ $orderdetails->status == 'Completed' ? 'selected' : '' }}>
+                            <option value="Completed" {{ $orderdetails->status == 'Completed' ? 'selected' : '' }}>
                                 Completed</option>
                         </select>
-                        <input type="hidden" id="userid" name="userid" value="{{ $orderdetails->userid }}"
-                            </div>
+                        <input type="hidden" id="userid" name="userid" value="{{ $orderdetails->id }}" </div>
                     </div>
                 </div>
             </div>
@@ -235,9 +246,12 @@
                                                 "error");
                                         }
                                     },
-                                    error: function() {
-                                        Swal.fire("Error", "An error occurred.", "error");
+                                    error: function(xhr, status, error) {
+                                        let errorMessage = xhr.responseJSON?.message || error ||
+                                            "An unknown error occurred.";
+                                        Swal.fire("Error", errorMessage, "error");
                                     }
+
                                 });
                             }
                         });
