@@ -37,6 +37,8 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('createform', 'createform')->name('createform');
     Route::get('pricingdetails', 'pricingdetails')->name('pricingdetails');
     Route::get('allcustomers', 'allcustomers')->name('allcustomers');
+    Route::get('customersorders', 'customersorders')->name('customersorders');
+    Route::get('admin/orderdetails/{id}', 'orderdetailsadmin')->name('orderdetailsadmin');
 
 });
 
@@ -58,11 +60,17 @@ Route::controller(AdminStores::class)->group(function () {
     Route::post('updatepricingdetails', 'updatepricingdetails')->name('updatepricingdetails');
     Route::get('filtertype/{selectedtype}', 'filtertype')->name('filtertype');
     Route::get('/deleteuser/{id}', 'deleteuser')->name('deleteuser');
-
-
+    Route::get('/deleteorder/{id}', 'deleteorder')->name('deleteorder');
+    Route::post('/updateorderstatus', 'updateorderstatus')->name('updateorderstatus');
 
 
 });
+
+
+
+
+
+
 
 
 
@@ -81,6 +89,10 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('editprofile', 'editprofile')->name('editprofile');
     Route::get('allservices', 'allservices')->name('allservices');
     Route::get('consultingdetails/{id}', 'consultingdetails')->name('consultingdetails');
+    Route::get('serviceformpage/{id}', 'serviceformpage')->name('serviceformpage');
+    Route::get('orderpage', 'orderpage')->name('orderpage');
+    Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
+    Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
 
     Route::get('refer', 'refer')->name('refer');
 
@@ -93,7 +105,9 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('proceedtootp', 'proceedtootp')->name('proceedtootp');
     Route::post('verifyotp', 'verifyotp')->name('verifyotp');
     Route::post('LoginOtpVerify', 'LoginOtpVerify')->name('LoginOtpVerify');
-
+    Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
+    Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
+    Route::post('insertwallet', 'insertwallet')->name('insertwallet');
 
 });
 

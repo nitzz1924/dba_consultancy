@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 10:06 AM
+-- Generation Time: Nov 21, 2024 at 01:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1731126549),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1731126549;', 1731126549);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1732165426),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1732165426;', 1732165426);
 
 -- --------------------------------------------------------
 
@@ -79,6 +79,7 @@ CREATE TABLE `form_attributes` (
   `id` int(11) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   `servicename` varchar(255) DEFAULT NULL,
+  `masterserviceid` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   `inputtype` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -89,9 +90,15 @@ CREATE TABLE `form_attributes` (
 -- Dumping data for table `form_attributes`
 --
 
-INSERT INTO `form_attributes` (`id`, `type`, `servicename`, `value`, `inputtype`, `created_at`, `updated_at`) VALUES
-(5, 'Services', 'GST No.', 'GST One', 'email', '2024-11-05 10:31:44', '2024-11-05 12:02:58'),
-(6, 'Services', 'GST No.', 'GST Two', 'text', '2024-11-05 12:02:13', '2024-11-05 12:03:09');
+INSERT INTO `form_attributes` (`id`, `type`, `servicename`, `masterserviceid`, `value`, `inputtype`, `created_at`, `updated_at`) VALUES
+(12, 'Services', 'File Tax Return', '215', 'Name', 'text', '2024-11-13 06:10:25', '2024-11-13 06:10:25'),
+(13, 'Services', 'File Tax Return', '215', 'Email', 'email', '2024-11-13 06:10:37', '2024-11-13 06:10:37'),
+(14, 'Services', 'File Tax Return', '215', 'Amount', 'text', '2024-11-13 06:10:47', '2024-11-13 06:14:03'),
+(15, 'Services', 'File Tax Return', '215', 'Details', 'textarea', '2024-11-13 06:11:03', '2024-11-13 06:11:03'),
+(19, 'Services', 'File Tax Return', '215', 'Profile', 'file', '2024-11-18 07:34:52', '2024-11-18 07:34:52'),
+(20, 'Services', 'GST No.', '214', 'Number', 'text', '2024-11-21 05:05:33', '2024-11-21 05:05:33'),
+(21, 'Services', 'GST No.', '214', 'Document', 'file', '2024-11-21 05:05:55', '2024-11-21 05:05:55'),
+(22, 'Services', 'GST No.', '214', 'Amount', 'text', '2024-11-21 05:06:06', '2024-11-21 05:06:06');
 
 -- --------------------------------------------------------
 
@@ -251,9 +258,36 @@ CREATE TABLE `pricing_details` (
 INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `disprice`, `duration`, `coverimage`, `documents`, `details`, `notereq`, `created_at`, `updated_at`) VALUES
 (6, 'Services', '214', '7955', '8', '9', 'service-bg.png', '[\"GST\",\"Aadhar Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 04:46:18', '2024-11-09 06:37:15'),
 (9, 'Services', '222', '60,000', '7500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2024-11-09 06:37:17'),
-(10, 'Services', '215', '60,0000', '7500', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-11-09 06:37:19'),
+(10, 'Services', '215', '15000', '7500', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-11-14 05:53:53'),
 (11, 'Services', '223', '50000', '988', '55', 'service-bg.png', '[\"Aadhar Card\",\"Bank Passbook\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:53', '2024-11-09 06:37:20'),
 (13, 'Consulting', '225', '75000', '7500', '45', '1731134472_service-bg.png', '[\"Aadhar Card\"]', 'Consulting Services', 'Consulting Services', '2024-11-09 06:41:12', '2024-11-09 07:16:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_services`
+--
+
+CREATE TABLE `purchase_services` (
+  `id` int(11) NOT NULL,
+  `formtype` varchar(255) DEFAULT NULL,
+  `serviceid` varchar(255) DEFAULT NULL,
+  `discount` varchar(255) DEFAULT NULL,
+  `userid` varchar(255) DEFAULT NULL,
+  `servicename` varchar(255) DEFAULT NULL,
+  `servicecharge` varchar(255) DEFAULT NULL,
+  `formdata` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`formdata`)),
+  `status` varchar(255) DEFAULT 'Unpaid',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_services`
+--
+
+INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `userid`, `servicename`, `servicecharge`, `formdata`, `status`, `created_at`, `updated_at`) VALUES
+(39, 'Services', '214', '8', '45', 'GST No.', '7955', '[{\"label\":\"_token\",\"value\":\"vMxnDvM2o8zJJGpqAT0Tb1ICSaDvNL1iyU2C8LPh\",\"type\":\"text\"},{\"label\":\"Number\",\"value\":\"500\",\"type\":\"text\"},{\"label\":\"Amount\",\"value\":\"5400\",\"type\":\"text\"},{\"label\":\"Document\",\"value\":\"1732192367_Anurag09.jpg\",\"type\":\"file\"}]', 'Unpaid', '2024-11-21 12:32:47', '2024-11-21 12:32:47');
 
 -- --------------------------------------------------------
 
@@ -277,8 +311,8 @@ CREATE TABLE `register_users` (
 --
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `username`) VALUES
-(44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-09 04:21:40', '704551', 'Anshul'),
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-08 12:34:00', '748279', 'Nitzz');
+(44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-13 04:49:01', '607991', 'Anshul'),
+(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-21 05:01:50', '264634', 'Nitzz');
 
 -- --------------------------------------------------------
 
@@ -300,7 +334,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('J4nIjzUTnTJfY5rzN6pblm4Wqev1IKDdKqgM3Ci9', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSzhSeFk4eEVWUWhLWFRhbEdDNnoyZmpoOEhkRHAyQmliczF0RDdFVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hbGxjdXN0b21lcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ0O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1731139604);
+('V52zcQ8zpcCyn8FJnLaLtVkG2TBRVkmDMEQ3ZuxR', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoidk14bkR2TTJvOHpKSkdwcUFUMFRiMUlDU2FEdk5MMWl5VTJDOExQaCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9jZWVkdG9wYXkvMjE0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0NTtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjt9', 1732192713);
 
 -- --------------------------------------------------------
 
@@ -330,6 +364,32 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
 (1, 'Harish', 'db@gmail.com', NULL, '$2y$12$l6.03Ub7zM/dwLJXXhDn2.SgsJM804w6Qcj18/t1UiVxoAeMsKFHi', NULL, NULL, NULL, 'i0pJuWnp0ael6gGkJfHvUUhpgyw4mmca3EDwF0ZP5KVaL19RtPKDat5OXbI3', NULL, NULL, '2024-09-04 04:20:07', '2024-09-04 04:20:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallets`
+--
+
+CREATE TABLE `wallets` (
+  `id` int(11) NOT NULL,
+  `userid` varchar(255) NOT NULL,
+  `transactionid` varchar(255) DEFAULT NULL,
+  `amount` float NOT NULL,
+  `paymenttype` varchar(255) NOT NULL DEFAULT '"credit","debit"',
+  `transactiontype` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wallets`
+--
+
+INSERT INTO `wallets` (`id`, `userid`, `transactionid`, `amount`, `paymenttype`, `transactiontype`, `status`, `created_at`, `updated_at`) VALUES
+(22, '45', NULL, 10000, 'credit', 'online', '0', '2024-11-21 09:54:05', '2024-11-21 09:54:05'),
+(23, '45', NULL, 2, 'debit', 'online', '0', '2024-11-21 10:01:19', '2024-11-21 10:01:52');
 
 --
 -- Indexes for dumped tables
@@ -406,6 +466,12 @@ ALTER TABLE `pricing_details`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `purchase_services`
+--
+ALTER TABLE `purchase_services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `register_users`
 --
 ALTER TABLE `register_users`
@@ -427,6 +493,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `wallets`
+--
+ALTER TABLE `wallets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -440,7 +512,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `form_attributes`
 --
 ALTER TABLE `form_attributes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -473,6 +545,12 @@ ALTER TABLE `pricing_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT for table `purchase_services`
+--
+ALTER TABLE `purchase_services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
 -- AUTO_INCREMENT for table `register_users`
 --
 ALTER TABLE `register_users`
@@ -483,6 +561,12 @@ ALTER TABLE `register_users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `wallets`
+--
+ALTER TABLE `wallets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

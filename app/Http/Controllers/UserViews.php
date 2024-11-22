@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Contact;
+use App\Models\FormAttribute;
 use App\Models\GroupType;
 use App\Models\Message;
+use App\Models\Wallet;
 use App\Models\Master;
 use App\Models\PricingDetail;
+use App\Models\PurchaseService;
 use App\Models\RegisterUser;
 use App\Models\Template;
 use Illuminate\Http\Request;
@@ -38,19 +41,31 @@ class UserViews extends Controller
     }
     public function home()
     {
+        $loggedinuser = Auth::guard('customer')->user();
         if (Auth::guard('customer')->check()) {
             $services = Master::where('type', '=', 'Services')->get();
             $consulting = Master::join('pricing_details', 'pricing_details.serviceid', '=', 'masters.id')
                 ->select('pricing_details.price as price', 'masters.*')->where('type', '=', 'Consulting')->get();
-            return view('UserPanel.home', compact('services', 'consulting'));
+            $debitTotal = 0;
+            $creditTotal = 0;
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+            $walletamount = ($creditTotal - $debitTotal);
+            return view('UserPanel.home', compact('services', 'consulting', 'walletamount'));
         } else {
             return view('auth.UserPanel.login');
         }
     }
     public function wallet()
     {
+        $loggedinuser = Auth::guard('customer')->user();
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.wallet');
+            $debitTotal = 0;
+            $creditTotal = 0;
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+            $walletamount = ($creditTotal - $debitTotal);
+            return view('UserPanel.wallet', compact('walletamount'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -112,4 +127,94 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
+    public function serviceformpage($id)
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        $pricingdata = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
+            ->select('masters.value as servicename', 'pricing_details.*')->
+            where('serviceid', $id)->first();
+        $serviceid = $id;
+        $formattributes = FormAttribute::where('masterserviceid', $id)->get();
+
+        $masterdata = Master::where('id', $id)->first();
+
+        $debitTotal = 0;
+        $creditTotal = 0;
+        $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+        $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+        $walletamount = ($creditTotal - $debitTotal);
+        return view('UserPanel.serviceformpage', compact('formattributes', 'serviceid', 'masterdata', 'pricingdata', 'walletamount'));
+    }
+    public function orderpage()
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
+            ->select('masters.iconimage as iconimage', 'purchase_services.*')
+            ->where('userid', $loggedinuser->id)->orderBy('created_at', 'Desc')->get();
+        // dd( $purchasedata);
+        return view('UserPanel.orderpage', compact('purchasedata'));
+    }
+    public function orderdetails($id)
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        // Fetch purchased data
+        $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
+            ->select('masters.*', 'purchase_services.*')
+            ->where('purchase_services.id', $id)
+            ->first();
+
+        // Decode JSON data
+        $olddata = json_decode($purchasedata->formdata, true);
+        // dd($olddata);
+
+        $newformattributes = PurchaseService::join('form_attributes', 'form_attributes.masterserviceid', '=', 'purchase_services.serviceid')
+            ->select('form_attributes.value as label', 'form_attributes.inputtype')
+            ->where('purchase_services.id', $id)
+            ->get()
+            ->toArray();
+        // dd($newformattributes);
+
+
+        // Create a map of existing labels in $olddata for easy lookup
+        $existingLabels = array_column($olddata, 'label');
+
+        // Build the final JSON
+        $finalData = $olddata;
+
+        foreach ($newformattributes as $attribute) {
+            if (!in_array($attribute['label'], $existingLabels)) {
+                // Append missing attributes from $newformattributes
+                $finalData[] = [
+                    'label' => $attribute['label'],
+                    'value' => '',
+                    'type' => $attribute['inputtype'],
+                ];
+            }
+        }
+
+        // Convert the final data back to JSON
+        $finalJson = json_encode($finalData);
+
+        $debitTotal = 0;
+        $creditTotal = 0;
+        $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+        $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+        $walletamount = ($creditTotal - $debitTotal);
+        return view('UserPanel.orderdetails', compact('purchasedata', 'finalJson', 'walletamount'));
+    }
+
+    public function proceedtopay($id){
+        $loggedinuser = Auth::guard('customer')->user();
+        $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
+            ->select('masters.*', 'purchase_services.*')
+            ->where('purchase_services.serviceid', $id)
+            ->first();
+        $debitTotal = 0;
+        $creditTotal = 0;
+        $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+        $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+        $walletamount = ($creditTotal - $debitTotal);
+        return view('UserPanel.proceedtopay',compact('walletamount','purchasedata'));
+    }
+
 }

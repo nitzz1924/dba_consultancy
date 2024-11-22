@@ -240,7 +240,7 @@
     <!-- App js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.13.2/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script> --}}
     <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.0/js/dataTables.buttons.js"></script>

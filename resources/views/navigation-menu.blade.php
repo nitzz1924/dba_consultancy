@@ -67,7 +67,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('pricingdetails') }}">
                         <i class="bx bx-rupee"></i>
-                        <span data-key="t-widgets">Add Pricing Details</span>
+                        <span data-key="t-widgets">Add Service Details</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -81,6 +81,11 @@
                             <li class="nav-item">
                                 <a href="{{ route('allcustomers') }}" class="nav-link" data-key="t-one-page">
                                     Customers List
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('customersorders') }}" class="nav-link" data-key="t-one-page">
+                                    Orders
                                 </a>
                             </li>
                         </ul>

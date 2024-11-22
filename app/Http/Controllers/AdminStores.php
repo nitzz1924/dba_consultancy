@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\GroupType;
 use App\Models\PricingDetail;
+use App\Models\PurchaseService;
 use App\Models\RegisterUser;
 use App\Models\FormAttribute;
 use Exception;
@@ -136,6 +137,7 @@ class AdminStores extends Controller
             FormAttribute::create([
                 'type' => $rq->servicetype,
                 'servicename' => $rq->servicename,
+                'masterserviceid' => $rq->masterserviceid,
                 'value' => $rq->value,
                 'inputtype' => $rq->inputtype,
             ]);
@@ -269,6 +271,24 @@ class AdminStores extends Controller
         $data = RegisterUser::find($id);
         $data->delete();
         return back()->with('success', "Deleted....!!!");
+    }
+
+    public function deleteorder($id)
+    {
+        $data = PurchaseService::find($id);
+        $data->delete();
+        return back()->with('success', "Deleted....!!!");
+    }
+
+    public function updateorderstatus(Request $req)
+    {
+        $orderstauts = PurchaseService::where('id',$req->record_id)->first();
+        if ($orderstauts) {
+            $orderstauts->status = $req->status;
+            $orderstauts->save();
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false], 404);
     }
 
 }

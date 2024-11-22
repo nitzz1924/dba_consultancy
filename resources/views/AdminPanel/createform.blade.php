@@ -31,11 +31,13 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <input type="hidden" name="masterserviceid" id="selectedServiceId">
                                 <div class="col-lg-3">
                                     <label class="">Select Service</label>
                                     <select name="servicename" class="form-select" id="serviceid" required>
                                         <option value="">--select service--</option>
                                     </select>
+
                                 </div>
                                 <div class="col-lg-2">
                                     <label for="example-text-input" class="">Value</label>
@@ -85,15 +87,16 @@
                                 {{-- @foreach ($attributesdata as $index => $row)
                                 <tr>
                                     <td>{{$index + 1}}</td>
-                                <td>{{$row->cartype}}</td>
-                                <td>{{$row->formlabels}}</td>
-                                <td>{{$row->value}}</td>
-                                <td>{{$row->inputtype}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-danger waves-effect waves-light btn-sm" onclick="confirmDelete('{{ $row->id }}')">
-                                        <i class="uil-trash-alt"></i>
-                                    </button>
-                                </td>
+                                    <td>{{$row->cartype}}</td>
+                                    <td>{{$row->formlabels}}</td>
+                                    <td>{{$row->value}}</td>
+                                    <td>{{$row->inputtype}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger waves-effect waves-light btn-sm"
+                                            onclick="confirmDelete('{{ $row->id }}')">
+                                            <i class="uil-trash-alt"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                                 @endforeach --}}
                             </tbody>
@@ -158,12 +161,24 @@
                     dropdown1.empty();
                     dropdown1.append($('<option selected>Choose...</option>'));
                     response.master.forEach(function(item) {
-                        dropdown1.append($('<option value="' + item.label + '">' + item.label +
-                            '</option>'));
+                        dropdown1.append($('<option value="' + item.label + '" data-id="' + item
+                            .id + '">' + item.label + '</option>'));
                     });
                 }
             });
         });
+
+        //Getting Master ID of Selected Option
+        $('#serviceid').on('change', function() {
+            var selectedOption = $(this).find('option:selected');
+            var selectedServiceId = selectedOption.attr('data-id');
+            $('#selectedServiceId').val(selectedServiceId);
+        });
+
+
+
+
+
 
         //Table Appending dynamically
         $('#servicetypeid, #serviceid').on('change', function() {

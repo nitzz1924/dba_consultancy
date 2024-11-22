@@ -50,11 +50,11 @@
                                         <td>{{$data->email}}</td>
                                         <td>
                                             @if($data->verifystatus == 0)
-                                            <span
-                                                class="badge rounded-pill bg-warning-subtle text-warning">Pending</span>
+                                            <span class="badge badge-label bg-danger fs-6"><i
+                                                class="mdi mdi-circle-medium"></i> Pending</span>
                                             @elseif($data->verifystatus == 1)
-                                            <span
-                                                class="badge rounded-pill bg-success-subtle text-success">Verified</span>
+                                            <span class="badge badge-label bg-success fs-6"><i
+                                                class="mdi mdi-circle-medium"></i>Verified</span>
                                             @endif
                                         </td>
                                         <td>

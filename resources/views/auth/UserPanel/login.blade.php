@@ -47,6 +47,7 @@
                                             <p class="text-muted text-center">Sign in to continue</p>
                                         </div>
                                         @csrf
+                                        <p id="demomobile" class="text-center fs-4">Demo Mobile No. : <strong>1234567890</strong></p>
                                         <div class="mb-3">
                                             <label for="username" class="form-label fs-5">Phone Number</label>
                                             <input type="text" name="mobilenumber" class="form-control rounded-5 p-3"
@@ -82,6 +83,7 @@
                                                 title="Please enter a number." required>
                                     </div>
                                     @endfor
+                                    <div class="text-center fs-3 text-bold mt-3" id="otpinput"></div>
                                     <input type="hidden" name="registerid" value="" id="registerid">
                             </div>
                             <div class="mt-3">
@@ -112,13 +114,15 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
+                    console.log(data);
                     if (data.msg == 'success') {
                         jQuery('#loginformid').hide();
                         jQuery('#signinotp').show();
                         jQuery('#registerid').val(data.data.id);
+                        $('#otpinput').text("OTP is : " + data.data.otp);
                     }
                 }
-            });
+            })
         });
 </script>
 <script>

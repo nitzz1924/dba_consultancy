@@ -218,6 +218,9 @@
     <script src="{{ asset('assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
+    <script src="{{asset('assets/libs/prismjs/prism.js')}}"></script>
+    <script src="{{asset('assets/js/pages/notifications.init.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     {{-- <script>
         dayjs.extend(dayjs_plugin_relativeTime);
     </script> --}}
@@ -232,6 +235,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.html5.min.js"></script>
+
     @if (session('success'))
         <script>
             // Display SweetAlert for success message

@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FormAttribute extends Model
+class PurchaseService extends Model
 {
     protected $fillable = [
-        'type',
+        'formtype',
+        'userid',
         'servicename',
-        'masterserviceid',
-        'value',
-        'inputtype',
+        'serviceid',
+        'discount',
+        'servicecharge',
+        'formdata',
+        'status',
     ];
 }
