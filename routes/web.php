@@ -94,6 +94,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
     Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
 
+    Route::get('refer', 'refer')->name('refer');
 
 });
 
