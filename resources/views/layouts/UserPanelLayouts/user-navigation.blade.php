@@ -13,8 +13,7 @@
         <!-- Light Logo-->
         <a href="{{ route('home') }}" class="logo logo-light py-2">
             <span class="logo-sm p-2">
-                <img class="rounded-pill" src="{{ asset('assets/images/dfavicon.png') }}" alt=""
-                    height="35" />
+                <img class="rounded-pill" src="{{ asset('assets/images/dfavicon.png') }}" alt="" height="35" />
             </span>
             <span class="logo-lg">
                 <img src="{{ asset('assets/images/dbalogo.png') }}" alt="dbalogo" height="100" />
@@ -44,8 +43,8 @@
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('allservices') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('allservices') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('allservices') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
                         <i class=" ri-list-settings-line"></i>All Services</span>
                     </a>
                 </li>
@@ -60,6 +59,12 @@
                     <a class="nav-link menu-link" href="{{ route('orderpage') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class=" ri-file-list-line"></i><span>My Orders</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('allrefers') ? 'active' : '' }}">
+                    <a class="nav-link menu-link" href="{{ route('allrefers') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarDashboards">
+                        <i class=" ri-file-list-line"></i><span>All Refers</span>
                     </a>
                 </li>
 

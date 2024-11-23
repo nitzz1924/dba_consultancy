@@ -217,4 +217,19 @@ class UserViews extends Controller
         return view('UserPanel.proceedtopay',compact('walletamount','purchasedata'));
     }
 
+    public function allrefers(){
+        $loggedinuser = Auth::guard('customer')->user();
+        $myrefercode =  $loggedinuser->refercode;
+        $list = RegisterUser::orderby('created_at','DESC')
+        ->where(  'parentreferid' ,'=', $myrefercode)->get();
+        $array = [];
+        foreach ($list as $row) {
+            $row->referral_count = RegisterUser::where('parentreferid', '=', $row->refercode)->count();
+            $array[] = $row;
+        }
+
+        //dd($array);
+        return view('UserPanel.allrefers',compact('list'));
+    }
+
 }

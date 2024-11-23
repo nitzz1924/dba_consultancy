@@ -32,16 +32,16 @@
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('dashboard')}}">
-                        <i class="bx bxs-dashboard"></i>
-                        <span data-key="t-widgets">Dashboard</span>
+                        <img class="" src="{{ asset('assets/images/dashboard.png') }}" alt=""
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarLanding">
-                        <i class="ri-settings-3-line"></i>
-                        <span data-key="t-landing">Settings</span>
+                        <img class="" src="{{ asset('assets/images/cogwheel.png') }}" alt=""
+                        height="20" />&nbsp;&nbsp;<span class="fs-5">Settings</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLanding">
                         <ul class="nav nav-sm flex-column">
@@ -60,21 +60,21 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('createform') }}">
-                        <i class="bx bxs-window-alt"></i>
-                        <span data-key="t-widgets">Create Forms</span>
+                        <img class="" src="{{ asset('assets/images/registration-form.png') }}" alt=""
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">Create Forms</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('pricingdetails') }}">
-                        <i class="bx bx-rupee"></i>
-                        <span data-key="t-widgets">Add Service Details</span>
+                        <img class="" src="{{ asset('assets/images/details.png') }}" alt=""
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">Add Service Details</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#cutomers" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="cutomers">
-                        <i class="ri-team-fill"></i>
-                        <span data-key="t-landing">Customer</span>
+                        <img class="" src="{{ asset('assets/images/end.png') }}" alt=""
+                        height="20" />&nbsp;&nbsp;<span class="fs-5">Customer</span>
                     </a>
                     <div class="collapse menu-dropdown" id="cutomers">
                         <ul class="nav nav-sm flex-column">
@@ -90,6 +90,18 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('referincomelevel') }}">
+                        <img class="" src="{{ asset('assets/images/change.png') }}" alt=""
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">Refer Income Level</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('referedusers') }}">
+                        <img class="" src="{{ asset('assets/images/exchanging.png')}}" alt=""
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">My Refered Users</span>
+                    </a>
                 </li>
             </ul>
         </div>

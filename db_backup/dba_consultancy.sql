@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2024 at 01:42 PM
+-- Generation Time: Nov 23, 2024 at 05:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1732165426),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1732165426;', 1732165426);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1732335725),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1732335725;', 1732335725);
 
 -- --------------------------------------------------------
 
@@ -292,6 +292,31 @@ INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `use
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `refer_incomes`
+--
+
+CREATE TABLE `refer_incomes` (
+  `id` int(11) NOT NULL,
+  `incomename` varchar(255) DEFAULT NULL,
+  `criteria` varchar(255) DEFAULT NULL,
+  `amount` varchar(255) DEFAULT NULL,
+  `lessthangreater` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `refer_incomes`
+--
+
+INSERT INTO `refer_incomes` (`id`, `incomename`, `criteria`, `amount`, `lessthangreater`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'Referral Bonus', '15%', '50000', 'beyond', '0', '2024-11-22 06:14:20', '2024-11-22 06:14:20'),
+(5, 'Direct Referral', '10%', '50000', 'upto', '0', '2024-11-22 06:14:39', '2024-11-22 06:14:39');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `register_users`
 --
 
@@ -303,6 +328,8 @@ CREATE TABLE `register_users` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `otp` varchar(22) DEFAULT NULL,
+  `refercode` varchar(255) DEFAULT NULL,
+  `parentreferid` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -310,9 +337,12 @@ CREATE TABLE `register_users` (
 -- Dumping data for table `register_users`
 --
 
-INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `username`) VALUES
-(44, '1234567894', 'anshul@gmail.com', '1', '2024-11-08 04:34:44', '2024-11-13 04:49:01', '607991', 'Anshul'),
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-21 05:01:50', '264634', 'Nitzz');
+INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`) VALUES
+(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-11-23 04:19:36', '153643', '2024refer45', NULL, 'Nitzz'),
+(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-11-22 07:35:56', '518127', '2024dba51', '2024refer45', 'Anshul'),
+(52, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba52', '2024dba51', 'kishan'),
+(53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing'),
+(56, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba54', '2024dba52', 'kishan Child');
 
 -- --------------------------------------------------------
 
@@ -334,7 +364,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('V52zcQ8zpcCyn8FJnLaLtVkG2TBRVkmDMEQ3ZuxR', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoidk14bkR2TTJvOHpKSkdwcUFUMFRiMUlDU2FEdk5MMWl5VTJDOExQaCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9jZWVkdG9wYXkvMjE0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0NTtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjt9', 1732192713);
+('Ivzf308O8K2MuCQV9eznerVepvDVnF9evNc3JVhw', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiUGlaSVlKTXV5eVZjSkxnbkhCY21YZnAxRm5YWHNLOG5uVndvc3ZtVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9yZWZlcmVkdXNlcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1732337353);
 
 -- --------------------------------------------------------
 
@@ -472,6 +502,12 @@ ALTER TABLE `purchase_services`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `refer_incomes`
+--
+ALTER TABLE `refer_incomes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `register_users`
 --
 ALTER TABLE `register_users`
@@ -551,10 +587,16 @@ ALTER TABLE `purchase_services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
+-- AUTO_INCREMENT for table `refer_incomes`
+--
+ALTER TABLE `refer_incomes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `register_users`
 --
 ALTER TABLE `register_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `users`

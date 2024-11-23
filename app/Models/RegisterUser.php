@@ -15,5 +15,7 @@ class RegisterUser extends Authenticatable
         'email',
         'otp',
         'username',
+        'refercode',
+        'parentreferid',
     ];
 }
