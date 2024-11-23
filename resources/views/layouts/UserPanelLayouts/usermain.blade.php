@@ -170,6 +170,42 @@
                 @yield('content')
             </div>
             <footer class="footer">
+                <div class="mobnav">
+                    <nav class="nav">
+                        <a href="{{ route('home') }}"
+                            class="nav-item {{ request()->routeIs('home') ? 'is-active' : '' }}">
+                            <i class='bx bx-home-alt'></i>
+                            <span>Home</span>
+                        </a>
+                        <a href="{{ route('allservices') }}"
+                            class="nav-item {{ request()->routeIs('allservices') ? 'is-active' : '' }}">
+                            <i class='bx bx-server'></i>
+                            <span>Services</span>
+                        </a>
+                        <a href="{{ route('orderpage') }}"
+                            class="nav-item {{ request()->routeIs('orderpage') ? 'is-active' : '' }}">
+                            <i class='bx bx-list-ol'></i>
+                            <span>Orders</span>
+                        </a>
+                        <a href="{{ route('wallet') }}"
+                            class="nav-item {{ request()->routeIs('wallet') ? 'is-active' : '' }}">
+                            <i class='bx bx-wallet'></i>
+                            <span>Wallet</span>
+                        </a>
+                        <a href="{{ route('refer') }}"
+                            class="nav-item {{ request()->routeIs('refer') ? 'is-active' : '' }}">
+                            <i class='bx bx-message-alt-add'></i>
+                            <span>Refer</span>
+                        </a>
+
+                        <div class="nav-indicator-wrapper">
+                            <span class="nav-indicator"></span>
+                        </div>
+                    </nav>
+
+                </div>
+
+
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
@@ -218,8 +254,8 @@
     <script src="{{ asset('assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
-    <script src="{{asset('assets/libs/prismjs/prism.js')}}"></script>
-    <script src="{{asset('assets/js/pages/notifications.init.js')}}"></script>
+    <script src="{{ asset('assets/libs/prismjs/prism.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/notifications.init.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     {{-- <script>
         dayjs.extend(dayjs_plugin_relativeTime);
@@ -264,6 +300,37 @@
             });
         </script>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const indicator = document.querySelector('.nav-indicator-wrapper');
+            const items = document.querySelectorAll('.nav-item');
+
+            function updateIndicator(el) {
+                indicator.style.width = `${el.offsetWidth}px`;
+                indicator.style.left = `${el.offsetLeft}px`;
+            }
+
+            function setActiveFromBlade() {
+                const activeItem = document.querySelector('.nav-item.is-active');
+                if (activeItem) {
+                    updateIndicator(activeItem);
+                }
+            }
+
+            // Initialize based on server-rendered class
+            setActiveFromBlade();
+
+            // Handle client-side navigation for smooth transitions
+            items.forEach((item) => {
+                item.addEventListener('click', () => {
+                    // Allow page reload for Laravel route handling
+                    items.forEach(i => i.classList.remove('is-active'));
+                    item.classList.add('is-active');
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
