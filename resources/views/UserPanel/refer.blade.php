@@ -44,7 +44,7 @@
                                 </div>
 
                                 <div id="p1" class="mb-3 text-center text-danger shadow-lg bg-white referCode">
-                                    {{ Auth::guard('customer')->user()->userid ?? 'Guest' }}
+                                    refer{{ Auth::guard('customer')->user()->id ?? 'Guest' }}
                                 </div>
                                 <div class="d-flex justify-content-around">
                                     <button onclick="copyToClipboard()" class="btn btn-outline-primary fs-4">
@@ -69,7 +69,20 @@
         function copyToClipboard() {
             var copyText = document.getElementById("p1").textContent;
             navigator.clipboard.writeText(copyText);
-            alert("Copied the code: " + copyText);
+            // alert("Copied the code: " + copyText);
+            Toastify({
+                text: "Copied to clipboard:" + copyText,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "green",
+                    color: "#ffffff",
+                    whiteSpace: "nowrap",
+                    borderRadius: "10px",
+                    textAlign: "center"
+                },
+                duration: 5000
+            }).showToast();
         }
 
         function shareOnWhatsapp(referCode) {
