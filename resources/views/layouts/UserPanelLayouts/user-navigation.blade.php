@@ -61,6 +61,12 @@
                         <i class=" ri-file-list-line"></i><span>My Orders</span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->routeIs('allrefers') ? 'active' : '' }}">
+                    <a class="nav-link menu-link" href="{{ route('allrefers') }}" role="button"
+                        aria-expanded="false" aria-controls="sidebarDashboards">
+                        <i class=" ri-file-list-line"></i><span>All Refers</span>
+                    </a>
+                </li>
 
             </ul>
         </div>

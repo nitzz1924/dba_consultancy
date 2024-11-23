@@ -23,7 +23,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return view('AdminPanel.dashboard');
     })->name('dashboard');
 });
@@ -32,13 +32,16 @@ Route::middleware([
 
 //Admin Panel Routes
 Route::controller(AdminViews::class)->group(function () {
-    Route::get('master', 'master')->name('master');
-    Route::get('submaster', 'submaster')->name('submaster');
-    Route::get('createform', 'createform')->name('createform');
-    Route::get('pricingdetails', 'pricingdetails')->name('pricingdetails');
-    Route::get('allcustomers', 'allcustomers')->name('allcustomers');
-    Route::get('customersorders', 'customersorders')->name('customersorders');
+    Route::get('admin/master', 'master')->name('master');
+    Route::get('admin/submaster', 'submaster')->name('submaster');
+    Route::get('admin/createform', 'createform')->name('createform');
+    Route::get('admin/pricingdetails', 'pricingdetails')->name('pricingdetails');
+    Route::get('admin/allcustomers', 'allcustomers')->name('allcustomers');
+    Route::get('admin/customersorders', 'customersorders')->name('customersorders');
     Route::get('admin/orderdetails/{id}', 'orderdetailsadmin')->name('orderdetailsadmin');
+    Route::get('admin/referincomelevel', 'referincomelevel')->name('referincomelevel');
+    Route::get('admin/referedusers', 'referedusers')->name('referedusers');
+    Route::get('admin/getchildren/{refercode}', 'getchildren')->name('getchildren');
 
 });
 
@@ -62,6 +65,8 @@ Route::controller(AdminStores::class)->group(function () {
     Route::get('/deleteuser/{id}', 'deleteuser')->name('deleteuser');
     Route::get('/deleteorder/{id}', 'deleteorder')->name('deleteorder');
     Route::post('/updateorderstatus', 'updateorderstatus')->name('updateorderstatus');
+    Route::post('/insertincomelevel', 'insertincomelevel')->name('insertincomelevel');
+    Route::get('/deleteincome/{id}', 'deleteincome')->name('deleteincome');
 
 
 });
@@ -93,6 +98,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('orderpage', 'orderpage')->name('orderpage');
     Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
     Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
+    Route::get('allrefers', 'allrefers')->name('allrefers');
 
     Route::get('refer', 'refer')->name('refer');
 

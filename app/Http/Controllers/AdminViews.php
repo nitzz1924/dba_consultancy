@@ -6,9 +6,10 @@ use App\Models\FormAttribute;
 use App\Models\Master;
 use App\Models\PricingDetail;
 use App\Models\PurchaseService;
+use App\Models\ReferIncome;
 use App\Models\RegisterUser;
 use Illuminate\Http\Request;
-
+use Auth;
 class AdminViews extends Controller
 {
     public function master()
@@ -58,5 +59,32 @@ class AdminViews extends Controller
         ->where('purchase_services.id',$id)->first();
         //dd($orderdetails);
         return view('AdminPanel.orderdetails',compact('orderdetails'));
+    }
+
+    public function referincomelevel(){
+        $incomedata = ReferIncome::orderBy('created_at','DESC')->get();
+        return view('AdminPanel.referincomelevel',compact('incomedata'));
+    }
+    public function referedusers(){
+        $loggedinuser = Auth::guard('customer')->user();
+        $myrefercode =  $loggedinuser->refercode;
+        $list = RegisterUser::orderby('created_at','DESC')
+        ->where(  'parentreferid' ,'=', $myrefercode)->get();
+        // $array = [];
+        // foreach ($list as $row) {
+        //     $finaldata = RegisterUser::where('parentreferid', '=', $row->refercode)->get();
+        //     $array[] =[
+        //         'user' => $row,
+        //         'referedusers'=>$finaldata,
+        //     ];
+        // }
+        //dd($array);
+        return view('AdminPanel.referedusers',compact('list'));
+    }
+    public function getchildren($refercode){
+        $children = RegisterUser::orderby('created_at','DESC')
+        ->where(  'parentreferid' , $refercode)->get();
+        // dd($children);
+        return response()->json($children);
     }
 }

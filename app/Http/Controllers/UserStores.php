@@ -21,6 +21,7 @@ class UserStores extends Controller
 {
     public function registeruser(Request $rq)
     {
+
         try {
             $data = $rq->validate([
                 'username' => 'required',
@@ -28,10 +29,11 @@ class UserStores extends Controller
                 'email' => 'required',
             ]);
 
-            RegisterUser::create([
+            $user = RegisterUser::create([
                 'username' => $rq->username,
                 'mobilenumber' => $rq->mobilenumber,
                 'email' => $rq->email,
+                'parentreferid' => $rq->parentreferid,
             ]);
             return back()->with('success', 'Registration Successfull..!!!!');
 
@@ -56,8 +58,14 @@ class UserStores extends Controller
                 'mobilenumber' => $rq->mobilenumber,
                 'email' => $rq->email,
                 'otp' => $otp,
+                'parentreferid' => $rq->parentreferid,
             ]);
-            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id]]);
+
+            //This is current user's referid
+            $data->update([
+                'refercode' =>  Carbon::now()->year.'dba'.$data->id,
+            ]);
+            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id,'otp' => $otp]]);
 
         } catch (Exception $e) {
             return response()->json(['msg' => 'failure']);

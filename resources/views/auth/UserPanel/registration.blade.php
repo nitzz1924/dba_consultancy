@@ -1,3 +1,4 @@
+
 {{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏--------------------------- --}}
 @extends('auth.UserPanel.Layouts.main')
 @push('title')
@@ -64,6 +65,11 @@
                                             <input type="text" name="mobilenumber" class="form-control rounded-5 p-3"
                                                 id="phn" placeholder="Enter Phone Number" required>
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="phn" class="form-label fs-5">Refer Code</label>
+                                            <input type="text" name="parentreferid" class="form-control rounded-5 p-3"
+                                                id="phn" placeholder="Enter Refer Code" required>
+                                        </div>
                                         {{-- <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value=""
                                                 id="auth-remember-check">
@@ -89,6 +95,7 @@
                                     <form autocomplete="off" action="{{ route('verifyotp') }}" id="loginformotp"
                                         method="POST" style="display: none;">
                                         @csrf
+                                        <div id="otp" class="text-black fw-bold">OTP is:</div>
                                         <div class="text-muted text-center mb-4 mx-lg-3">
                                             <h2 class="text-center fw-bold" style="color: #fa7823">Verify Yourself</h2>
                                             <p>Please enter the 6 digit code sent to <span
@@ -137,6 +144,7 @@
                     jQuery('#registerform').hide();
                     jQuery('#loginformotp').show();
                     jQuery('#registerid').val(data.data.id);
+                    jQuery('#otp').text(data.data.otp);
                 }
             }
         });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\GroupType;
 use App\Models\PricingDetail;
 use App\Models\PurchaseService;
+use App\Models\ReferIncome;
 use App\Models\RegisterUser;
 use App\Models\FormAttribute;
 use Exception;
@@ -291,4 +292,27 @@ class AdminStores extends Controller
         return response()->json(['success' => false], 404);
     }
 
+    public function insertincomelevel(Request $rq){
+        try {
+
+            $data = ReferIncome::create([
+                'incomename' => $rq->incomename,
+                'criteria' => $rq->criteria,
+                'amount' => $rq->amount,
+                'lessthangreater' => $rq->lessthangreater,
+            ]);
+            return back()->with('success', 'Income Added..!!!!');
+
+        } catch (Exception $e) {
+            return redirect()->route('referincomelevel')->with('error', $e->getMessage());
+            //return redirect()->route('referincomelevel')->with('error', 'Not Added Try Again...!!!!');
+        }
+    }
+
+    public function deleteincome($id)
+    {
+        $data = ReferIncome::find($id);
+        $data->delete();
+        return back()->with('success', "Deleted....!!!");
+    }
 }
