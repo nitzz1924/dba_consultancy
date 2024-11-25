@@ -35,19 +35,20 @@
                 @php
                 $servicesum = intval($purchasedata->servicecharge) - intval($purchasedata->discount);
                 @endphp
-                @if ($walletamount < $servicesum) <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                    Toastify({
-                    text: "Insufficient Balance !, Please Recharge",
-                    gravity: "top",
-                    position: "center",
-                    style: {
-                    background: "#dc3545",
-                    color: "#ffffff",
-                    },
-                    duration: 5000
-                    }).showToast();
-                    });
+                @if ($walletamount < $servicesum && $purchasedata->status == 'Unpaid')
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                                Toastify({
+                                    text: "Insufficient Balance !, Please Recharge",
+                                    gravity: "top",
+                                    position: "center",
+                                    style: {
+                                        background: "#dc3545",
+                                        color: "#ffffff",
+                                    },
+                                    duration: 5000
+                                }).showToast();
+                            });
                     </script>
                     <div class="p-3">
                         <!-- Danger Alert -->
@@ -76,7 +77,7 @@
                                 Wallet Balance
                             </div>
                             <div class="p-1">
-                                ₹ {{$walletamount}}/-
+                                ₹ {{ $walletamount }}/-
                             </div>
                         </div>
                         <hr>
@@ -109,11 +110,24 @@
                             </div>
                         </div>
                     </div>
+                    @if ($purchasedata->status == 'Processing')
+                    <div class="mt-2 p-2 text-center">
+                        <span class="badge bg-info-subtle text-info fs-5 badge-border">Order Paid</span>
+                    </div>
+                    @elseif($purchasedata->status == 'Completed')
+                    <div class="mt-3 text-center" style="background-color: antiquewhite;">
+                        This Order was Completed on : <span
+                            class="fw-bold">{{$purchasedata->updated_at->format('d/m/y')}}</span>
+                    </div>
+                    <div class="mt-2 p-2 text-center">
+                        <span class="badge bg-success-subtle text-success fs-5 badge-border">Order Completed</span>
+                    </div>
+                    @endif
             </div>
         </div>
     </div>
 
-    {{-- History --}}
+    @if($purchasedata->status != 'Completed')
     <div class="row my-3">
         <div class="card mt-0 rounded-4">
             <div class="card-body">
@@ -185,7 +199,7 @@
                     <!--Sending Necessary Things in form-->
 
                     <input type="hidden" name="formtype" id="formtype" value="{{ $purchasedata->type }}">
-                    <input type="hidden" name="serviceid" id="formtype" value="{{ $purchasedata->id }}">
+                    <input type="hidden" name="orderid" id="orderid" value="{{ $purchasedata->id }}">
                     <input type="hidden" name="servicename" id="servicename" value=" {{ $purchasedata->servicename }}">
                     <input type="hidden" name="amount" id="amount" value="{{ $purchasedata->servicecharge }}">
                     <input type="hidden" name="discount" id="amount" value="{{ $purchasedata->discount }}">
@@ -196,6 +210,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 {{-- JavaScript for Image Preview --}}
@@ -260,6 +275,8 @@
                         const formtype = $('#formtype').val();
                         const servicename = $('#servicename').val();
                         const amount = $('#amount').val();
+                        const orderid = $('#orderid').val();
+                        console.log(orderid);
                         var formData = new FormData(document.getElementById('originalform'));
                         formData.append('formtype', formtype);
                         formData.append('servicename', servicename);
@@ -281,7 +298,7 @@
                                         confirmButtonText: "OK"
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            window.location.href = "/orderpage";
+                                            window.location.href = "/proceedtopay/" + orderid;
                                         }
                                     });
                                 } else {

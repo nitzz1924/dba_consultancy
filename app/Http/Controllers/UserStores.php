@@ -287,5 +287,28 @@ class UserStores extends Controller
         }
     }
 
+    public function paynow(Request $request){
+        $loggedinuser = Auth::guard('customer')->user();
+        //dd($request->all());
+        try {
+            $walletdata = new Wallet();
+            $walletdata->userid = $loggedinuser->id;
+            $walletdata->serviceid = $request->input('serviceid');
+            $walletdata->transactiontype = $request->input('transactiontype');
+            $walletdata->paymenttype = $request->input('paymenttype');
+            $walletdata->amount = $request->input('amount');
+            $walletdata->transactionid = $request->input('orderid');
+            $walletdata->status = 0;
+            $walletdata->save();
+
+            $orderstatus = PurchaseService::where('id',$request->input('orderid'))->update([
+                'status' => 'Processing',
+            ]);
+            return redirect()->route('orderpage')->with('success', 'Order Placed.');
+        } catch (Exception $e) {
+            return redirect()->route('proceedtopay')->with('error', $e->getMessage());
+        }
+    }
+
 }
 

@@ -35,7 +35,7 @@
             <div class="balance text-white">
                 Current Balance
                 <div class="wallet-amount">
-                    <i class='bx bx-rupee'></i>{{$walletamount}}
+                    <i class='bx bx-rupee'></i>{{ $walletamount }}
                 </div>
             </div>
             <form action="{{ route('insertwallet') }}" method="post">
@@ -47,11 +47,11 @@
                     <input type="hidden" name="paymenttype" value="credit">
                 </div>
                 <div class="wallet-actions mt-3 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-light rounded-pill fs-6 shadow-lg">
-                            <div >
-                                <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
-                            </div>
-                        </button>
+                    <button type="submit" class="btn btn-light rounded-pill fs-6 shadow-lg">
+                        <div>
+                            <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
+                        </div>
+                    </button>
                 </div>
             </form>
         </div>
@@ -68,28 +68,29 @@
                 <a href="#" class="btn btn-outline-dark border-0 fs-6">See more</a>
             </div>
         </div>
-
+        @foreach ($debithistory->take(10) as $row)
+        @if ($row->paymenttype == 'debit')
         <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex align-items-center">
                 <div class="me-2">
                     <i class='bx bx-minus-circle text-danger fs-1'></i>
                 </div>
                 <div class="fs-5">
-                    Legal Consulting
+                    {{$row->servicename}}
                     <div class="">
                         <div class="text-muted fs-6">
-                            10 Oct 2024
+                            {{ $row->created_date }}
                         </div>
                     </div>
                 </div>
             </div>
             <div>
-                <div class="fs-3 text-danger fw-bold">
-                    <i class='bx bx-rupee'></i>500
+                <div class="fs-3 text-muted fw-bold">
+                    {{ $row->amount }}<sub class="text-danger fs-6">Dr.</sub>
                 </div>
             </div>
         </div>
-
+        @else
         <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex align-items-center">
                 <div class="me-2">
@@ -106,36 +107,12 @@
             </div>
             <div>
                 <div class="fs-3 text-success fw-bold">
-                    <i class='bx bx-rupee'></i>750
+                    <i class='bx bx-rupee'></i>750Cr
                 </div>
             </div>
         </div>
-
-        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <i class='bx bx-minus-circle text-danger fs-1'></i>
-                </div>
-                <div class="fs-5">
-                    Justice Firm
-                    <div class="">
-                        <div class="text-muted fs-6">
-                            10 Oct 2024
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="fs-3 text-danger fw-bold">
-                    <i class='bx bx-rupee'></i>450
-                </div>
-            </div>
-        </div>
-
-
+        @endif
+        @endforeach
     </div>
-
-
-
 </div>
 @endsection

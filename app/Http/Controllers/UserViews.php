@@ -65,7 +65,17 @@ class UserViews extends Controller
             $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
-            return view('UserPanel.wallet', compact('walletamount'));
+
+            $debithistory = Wallet::join('purchase_services', 'purchase_services.userid', '=', 'wallets.userid')
+                ->select('wallets.*', 'purchase_services.servicename as servicename')
+                ->where('purchase_services.userid', $loggedinuser->id)
+                ->get();
+
+            //dd($debithistory);
+            foreach ($debithistory as $debit) {
+                $debit->created_date = Carbon::parse($debit->created_at)->format('d/M/Y');
+            }
+            return view('UserPanel.wallet', compact('walletamount', 'debithistory'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -203,25 +213,25 @@ class UserViews extends Controller
         return view('UserPanel.orderdetails', compact('purchasedata', 'finalJson', 'walletamount'));
     }
 
-    public function proceedtopay($id){
+    public function proceedtopay($id)
+    {
         $loggedinuser = Auth::guard('customer')->user();
-        $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
-            ->select('masters.*', 'purchase_services.*')
-            ->where('purchase_services.serviceid', $id)
-            ->first();
+        $purchasedata = PurchaseService::where('id', $id)->where('userid',  $loggedinuser->id)->first();
+        //dd( $purchasedata);
         $debitTotal = 0;
         $creditTotal = 0;
         $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
         $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
         $walletamount = ($creditTotal - $debitTotal);
-        return view('UserPanel.proceedtopay',compact('walletamount','purchasedata'));
+        return view('UserPanel.proceedtopay', compact('walletamount', 'purchasedata'));
     }
 
-    public function allrefers(){
+    public function allrefers()
+    {
         $loggedinuser = Auth::guard('customer')->user();
-        $myrefercode =  $loggedinuser->refercode;
-        $list = RegisterUser::orderby('created_at','DESC')
-        ->where(  'parentreferid' ,'=', $myrefercode)->get();
+        $myrefercode = $loggedinuser->refercode;
+        $list = RegisterUser::orderby('created_at', 'DESC')
+            ->where('parentreferid', '=', $myrefercode)->get();
         $array = [];
         foreach ($list as $row) {
             $row->referral_count = RegisterUser::where('parentreferid', '=', $row->refercode)->count();
@@ -229,7 +239,7 @@ class UserViews extends Controller
         }
 
         //dd($array);
-        return view('UserPanel.allrefers',compact('list'));
+        return view('UserPanel.allrefers', compact('list'));
     }
 
 }

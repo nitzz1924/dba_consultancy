@@ -23,7 +23,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/', function () {
+    Route::get('/dashboard', function () {
         return view('AdminPanel.dashboard');
     })->name('dashboard');
 });
@@ -74,13 +74,6 @@ Route::controller(AdminStores::class)->group(function () {
 
 
 
-
-
-
-
-
-
-
 //User Panel Routes
 Route::controller(UserViews::class)->group(function () {
     Route::get('/', 'userloginpage')->name('userloginpage');
@@ -99,7 +92,6 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
     Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
     Route::get('allrefers', 'allrefers')->name('allrefers');
-
     Route::get('refer', 'refer')->name('refer');
 
 });
@@ -114,6 +106,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
     Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
     Route::post('insertwallet', 'insertwallet')->name('insertwallet');
+    Route::post('paynow', 'paynow')->name('paynow');
 
 });
 
