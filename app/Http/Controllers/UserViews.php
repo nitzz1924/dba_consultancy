@@ -53,7 +53,8 @@ class UserViews extends Controller
             $walletamount = ($creditTotal - $debitTotal);
             return view('UserPanel.home', compact('services', 'consulting', 'walletamount'));
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
+        
         }
     }
     public function wallet()
@@ -67,7 +68,7 @@ class UserViews extends Controller
             $walletamount = ($creditTotal - $debitTotal);
             return view('UserPanel.wallet', compact('walletamount'));
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function servicedetail($id)
@@ -79,7 +80,7 @@ class UserViews extends Controller
             // dd($data);
             return view('UserPanel.servicedetail', compact('data'));
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function userprofile()
@@ -87,7 +88,7 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             return view('UserPanel.userprofile');
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function editprofile()
@@ -95,7 +96,7 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             return view('UserPanel.editprofile');
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function allservices()
@@ -104,7 +105,7 @@ class UserViews extends Controller
             $services = Master::where('type', '=', 'Services')->get();
             return view('UserPanel.allservices', compact('services'));
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function refer()
@@ -112,7 +113,7 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             return view('UserPanel.refer');
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function consultingdetails($id)
@@ -124,7 +125,7 @@ class UserViews extends Controller
             // dd($data);
             return view('UserPanel.consultingdetail', compact('data'));
         } else {
-            return view('auth.UserPanel.login');
+            return redirect()->route('userloginpage');
         }
     }
     public function serviceformpage($id)

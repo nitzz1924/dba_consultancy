@@ -6,7 +6,9 @@ use App\Http\Controllers\UserStores;
 use App\Http\Controllers\UserViews;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExcelContactSheet;
+use App\Http\Controllers\WebsiteViews;
 use App\Http\Middleware\VerifyCsrfToken;
+
 
 
 Route::get('admin/login', function () {
@@ -23,7 +25,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/', function () {
+    Route::get('/dashboard', function () {
         return view('AdminPanel.dashboard');
     })->name('dashboard');
 });
@@ -83,7 +85,7 @@ Route::controller(AdminStores::class)->group(function () {
 
 //User Panel Routes
 Route::controller(UserViews::class)->group(function () {
-    Route::get('/', 'userloginpage')->name('userloginpage');
+    Route::get('user/login', 'userloginpage')->name('userloginpage');
     Route::get('user/registration', 'registration')->name('registration');
     Route::get('userdashboard', 'userdashboard')->name('userdashboard');
     Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
@@ -117,7 +119,15 @@ Route::controller(UserStores::class)->group(function () {
 
 });
 
+Route::controller(WebsiteViews::class)->group(function () {
+    Route::get('/', 'home')->name('homepage');
+    Route::get('/about', 'about')->name('about');
+    Route::get('/contact', 'contact')->name('contact');
+    Route::get('/features', 'features')->name('features');
+    Route::get('/services', 'services')->name('services');
+    Route::get('/privacypolicy', 'privacypolicy')->name('privacypolicy');
 
+});
 // //Excel Routes
 // Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
 // Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
