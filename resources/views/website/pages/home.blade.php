@@ -27,7 +27,7 @@
                                         <span class="color--theme">WITH YOU</span>
                                     </strong>
                                 </h1>
-                                <a href="contact.html" class="cr-btn">
+                                <a href="{{ route('contact')}}" class="cr-btn">
                                     <span>Contact Now</span>
                                 </a>
                             </div>

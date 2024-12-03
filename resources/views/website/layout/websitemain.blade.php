@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="{{ asset('assets/websiteAssets/images/favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/websiteAssets/images/icon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/dfavicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/dfavicon.png') }}">
 
     <!-- Google font (font-family: 'Josefin Sans', sans-serif;) -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
@@ -28,9 +28,6 @@
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-  <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
- <![endif]-->
 
     <!-- Add your site or application content here -->
 
@@ -53,12 +50,13 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="flaticon-black-back-closed-envelope-shape"></i> info@taxco.com</a>
+                                    <i class="flaticon-black-back-closed-envelope-shape"></i>
+                                    info@dbaconsultancy.com</a>
                             </li>
                         </ul>
                         <div class="header__top__button">
-                            <a class="cr-btn cr-btn--lg" href="appointment.html">
-                                <span>Make an appointment</span>
+                            <a class="cr-btn cr-btn--lg" href="{{ route('userloginpage') }}">
+                                <span>Login</span>
                             </a>
                         </div>
                     </div>
@@ -67,152 +65,33 @@
             <!--// Header Top Area -->
 
             <!-- Header Bottom Area -->
-            <div class="header__bottom bg--white">
+            <div class="header__bottom bg--black">
                 <div class="container d-none d-lg-block">
                     <div class="header__bottom__inner">
                         <div class="header__logo">
-                            <a href="index.html">
-                                <img src="{{ asset('assets/websiteAssets/images/logo/logo-theme.png') }}"
-                                    alt="header logo">
+                            <a href="{{ route('homepage') }}">
+                                <img src="{{ asset('assets/images/dbalogo.png') }}" alt="header logo" width="150px">
                             </a>
                         </div>
 
                         <!-- Main Navigation -->
                         <nav id="main-navigation" class="header__menu main-navigation">
                             <ul>
-                                <li class="cr-dropdown">
-                                    <a href="index.html">HOME</a>
-                                    <ul class="cr-dropdown-menu">
-                                        <li>
-                                            <a href="index.html">Homepage Classic</a>
-                                        </li>
-                                        <li>
-                                            <a href="index-2.html">Homepage Interactive</a>
-                                        </li>
-                                        <li>
-                                            <a href="index-3.html">Homepage Modern</a>
-                                        </li>
-                                        <li>
-                                            <a href="index-with-content-slider.html">Homepage Content Slider</a>
-                                        </li>
-                                        <li>
-                                            <a href="index-with-single-banner.html">Homepage Single Banner</a>
-                                        </li>
-                                        <li>
-                                            <a href="index-boxed-layout.html">Homepage Boxed Layout</a>
-                                        </li>
-                                    </ul>
+                                <li>
+                                    <a href="{{ route('homepage') }}">Home</a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html">ABOUT</a>
+                                    <a href="{{ route('about') }}">About</a>
                                 </li>
                                 <li>
-                                    <a href="features.html">FEATURES</a>
-                                </li>
-                                <li class="cr-dropdown">
-                                    <a href="services.html">SERVICE</a>
-                                    <ul class="cr-dropdown-menu">
-                                        <li>
-                                            <a href="services.html">Services</a>
-                                        </li>
-                                        <li>
-                                            <a href="services-2.html">Services Style 2</a>
-                                        </li>
-                                        <li>
-                                            <a href="single-service.html">Single Service</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="cr-dropdown">
-                                    <a href="#">PAGES</a>
-                                    <ul class="cr-dropdown-menu">
-                                        <li>
-                                            <a href="about-us.html">ABOUT</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog.html">BLOG</a>
-                                            <ul class="cr-sub-dropdown-menu">
-                                                <li>
-                                                    <a href="blog.html">Blog</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-with-right-sidebar.html">Blog With Right Sidebar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-with-left-sidebar.html">Blog With Left Sidebar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-details.html">Blog Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-details-with-left-sidebar.html">Blog Details With Left
-                                                        Sidebar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-details-with-video.html">Blog Details With Video</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-details-with-slider.html">Blog Details With Slider</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="features.html">FEATURES</a>
-                                        </li>
-                                        <li>
-                                            <a href="services.html">SERVICE</a>
-                                            <ul class="cr-sub-dropdown-menu">
-                                                <li>
-                                                    <a href="services.html">Services</a>
-                                                </li>
-                                                <li>
-                                                    <a href="services-2.html">Services Style 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="single-service.html">Single Service</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="advisors.html">Advisors</a>
-                                        </li>
-                                        <li>
-                                            <a href="advisor-details.html">Advisor Details</a>
-                                        </li>
-                                        <li>
-                                            <a href="appointment.html">Appointment</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="cr-dropdown">
-                                    <a href="blog.html">BLOG</a>
-                                    <ul class="cr-dropdown-menu">
-                                        <li>
-                                            <a href="blog.html">Blog</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-with-right-sidebar.html">Blog With Right Sidebar</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-with-left-sidebar.html">Blog With Left Sidebar</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-details.html">Blog Details</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-details-with-left-sidebar.html">Blog Details With Left
-                                                Sidebar</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-details-with-video.html">Blog Details With Video</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-details-with-slider.html">Blog Details With Slider</a>
-                                        </li>
-                                    </ul>
+                                    <a href="{{ route('features') }}">Features</a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">CONTACT</a>
+                                    <a href="{{ route('services') }}">Services</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('contact') }}">Contact</a>
                                 </li>
                             </ul>
                         </nav>
@@ -225,7 +104,7 @@
                 <div class="container d-block d-lg-none">
                     <div class="mobile-menu clearfix d-md-block d-lg-none">
                         <a class="mobile-logo" href="index.html">
-                            <img src="{{ asset('assets/websiteAssets/images/logo/logo-theme.png') }}" alt="logo">
+                            <img src="{{ asset('assets/images/dbalogo.png') }}" alt="logo">
                         </a>
                     </div>
                 </div>
@@ -249,9 +128,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer-area__logo text-center">
-                                <a href="index.html">
-                                    <img src="{{ asset('assets/websiteAssets/images/logo/logo-footer.png') }}"
-                                        alt="footer logo">
+                                <a href="{{ route('homepage') }}">
+                                    <img src="{{ asset('assets/images/dbalogo.png') }}" alt="footer logo"
+                                        width="150px">
                                 </a>
                             </div>
                         </div>
@@ -260,7 +139,7 @@
 
                         <!-- Single Widget -->
                         <section class="widget widget-about">
-                            <h5 class="widget-title">ABOUT korde</h5>
+                            <h5 class="widget-title">ABOUT DBA Consultancy</h5>
                             <p>Perspiciatis unde omnis iste natus error sit voluptatem accusantium oloremque laudantium,
                                 totam rem onsectetur sires
                                 to obtain pain of itself because</p>
