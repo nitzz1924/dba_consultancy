@@ -51,7 +51,7 @@
                             <li>
                                 <a href="#">
                                     <i class="flaticon-black-back-closed-envelope-shape"></i>
-                                    info@dbaconsultancy.com</a>
+                                    info@dbaconsultancy.in</a>
                             </li>
                         </ul>
                         <div class="header__top__button">
@@ -103,7 +103,7 @@
                 <!-- Mobile Menu -->
                 <div class="container d-block d-lg-none">
                     <div class="mobile-menu clearfix d-md-block d-lg-none">
-                        <a class="mobile-logo" href="index.html">
+                        <a class="mobile-logo" href="{{ route('homepage')}}">
                             <img src="{{ asset('assets/images/dbalogo.png') }}" alt="logo">
                         </a>
                     </div>
@@ -125,24 +125,30 @@
             <!-- Footer Widgets Area -->
             <div class="footer-area__widgets section-padding--md bg--dark--light">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer-area__logo text-center">
-                                <a href="{{ route('homepage') }}">
-                                    <img src="{{ asset('assets/images/dbalogo.png') }}" alt="footer logo"
-                                        width="150px">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="widget-area footer--widgets">
-
+                        
+                        <!-- Single Widget -->
+                        <section class="widget widget-twitter-feed">
+                            
+                            <div class="col-lg-12">
+                                <div class="footer-area__logo text-center">
+                                    <a href="{{ route('homepage') }}">
+                                        <img src="{{ asset('assets/images/dbalogo.png') }}" alt="footer logo"
+                                            width="150px">
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                        <!--// Single Widget -->
                         <!-- Single Widget -->
                         <section class="widget widget-about">
+                            
                             <h5 class="widget-title">ABOUT DBA Consultancy</h5>
-                            <p>Perspiciatis unde omnis iste natus error sit voluptatem accusantium oloremque laudantium,
-                                totam rem onsectetur sires
-                                to obtain pain of itself because</p>
+                            <p>DBA Consultancy is your trusted partner for comprehensive tax and legal solutions. With a
+                                focus on accuracy, reliability, and personalized support, we simplify complex processes
+                                to ensure your peace of mind. </p>
+
                             <div class="social-icons social-icons--rounded">
                                 <ul>
                                     <li class="facebook">
@@ -175,54 +181,29 @@
                             <h5 class="widget-title">QUICK LINKS</h5>
                             <ul>
                                 <li>
-                                    <a href="services.html">Our Services</a>
+                                    <a href="{{ route('services')}}">Our Services</a>
                                 </li>
                                 <li>
-                                    <a href="features.html">Features</a>
+                                    <a href="{{ route('features')}}">Features</a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html">About Us</a>
+                                    <a href="{{ route('about')}}">About Us</a>
                                 </li>
+
                                 <li>
-                                    <a href="#">Help Centre</a>
-                                </li>
-                                <li>
-                                    <a href="contact.html">Contact Us</a>
+                                    <a href="{{ route('contact')}}">Contact Us</a>
                                 </li>
                             </ul>
                         </section>
                         <!--// Single Widget -->
 
-                        <!-- Single Widget -->
-                        <section class="widget widget-twitter-feed">
-                            <h5 class="widget-title">Twitter Feed</h5>
-                            <ul>
-                                <li>
-                                    <p>
-                                        <a href="#">@Alex Smith</a>, unde omnis te us error sit voluptatem
-                                    </p>
-                                    <span class="time">
-                                        <a href="#">10 Mins ago</a>
-                                    </span>
-                                </li>
-                                <li>
-                                    <p>
-                                        <a href="#">@Justin Bieber</a>, unde omnis te us error sit voluptatem
-                                    </p>
-                                    <span class="time">
-                                        <a href="#">12 Mins ago</a>
-                                    </span>
-                                </li>
-                            </ul>
-                        </section>
-                        <!--// Single Widget -->
 
                         <!-- Single Widget -->
                         <section class="widget widget-contact-info">
                             <h5 class="widget-title">Contact Info</h5>
                             <ul>
                                 <li>
-                                    <p>256 Notrh Tower, Western City Mid Town, Las Vagas, USA</p>
+                                    <p>Ajmer</p>
                                 </li>
                                 <li>
                                     <p>
@@ -234,10 +215,10 @@
                                 </li>
                                 <li>
                                     <p>
-                                        <a href="mailto://info@korde.com">info@korde.com</a>
+                                        <a href="mailto://info@dbaconsultancy.in">info@dbaconsultancy.in</a>
                                     </p>
                                     <p>
-                                        <a href="mailto://info@korde.com">www.korde.com</a>
+                                        <a href="mailto://info@dbaconsultancy.in">www.dbaconsultancy.in</a>
                                     </p>
                                 </li>
                             </ul>

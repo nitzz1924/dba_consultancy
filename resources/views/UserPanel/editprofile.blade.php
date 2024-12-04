@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="Email" name="Email"
-                            placeholder="user@dbaconsultancy.com">
+                            placeholder="user@dbaconsultancy.in">
                         <label for="Email">Email address</label>
                     </div>
                     <div class="form-floating mb-3">

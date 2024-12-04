@@ -33,7 +33,7 @@
                     <li class="list-group-item">
                         <div class="fw-bold text-danger">Email:</div>
                         <span class="ms-2">
-                            user@dbaconsultancy.com
+                            user@dbaconsultancy.in
                         </span>
                     </li>
                     <li class="list-group-item">

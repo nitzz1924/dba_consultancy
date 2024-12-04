@@ -10,7 +10,7 @@
                     <div class="cr-breadcrumb">
                         <ul class="cr-breadcrumb__pagination">
                             <li>
-                                <a href="index.html">Home</a>
+                                <a href="{{ route('homepage')}}">Home</a>
                             </li>
                             <li>Privacy Policy</li>
                         </ul>
@@ -81,7 +81,7 @@
                     <li>Request deletion of your data, subject to legal and contractual obligations.</li>
                     <li>Opt-out of marketing communications.</li>
                 </ul>
-                <p>To exercise these rights, please contact us at <strong>support@dbaconsultancy.com</strong>.</p>
+                <p>To exercise these rights, please contact us at <strong>support@dbaconsultancy.in</strong>.</p>
 
                 <h4 class="mt-4">8. Third-Party Links</h4>
                 <p>Our web app may contain links to external websites. We are not responsible for their privacy practices.
@@ -99,7 +99,7 @@
                 <p>If you have any questions or concerns regarding this policy, please contact us:</p>
                 <ul>
                     <li><strong>DBA Consultancy</strong></li>
-                    <li>Email: support@dbaconsultancy.com</li>
+                    <li>Email: support@dbaconsultancy.in</li>
                     <li>Phone: [Insert Phone Number]</li>
                     <li>Address: [Insert Address]</li>
                 </ul>

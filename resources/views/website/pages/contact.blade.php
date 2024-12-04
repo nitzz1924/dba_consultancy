@@ -10,17 +10,18 @@
                 <div class="col-xl-5 col-lg-6 col-md-8">
                     <div class="cr-breadcrumb">
                         <ul class="cr-breadcrumb__pagination">
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{ route('homepage') }}">Home</a></li>
                             <li>Contact</li>
                         </ul>
                         <h1>Contact Us</h1>
-                        <p>perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                            rem </p>
+                        <p>Reach out to us for expert tax and legal solutions. We're here to guide you every step of the
+                            way.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div><!--// Breadcrumb Area -->
+    </div>
+    <!--// Breadcrumb Area -->
 
     <!-- Page Conent -->
     <main class="page-content">
@@ -38,8 +39,7 @@
                                     <h2>SEND A MESSAGE</h2>
                                 </div>
                                 <div class="pg-appintment__box">
-                                    <form id="contact-form" action="https://demo.hasthemes.com/korde/korde/mail.php"
-                                        method="POST">
+                                    <form id="contact-form" action="" method="POST">
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="single-input">
@@ -88,19 +88,19 @@
                 </div>
             </div><!--// Contact Form -->
 
-            <div class="google-map-wrapper">
-                <div id="google-map" class="google-map"></div>
+            <div class="">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xl-8 col-lg-9">
+                        <div class="col-xl-12 col-lg-12">
                             <div class="pg-contact__content">
                                 <h1>say hello to us</h1>
-                                <p>perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                    laudantium, totam rem </p>
+                                <p>We are here to address your tax and legal concerns. Feel free to reach out for any
+                                    assistance or queries.</p>
+
                                 <div class="pg-contact__blocks">
                                     <div class="single-block address">
-                                        <h6>address</h6>
-                                        <p>256 Notrh Tower, Western City Mid Town, Las Vagas, USA</p>
+                                        <h6>Address</h6>
+                                        <p>Ajmer</p>
                                     </div>
                                     <div class="single-block phone">
                                         <h6>Phone</h6>
@@ -109,24 +109,10 @@
                                     </div>
                                     <div class="single-block web">
                                         <h6>Web</h6>
-                                        <p><a href="#">info@taxco.com</a></p>
-                                        <p><a href="#">www@taxco.com</a></p>
+                                        <p><a href="#">info@dbaconsultancy.in</a></p>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="pg-contact__newsletter">
-                                            <h5>also subscribe our newsletter to be uptodae</h5>
-                                            <form
-                                                action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef"
-                                                method="post" target="_blank">
-                                                <input type="email" name="EMAIL" class="email" id="mce-EMAIL"
-                                                    placeholder="Your Email here" required>
-                                                <button type="submit"><i class="fa fa-paper-plane-o"></i></button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -135,23 +121,6 @@
 
         </div><!--// Pg Contact -->
 
-        <!-- Call To Action Area -->
-        <section id="cta-area" class="cta-area section-padding--sm bg--grey--light bg--abstruct-mask">
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 offset-lg-1 col-md-12 offset-0">
-                        <div class="calltoaction text-center">
-                            <h3>NEED ANY HELP AT<span class="color--theme"> YOUR TAX SOLUTION?</span></h3>
-                            <p>Perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                                totam rem aperiam, eaque ipsa Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-                                amet, consectetur, adipisci </p>
-                            <h6>JUST DAIL <a href="callto://+00812548359874">+008 12548 359 874</a> (TOLL FREE)</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section><!--// Call To Action Area -->
 
     </main><!-- //Page Conent -->
 
