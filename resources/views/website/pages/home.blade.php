@@ -335,53 +335,58 @@
             <div class="funfacts">
                 <div class="row no-gutters">
 
-                    <!--  Single Funfact -->
+                    <!-- Single Funfact -->
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                         <div class="funfact text-center">
                             <h1>
                                 <span class="counter">349</span>
                             </h1>
-                            <h5>TRUSTED CLIENTS</h5>
+                            <h5>Trusted Clients</h5>
+                            <p>We have earned the trust of over 349 clients worldwide through our reliable services.</p>
                         </div>
                     </div>
-                    <!--//  Single Funfact -->
+                    <!--// Single Funfact -->
 
-                    <!--  Single Funfact -->
+                    <!-- Single Funfact -->
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                         <div class="funfact text-center">
                             <h1>
                                 <span class="counter">109</span>
                             </h1>
-                            <h5>Awards Win</h5>
+                            <h5>Awards Won</h5>
+                            <p>Recognition for excellence with 109 industry awards and counting.</p>
                         </div>
                     </div>
-                    <!--//  Single Funfact -->
+                    <!--// Single Funfact -->
 
-                    <!--  Single Funfact -->
+                    <!-- Single Funfact -->
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                         <div class="funfact text-center">
                             <h1>
                                 <span class="counter">459</span>
                             </h1>
-                            <h5>Project Done</h5>
+                            <h5>Projects Completed</h5>
+                            <p>Successfully delivered 459 projects, ensuring client satisfaction every time.</p>
                         </div>
                     </div>
-                    <!--//  Single Funfact -->
+                    <!--// Single Funfact -->
 
-                    <!--  Single Funfact -->
+                    <!-- Single Funfact -->
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                         <div class="funfact text-center">
                             <h1>
                                 <span class="counter">19</span>
                             </h1>
-                            <h5>Expert Advisor</h5>
+                            <h5>Expert Advisors</h5>
+                            <p>Our team of 19 dedicated experts ensures your success is their priority.</p>
                         </div>
                     </div>
-                    <!--//  Single Funfact -->
+                    <!--// Single Funfact -->
 
                 </div>
             </div>
         </div>
+
         <!--// Funfact Area -->
 
         <!-- Testimonial Area -->
@@ -395,7 +400,7 @@
 
                             <!-- Testimonial Content Single -->
                             <div class="testimonial__content__single">
-                                <p>"AJ Kart Logistics transformed our business operations. Their seamless services made
+                                <p>"DBA Consultancy transformed our business operations. Their seamless services made
                                     managing logistics effortless and efficient!"</p>
                             </div>
                             <!--// Testimonial Content Single -->
@@ -473,7 +478,7 @@
 
                             <!-- Testimonial Content Single -->
                             <div class="testimonial__content__single">
-                                <p>"AJ Kart Logistics has been instrumental in scaling our e-commerce business. Highly
+                                <p>"DBA Consultancy has been instrumental in scaling our e-commerce business. Highly
                                     recommended for startups."</p>
                             </div>
                             <!--// Testimonial Content Single -->
