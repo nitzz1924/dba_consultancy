@@ -126,6 +126,8 @@ Route::controller(WebsiteViews::class)->group(function () {
     Route::get('/features', 'features')->name('features');
     Route::get('/services', 'services')->name('services');
     Route::get('/privacypolicy', 'privacypolicy')->name('privacypolicy');
+    Route::get('/termsandconditions', 'termsandconditions')->name('termsandconditions');
+    Route::get('/returnandrefund', 'returnandrefund')->name('returnandrefund');
 
 });
 // //Excel Routes

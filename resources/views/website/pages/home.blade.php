@@ -407,10 +407,10 @@
 
                             <!-- Single Author -->
                             <div class="testimonial__author__single">
-                                <div class="testimonial__author__image">
+                                {{-- <div class="testimonial__author__image">
                                     <img src="{{ asset('assets/websiteAssets/images/testimonial/testimonial-author-1.png') }}"
                                         alt="testimonial author">
-                                </div>
+                                </div> --}}
                                 <div class="testimonial__author__description">
                                     <h6>Rajesh Sharma</h6>
                                     <span>Managing Director</span>
@@ -433,10 +433,10 @@
 
                             <!-- Single Author -->
                             <div class="testimonial__author__single">
-                                <div class="testimonial__author__image">
+                                {{-- <div class="testimonial__author__image">
                                     <img src="{{ asset('assets/websiteAssets/images/testimonial/testimonial-author-2.png') }}"
                                         alt="testimonial author">
-                                </div>
+                                </div> --}}
                                 <div class="testimonial__author__description">
                                     <h6>Anjali Mehta</h6>
                                     <span>CEO</span>
@@ -459,10 +459,10 @@
 
                             <!-- Single Author -->
                             <div class="testimonial__author__single">
-                                <div class="testimonial__author__image">
+                                {{-- <div class="testimonial__author__image">
                                     <img src="{{ asset('assets/websiteAssets/images/testimonial/testimonial-author-3.png') }}"
                                         alt="testimonial author">
-                                </div>
+                                </div> --}}
                                 <div class="testimonial__author__description">
                                     <h6>Vikram Iyer</h6>
                                     <span>Operations Manager</span>
@@ -485,10 +485,10 @@
 
                             <!-- Single Author -->
                             <div class="testimonial__author__single">
-                                <div class="testimonial__author__image">
+                                {{-- <div class="testimonial__author__image">
                                     <img src="{{ asset('assets/websiteAssets/images/testimonial/testimonial-author-2.png') }}"
                                         alt="testimonial author">
-                                </div>
+                                </div> --}}
                                 <div class="testimonial__author__description">
                                     <h6>Priya Desai</h6>
                                     <span>Entrepreneur</span>
@@ -520,7 +520,7 @@
                                 providing reliable legal advice.
                                 Get peace of mind with our hassle-free services tailored to your needs.</p>
                             <h6>CALL US NOW
-                                <a href="tel:+918123456789">+91 81234 56789</a> (TOLL-FREE)
+                                <a href="tel:+919460574344">+91 9460 574 344</a>
                             </h6>
                         </div>
                     </div>

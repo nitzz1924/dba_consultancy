@@ -100,16 +100,15 @@
                                 <div class="pg-contact__blocks">
                                     <div class="single-block address">
                                         <h6>Address</h6>
-                                        <p>Ajmer</p>
+                                        <p>DBA Consultancy, Near Truck Chouraha, NH 8, Bhim, Distt. Rajsamand, Rajasthan - 305921</p>
                                     </div>
                                     <div class="single-block phone">
                                         <h6>Phone</h6>
-                                        <p><a href="#">+008 12568 987 789</a></p>
-                                        <p><a href="#">+008 35687 567 458</a></p>
+                                        <p><a href="tel:+919460574344">+91 9460 574 344</a></p>
                                     </div>
                                     <div class="single-block web">
-                                        <h6>Web</h6>
-                                        <p><a href="#">info@dbaconsultancy.in</a></p>
+                                        <h6>Mail Us At</h6>
+                                        <p><a href="mailto:info@dbaconsultancy.in">info@dbaconsultancy.in</a></p>
                                     </div>
                                 </div>
 

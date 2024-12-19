@@ -144,7 +144,7 @@
 
 
         <!-- Team Area -->
-        <section id="team-area" class="advisor-area bg--white section-padding--xlg">
+        {{-- <section id="team-area" class="advisor-area bg--white section-padding--xlg">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-12 offset-0">
@@ -231,7 +231,7 @@
 
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!--// Team Area -->
 
         <!-- Funfact Area -->
@@ -303,7 +303,7 @@
                                 providing reliable legal advice.
                                 Get peace of mind with our hassle-free services tailored to your needs.</p>
                             <h6>CALL US NOW
-                                <a href="tel:+918123456789">+91 81234 56789</a> (TOLL-FREE)
+                                <a href="tel:+919460574344">+91 9460 574 344</a>
                             </h6>
                         </div>
                     </div>

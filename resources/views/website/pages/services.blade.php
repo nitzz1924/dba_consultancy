@@ -66,30 +66,37 @@
             <div class="pg-services-area__srevicelist servicelist--style2">
                 <div class="container">
                     <div class="row">
+                        @foreach ($services as $row)
 
                         <!-- Single Service -->
                         <div class="col-lg-4 col-md-6 wow fadeInUp">
-                            <div class="service service--style2">
+                            <div class="service service--style2 border p-3 rounded-3">
                                 <div class="service__thumb">
                                     <a href="#">
-                                        <img src="{{ asset('assets/websiteAssets/images/services/service-thumb-1.jpg') }}"
+                                        <img width="75" src="{{ asset('assets/images/Services/'.$row->iconimage) }}"
                                             alt="Personal Tax Services">
                                     </a>
                                 </div>
                                 <div class="service__content">
                                     <h5>
-                                        <a href="#">Personal Tax Services</a>
+                                        <a href="#">{{$row->label}}</a>
                                     </h5>
-                                    <p>Our Personal Tax Services are designed to simplify tax complexities and ensure
-                                        compliance, helping you maximize refunds and minimize liabilities.</p>
+                                    <div class="fw-bold">Rs. {{$row->price}}</div>
+                                    <p>{{ SUBSTR($row->details, 0, 100)}}</p>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="#" class="btn btn-primary ">
+                                        Buy Now
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
+                        
                         <!--// Single Service -->
+                        @endforeach
 
                         <!-- Single Service -->
-                        <div class="col-lg-4 col-md-6 wow fadeInUp">
+                        {{-- <div class="col-lg-4 col-md-6 wow fadeInUp">
                             <div class="service service--style2">
                                 <div class="service__thumb">
                                     <a href="#">
@@ -177,7 +184,7 @@
                                         efficiency in their financial strategies.</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <!--// Single Service -->
 
@@ -188,8 +195,6 @@
 
         </section>
         <!--// Page Service Area -->
-
-
 
     </main>
     <!-- //Page Conent -->

@@ -16,7 +16,9 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ asset('assets/websiteAssets/css/bootstrap.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    {{-- <link rel="stylesheet" href="{{ asset('assets/websiteAssets/css/bootstrap.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/websiteAssets/css/plugins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/websiteAssets/css/style.css') }}">
 
@@ -46,7 +48,7 @@
                         <ul class="header__top__info">
                             <li>
                                 <a href="#">
-                                    <i class="flaticon-old-typical-phone"></i> 01354 568 787</a>
+                                    <i class="flaticon-old-typical-phone"></i>9460574344</a>
                             </li>
                             <li>
                                 <a href="#">
@@ -104,7 +106,7 @@
                 <div class="container d-block d-lg-none">
                     <div class="mobile-menu clearfix d-md-block d-lg-none">
                         <a class="mobile-logo" href="{{ route('homepage')}}">
-                            <img src="{{ asset('assets/images/dbalogo.png') }}" alt="logo">
+                            <img width="100" src="{{ asset('assets/images/dbalogo.png') }}" alt="logo">
                         </a>
                     </div>
                 </div>
@@ -181,13 +183,13 @@
                             <h5 class="widget-title">QUICK LINKS</h5>
                             <ul>
                                 <li>
-                                    <a href="{{ route('services')}}">Our Services</a>
+                                    <a href="{{ route('privacypolicy')}}">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('features')}}">Features</a>
+                                    <a href="{{ route('termsandconditions')}}">Terms and Conditions</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('about')}}">About Us</a>
+                                    <a href="{{ route('returnandrefund')}}">Return and Refund</a>
                                 </li>
 
                                 <li>
@@ -203,22 +205,16 @@
                             <h5 class="widget-title">Contact Info</h5>
                             <ul>
                                 <li>
-                                    <p>Ajmer</p>
+                                    <p>DBA Consultancy, Near Truck Chouraha, NH 8, Bhim, Distt. Rajsamand, Rajasthan - 305921</p>
                                 </li>
                                 <li>
                                     <p>
-                                        <a href="callto://+00812568987789">+008 12568 987 789</a>
-                                    </p>
-                                    <p>
-                                        <a href="callto://+00835687567458">+008 35687 567 458</a>
+                                        <a href="callto://+919460574344">+91 9460574344</a>
                                     </p>
                                 </li>
                                 <li>
                                     <p>
                                         <a href="mailto://info@dbaconsultancy.in">info@dbaconsultancy.in</a>
-                                    </p>
-                                    <p>
-                                        <a href="mailto://info@dbaconsultancy.in">www.dbaconsultancy.in</a>
                                     </p>
                                 </li>
                             </ul>
@@ -253,8 +249,10 @@
 
     <!-- JS Files -->
     <script src="{{ asset('assets/websiteAssets/js/vendor/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('assets/websiteAssets/js/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/websiteAssets/js/bootstrap.min.js') }}"></script>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    {{-- <script src="{{ asset('assets/websiteAssets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/websiteAssets/js/bootstrap.min.js') }}"></script> --}}
     <script src="{{ asset('assets/websiteAssets/js/plugins.js') }}"></script>
     <script src="{{ asset('assets/websiteAssets/js/active.js') }}"></script>
     <script src="{{ asset('assets/websiteAssets/js/scripts.js') }}"></script>

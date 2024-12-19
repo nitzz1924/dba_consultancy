@@ -97,12 +97,13 @@
 
                 <h4 class="mt-4">11. Contact Us</h4>
                 <p>If you have any questions or concerns regarding this policy, please contact us:</p>
-                <ul>
-                    <li><strong>DBA Consultancy</strong></li>
-                    <li>Email: support@dbaconsultancy.in</li>
-                    <li>Phone: [Insert Phone Number]</li>
-                    <li>Address: [Insert Address]</li>
-                </ul>
+                
+                <div class="contact-info">
+                    <strong>DBA Consultancy</strong>
+                    <p><strong>Email:</strong> <a href="mailto:info@dbaconsultancy.in">info@dbaconsultancy.in</a></p>
+                    <p><strong>Phone:</strong> +91 9460574344</p>
+                    <p><strong>Address:</strong> DBA Consultancy, Near Truck Chouraha, NH 8, Bhim, Distt. Rajsamand, Rajasthan - 305921</p>
+                </div>
             </div>
         </div>
     </section>
