@@ -1,6 +1,6 @@
 @extends('layouts.UserPanelLayouts.usermain')
 @push('title')
-<title>Refer & Earn | DBA Consultancy</title>
+    <title>Refer & Earn | DBA Consultancy</title>
 @endpush
 @section('content')
 <div class="p-4">
@@ -18,15 +18,15 @@
             <div class="col-lg-4 p-0">
                 <div class="row justify-content-center shadow-lg py-3 rounded-4 bg-white">
                     <div class="">
-                        <h5 class="text-success">Referral Program Conditions:</h5>
-                        <p>
-                            <b>Direct referral:</b> 10% bonus up to ₹50,000 in business. <br />
-                            <b>Annual business requirement for bonus eligibility.</b>
-                        <ul class="text-dark fs-6">
-                            <li> <b> Beyond ₹50,000 in business:</b> 15% referral bonus.</li>
-                            <li><b> Second-level referrals:</b> 5% bonus.</li>
-                        </ul>
-                        </p>
+                        <h5 class="text-success text-center fw-bold">Referral Program Conditions:</h5>
+                        @foreach ($referincomedata as $data)
+                            <p>
+                            <ul class="text-dark fs-5">
+                                <li> <strong> {{$data->lessthangreater}} ₹{{$data->amount}}/- in business:</strong>
+                                    {{$data->criteria}} referral bonus.</li>
+                            </ul>
+                            </p>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -67,17 +67,17 @@
 
 <script>
     function copyToClipboard() {
-            var copyText = document.getElementById("p1").textContent;
-            navigator.clipboard.writeText(copyText);
-            alert("Copied the code: " + copyText);
-        }
+        var copyText = document.getElementById("p1").textContent;
+        navigator.clipboard.writeText(copyText);
+        alert("Copied the code: " + copyText);
+    }
 
-        function shareOnWhatsapp(referCode) {
-            const message = encodeURIComponent(
-                `🎉👉 Use my referral code *${referCode}* to sign up and get a Bonus🏆`
-            );
-            const whatsappLink = `https://api.whatsapp.com/send/?text=${message}`;
-            window.open(whatsappLink, '_blank');
-        }
+    function shareOnWhatsapp(referCode) {
+        const message = encodeURIComponent(
+            `🎉👉 Use my referral code *${referCode}* to sign up and get a Bonus🏆`
+        );
+        const whatsappLink = `https://api.whatsapp.com/send/?text=${message}`;
+        window.open(whatsappLink, '_blank');
+    }
 </script>
 @endsection

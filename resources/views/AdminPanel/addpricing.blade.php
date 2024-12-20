@@ -346,7 +346,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 mt-2">
-                <label for="example-email-input" class="form-label">Details</label>
+                    <label for="example-email-input" class="form-label">Details</label>
                     <textarea rows="4" name="details" class="form-control resize-none" placeholder="Your Details...">${pricingdata.details}</textarea>
                 </div>
                 <div class="col-lg-12 mt-2">

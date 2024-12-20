@@ -37,11 +37,13 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/createform', 'createform')->name('createform');
     Route::get('admin/pricingdetails', 'pricingdetails')->name('pricingdetails');
     Route::get('admin/allcustomers', 'allcustomers')->name('allcustomers');
-    Route::get('admin/customersorders', 'customersorders')->name('customersorders');
+    Route::get('admin/customersorders/{status}', 'customersorders')->name('customersorders');
+    Route::get('admin/customersallorders', 'customersallorders')->name('customersallorders');
     Route::get('admin/orderdetails/{id}', 'orderdetailsadmin')->name('orderdetailsadmin');
     Route::get('admin/referincomelevel', 'referincomelevel')->name('referincomelevel');
     Route::get('admin/referedusers', 'referedusers')->name('referedusers');
     Route::get('admin/getchildren/{refercode}', 'getchildren')->name('getchildren');
+    Route::post('admin/datefilterorders', 'datefilterorders')->name('datefilterorders');
 
 });
 
@@ -93,6 +95,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
     Route::get('allrefers', 'allrefers')->name('allrefers');
     Route::get('refer', 'refer')->name('refer');
+    Route::get('customercommission', 'customercommission')->name('customercommission');
 
 });
 
@@ -113,5 +116,12 @@ Route::controller(UserStores::class)->group(function () {
 
 // //Excel Routes
 // Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
+// Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
+
+
+
+
+
+
 // Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
 

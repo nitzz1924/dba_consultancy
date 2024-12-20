@@ -179,7 +179,8 @@ class AdminStores extends Controller
         }
     }
 
-    public function insertpricingform(Request $rq){
+    public function insertpricingform(Request $rq)
+    {
         // dd($rq->all());
         try {
             $data = $rq->validate([
@@ -283,16 +284,38 @@ class AdminStores extends Controller
 
     public function updateorderstatus(Request $req)
     {
-        $orderstauts = PurchaseService::where('id',$req->record_id)->first();
-        if ($orderstauts) {
-            $orderstauts->status = $req->status;
-            $orderstauts->save();
-            return response()->json(['success' => true]);
+        //dd($req->status);
+        try {
+            //Mutiple Image Upload
+            $image = array();
+            if ($files = $req->file('documents')) {
+                foreach ($files as $file) {
+                    $image_name = md5(rand(1000, 10000));
+                    $extension = strtolower($file->getClientOriginalExtension());
+                    $image_fullname = $image_name . '.' . $extension;
+                    $uploaded_path = "public/assets/images/documents/";
+                    $image_url = $uploaded_path . $image_fullname;
+                    $file->move($uploaded_path, $image_fullname);
+                    $image[] = $image_url;
+                }
+            }
+            $purchasedata = PurchaseService::where('id', $req->userid)->first();
+            if ($purchasedata) {
+                $purchasedata->status = $req->status == null ? $purchasedata->status : $req->status;
+                $purchasedata->documents = count($image) > 0 ? implode(',', $image) : $purchasedata->documents;
+                $purchasedata->note = $req->note == null ? $purchasedata->note : $req->note;
+                $purchasedata->update();
+                return back()->with('success', 'Status Updated..!!!!');
+            } else {
+                return back()->with('error', 'Status Not Updated..!!!!');
+            }
+        } catch (Exception $e) {
+            return back()->with('error')->with('error', $e->getMessage());
         }
-        return response()->json(['success' => false], 404);
     }
 
-    public function insertincomelevel(Request $rq){
+    public function insertincomelevel(Request $rq)
+    {
         try {
 
             $data = ReferIncome::create([
@@ -315,4 +338,5 @@ class AdminStores extends Controller
         $data->delete();
         return back()->with('success', "Deleted....!!!");
     }
+
 }

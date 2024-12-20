@@ -58,16 +58,14 @@
                                                 <div class="flex-grow-1 ms-3">
                                                     <h5 class="fs-14 text-body">{{ $orderdetails->servicename }}</h5>
                                                     <p class="text-muted mb-0">{{ $orderdetails->formtype }}</p>
-                                                    <span class="text-muted mb-0">{{
-                                                        $orderdetails->created_at->format('d
-                                                        M Y') }}</span>
-                                                    </p>
+                                                    <span
+                                                        class="text-muted mb-0">{{ $orderdetails->created_at->format('d M Y') }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>₹ {{ $orderdetails->servicecharge }}/-</td>
                                         <td class="fw-medium text-end">
-                                            @php $total = $orderdetails->servicecharge- $orderdetails->discount @endphp
+                                            @php $total = $orderdetails->servicecharge - $orderdetails->discount @endphp
                                             ₹ {{ $total }}/-
                                         </td>
                                     </tr>
@@ -105,47 +103,43 @@
                     </div>
                     <div class="card-body">
                         @php
-                        $formdata = json_decode($orderdetails->formdata, true);
+                            $formdata = json_decode($orderdetails->formdata, true);
                         @endphp
                         <table class="table table-bordered border-light">
-
                             <tbody>
                                 @foreach ($formdata as $data)
-                                @if ($data['label'] !== '_token')
-                                <tr>
-                                    <td>{{ $data['label'] }}</td>
-                                    <td>
-                                        @php
-                                        $filePath = asset('assets/images/users/' . $data['value']);
-                                        $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
-                                        $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                                        @endphp
+                                                            @if ($data['label'] !== '_token')
+                                                                                        <tr>
+                                                                                            <td>{{ $data['label'] }}</td>
+                                                                                            <td>
+                                                                                                @php
+                                                                                                    $filePath = asset('assets/images/users/' . $data['value']);
+                                                                                                    $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
+                                                                                                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                                                                                                @endphp
 
-                                        @if (in_array(strtolower($fileExtension), $imageExtensions))
-                                        <div>
-                                            <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
-                                                style="width: 100px; height: 100px; object-fit: cover;">
-
-                                        </div>
-                                        <a href="{{ $filePath }}" download="{{ $data['value'] }}"
-                                            class="btn btn-dark btn-sm mt-2">Download</a>
-                                        @elseif (strtolower($fileExtension) === 'pdf')
-                                        <!-- Display PDF in iframe with download link -->
-                                        <iframe src="{{ $filePath }}"
-                                            style="width: 100%; height: 200px; border: none;"></iframe>
-                                        <a href="{{ $filePath }}" download="{{ $data['value'] }}"
-                                            class="btn btn-dark btn-sm mt-2">Download PDF</a>
-                                        @else
-                                        {{ $data['value'] }}
-                                        @endif
-                                    </td>
-
-                                </tr>
-                                @endif
+                                                                                                @if (in_array(strtolower($fileExtension), $imageExtensions))
+                                                                                                    <div>
+                                                                                                        <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
+                                                                                                            style="width: 100px; height: 100px; object-fit: cover;">
+                                                                                                    </div>
+                                                                                                    <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                                                                                        class="btn btn-dark btn-sm mt-2">Download</a>
+                                                                                                @elseif (strtolower($fileExtension) === 'pdf')
+                                                                                                    <!-- Display PDF in iframe with download link -->
+                                                                                                    <iframe src="{{ $filePath }}"
+                                                                                                        style="width: 100%; height: 200px; border: none;"></iframe>
+                                                                                                    <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                                                                                        class="btn btn-dark btn-sm mt-2">Download PDF</a>
+                                                                                                @else
+                                                                                                    {{ $data['value'] }}
+                                                                                                @endif
+                                                                                            </td>
+                                                                                        </tr>
+                                                            @endif
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -173,89 +167,113 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><i class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $orderdetails->email
-                                }}
+                            <li><i
+                                    class="ri-mail-line me-2 align-middle text-muted fs-16"></i>{{ $orderdetails->email }}
                             </li>
                             <li><i class="ri-phone-line me-2 align-middle text-muted fs-16"></i>+(91)
-                                {{ $orderdetails->mobilenumber }}</li>
+                                {{ $orderdetails->mobilenumber }}
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex">
-                            <h5 class="card-title flex-grow-1 mb-0">Change Order Status</h5>
+                <form action="{{route('updateorderstatus')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex">
+                                <h5 class="card-title flex-grow-1 mb-0">Update Order Status and Upload Documents</h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="orderStatus" class="form-label">Order Status</label>
+                                <select name="status" class="form-select orderstatus" id="orderStatus"
+                                    aria-label="Default select example">
+                                    <option>--select to change--</option>
+                                    <option value="Cancel" {{ $orderdetails->status == 'Cancel' ? 'selected' : '' }}>
+                                        Cancel
+                                    </option>
+                                    <option value="Hold" {{ $orderdetails->status == 'Hold' ? 'selected' : '' }}>On Hold
+                                    </option>
+                                    <option value="Processing" {{ $orderdetails->status == 'Processing' ? 'selected' : '' }}>
+                                        Processing</option>
+                                    <option value="Completed" {{ $orderdetails->status == 'Completed' ? 'selected' : '' }}>
+                                        Completed</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="uploadDocuments" class="form-label">Select Documents</label>
+                                <input class="form-control" type="file" id="uploadDocuments" name="documents[]" multiple
+                                    accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
+                            </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Write Note</label>
+                                <input class="form-control" type="text" placeholder="Write a Note......." id="note"
+                                    name="note">
+                            </div>
+                            <input type="hidden" id="userid" name="userid" value="{{ $orderdetails->id }}">
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success ">Submit</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <select class="form-select orderstatus mb-3" aria-label="Default select example">
-                            <option>--select to change--</option>
-                            <option value="Unpaid" {{ $orderdetails->status == 'Unpaid' ? 'selected' : '' }}>
-                                Unpaid</option>
-                            <option value="Processing" {{ $orderdetails->status == 'Processing' ? 'selected' : '' }}>
-                                Processing</option>
-                            <option value="Completed" {{ $orderdetails->status == 'Completed' ? 'selected' : '' }}>
-                                Completed</option>
-                        </select>
-                        <input type="hidden" id="userid" name="userid" value="{{ $orderdetails->id }}" </div>
-                    </div>
-                </div>
+                </form>
             </div>
-            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-            <!--Order Status-->
-            <script>
-                $(document).ready(function() {
-                    $('.orderstatus').on('change', function() {
-                        var selectedStatus = $(this).val();
-                        var userid = $('#userid').val();
-                        console.log(selectedStatus, userid);
-                        Swal.fire({
-                            title: "Update Order Status",
-                            text: "Are you sure you want to update the Order status?",
-                            icon: "info",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Yes, update it!",
-                            cancelButtonText: "Cancel"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: '/updateorderstatus',
-                                    method: 'POST',
-                                    data: {
-                                        _token: '{{ csrf_token() }}',
-                                        status: selectedStatus,
-                                        record_id: userid
-                                    },
-                                    success: function(response) {
-                                        if (response.success) {
-                                            Swal.fire({
-                                                title: "Success!",
-                                                text: "Status Updated..!",
-                                                icon: "success",
-                                                confirmButtonText: "OK"
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    window.location.href =
-                                                        "/customersorders";
-                                                }
-                                            });
-                                        } else {
-                                            Swal.fire("Error", "Failed to update Order status.",
-                                                "error");
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!--Order Status-->
+    <!-- <script>
+        $(document).ready(function () {
+            $('.orderstatus').on('change', function () {
+                var selectedStatus = $(this).val();
+                var userid = $('#userid').val();
+                console.log(selectedStatus, userid);
+                Swal.fire({
+                    title: "Update Order Status",
+                    text: "Are you sure you want to update the Order status?",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, update it!",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/updateorderstatus',
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                status: selectedStatus,
+                                record_id: userid
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        title: "Success!",
+                                        text: "Status Updated..!",
+                                        icon: "success",
+                                        confirmButtonText: "OK"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "/admin/customersallorders";
                                         }
-                                    },
-                                    error: function(xhr, status, error) {
-                                        let errorMessage = xhr.responseJSON?.message || error ||
-                                            "An unknown error occurred.";
-                                        Swal.fire("Error", errorMessage, "error");
-                                    }
-
-                                });
+                                    });
+                                } else {
+                                    Swal.fire("Error", "Failed to update Order status.", "error");
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                let errorMessage = xhr.responseJSON?.message || error || "An unknown error occurred.";
+                                Swal.fire("Error", errorMessage, "error");
                             }
                         });
-                    });
+                    }
                 });
-            </script>
+            });
+        });
+    </script> -->
 </x-app-layout>

@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\FormAttribute;
 use App\Models\GroupType;
 use App\Models\Message;
+use App\Models\ReferIncome;
 use App\Models\Wallet;
 use App\Models\Master;
 use App\Models\PricingDetail;
@@ -119,8 +120,11 @@ class UserViews extends Controller
     }
     public function refer()
     {
+        $loggedinuser = Auth::guard('customer')->user();
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.refer');
+            $referincomedata = ReferIncome::orderBy('created_at', 'DESC')->get();
+            // dd($referincomedata);
+            return view('UserPanel.refer',compact('referincomedata'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -242,4 +246,13 @@ class UserViews extends Controller
         return view('UserPanel.allrefers', compact('list'));
     }
 
+    public function customercommission()
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        if (Auth::guard('customer')->check()) {
+            return view('UserPanel.customercommission');
+        } else {
+            return view('auth.UserPanel.login');
+        }
+    }
 }
