@@ -124,7 +124,7 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             $referincomedata = ReferIncome::orderBy('created_at', 'DESC')->get();
             // dd($referincomedata);
-            return view('UserPanel.refer',compact('referincomedata'));
+            return view('UserPanel.refer', compact('referincomedata'));
         } else {
             return view('auth.UserPanel.login');
         }
@@ -220,7 +220,7 @@ class UserViews extends Controller
     public function proceedtopay($id)
     {
         $loggedinuser = Auth::guard('customer')->user();
-        $purchasedata = PurchaseService::where('id', $id)->where('userid',  $loggedinuser->id)->first();
+        $purchasedata = PurchaseService::where('id', $id)->where('userid', $loggedinuser->id)->first();
         //dd( $purchasedata);
         $debitTotal = 0;
         $creditTotal = 0;

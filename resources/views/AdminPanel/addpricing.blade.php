@@ -280,7 +280,7 @@
         $('#table-body').on('click', '.editbtnmodal', function() {
             const pricingdata = $(this).data('pricing');
             console.log(pricingdata);
-            const imageSrc = pricingdata.coverimage ? 'assets/images/Services/' + pricingdata.coverimage : '';
+            const imageSrc = pricingdata.coverimage ? '{{ asset('assets/images/Services/') }}/' + pricingdata.coverimage : '';
             console.log(imageSrc);
             const selectedDocuments = JSON.parse(pricingdata.documents || "[]");
             console.log("Documents : " + selectedDocuments);
@@ -340,7 +340,7 @@
                 </div>
                 <div class="col-lg-6">
                         <div class="img-pre">
-                            <img id="imagemain" class="img-fluid"  src="${imageSrc}" alt="">
+                            <img id="imagemain" class="img-fluid" src="${imageSrc}" alt="">
                         </div>
                     </div>
             </div>

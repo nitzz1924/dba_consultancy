@@ -49,27 +49,27 @@
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('refer') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('refer') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('refer') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
                         <i class=" ri-hand-heart-fill"></i>Refer A Friend</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('orderpage') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('orderpage') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('orderpage') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
                         <i class=" ri-shopping-cart-fill"></i><span>My Orders</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('allrefers') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('allrefers') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="{{ route('allrefers') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
                         <i class=" ri-team-fill"></i><span>All Refers</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('customercommission') ? 'active' : '' }}">
                     <a class="nav-link menu-link" href="{{ route('customercommission') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class=" ri-team-fill"></i><span>Customer Commission</span>
+                        <i class="ri-coins-fill"></i><span>Customer Commission</span>
                     </a>
                 </li>
 

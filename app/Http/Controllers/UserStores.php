@@ -298,7 +298,7 @@ class UserStores extends Controller
             $walletdata->paymenttype = $request->input('paymenttype');
             $walletdata->amount = $request->input('amount');
             $walletdata->transactionid = $request->input('orderid');
-            $walletdata->status = 0;
+            $walletdata->status = 'Hold';
             $walletdata->save();
 
             $orderstatus = PurchaseService::where('id',$request->input('orderid'))->update([

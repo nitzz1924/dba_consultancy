@@ -22,8 +22,11 @@
                         @foreach ($referincomedata as $data)
                             <p>
                             <ul class="text-dark fs-5">
-                                <li> <strong> {{$data->lessthangreater}} ₹{{$data->amount}}/- in business:</strong>
-                                    {{$data->criteria}} referral bonus.</li>
+                                <li>
+                                    <strong>{{$data->incomename}}</strong>
+                                    <p>{{$data->lessthangreater}} ₹{{$data->amount}}/- in business: {{$data->criteria}}
+                                        referral bonus.</p>
+                                </li>
                             </ul>
                             </p>
                         @endforeach

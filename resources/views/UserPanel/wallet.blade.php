@@ -85,8 +85,8 @@
                 </div>
             </div>
             <div>
-                <div class="fs-3 text-muted fw-bold">
-                    {{ $row->amount }}<sub class="text-danger fs-6">Dr.</sub>
+                <div class="fs-3  text-danger fw-bold">
+                <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-danger fs-6">&nbsp;&nbsp;<span class="badge bg-danger">Debit</span></sub>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
             </div>
             <div>
                 <div class="fs-3 text-success fw-bold">
-                    <i class='bx bx-rupee'></i>750Cr
+                    <i class='bx bx-rupee'></i>750<sub class="text-success fs-6">&nbsp;&nbsp;<span class="badge bg-success">Credit</span></sub>
                 </div>
             </div>
         </div>

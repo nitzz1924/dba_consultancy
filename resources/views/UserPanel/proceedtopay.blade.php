@@ -117,7 +117,7 @@
                             @csrf
                             <button type="submit" class="btn btn-success rounded-pill fs-6 shadow-lg">
                                 <div class="">
-                                    <i class='bx bx-plus bg-light text-black p-2 rounded-pill me-1'></i>Pay Now
+                                    <i class='lab la-amazon-pay bg-light text-black p-2 rounded-pill me-1'></i>Pay Now
                                 </div>
                             </button>
                             <input type="hidden" name="paymenttype" value="debit">
