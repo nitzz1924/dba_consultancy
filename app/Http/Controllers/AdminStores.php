@@ -10,6 +10,7 @@ use App\Models\FormAttribute;
 use Exception;
 use App\Models\SubMaster;
 use App\Models\Master;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 
 class AdminStores extends Controller
@@ -302,6 +303,9 @@ class AdminStores extends Controller
             $purchasedata = PurchaseService::where('id', $req->userid)->first();
             if ($purchasedata) {
                 $purchasedata->status = $req->status == null ? $purchasedata->status : $req->status;
+                if($purchasedata->status == 'Completed'){
+                   Wallet::where('transactionid', $purchasedata->id)->where('status','=','Hold')->update(['status'=>0]);
+                }
                 $purchasedata->documents = count($image) > 0 ? implode(',', $image) : $purchasedata->documents;
                 $purchasedata->note = $req->note == null ? $purchasedata->note : $req->note;
                 $purchasedata->update();

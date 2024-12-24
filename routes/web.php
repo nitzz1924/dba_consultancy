@@ -2,6 +2,7 @@
 #---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏---------------------------”
 use App\Http\Controllers\AdminStores;
 use App\Http\Controllers\AdminViews;
+use App\Http\Controllers\RazorPayController;
 use App\Http\Controllers\UserStores;
 use App\Http\Controllers\UserViews;
 use Illuminate\Support\Facades\Route;
@@ -114,14 +115,15 @@ Route::controller(UserStores::class)->group(function () {
 });
 
 
+
+// Razorpay Routes
+Route::controller(RazorPayController::class)->group(function () {
+    Route::post('razorpay/payment', 'payment')->name('razorpay.payment');
+});
+
+
+
+
 // //Excel Routes
 // Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
 // Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
-
-
-
-
-
-
-// Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
-
