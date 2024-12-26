@@ -264,7 +264,7 @@
             // If the form is valid, proceed with the SweetAlert confirmation dialog
             Swal.fire({
                     title: "Are you sure?",
-                    html: "You want to Order <strong style='color: black; font-weight:bold;'>" + servicename +
+                    html: "You want to Buy <strong style='color: black; font-weight:bold;'>" + servicename +
                         "</strong> ?",
                     icon: "warning",
                     showCancelButton: true,

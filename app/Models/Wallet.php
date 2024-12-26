@@ -9,10 +9,12 @@ class Wallet extends Model
 {
     protected $fillable = [
         'userid',
+        'serviceid',
         'transactionid',
         'amount',
         'paymenttype',
         'transactiontype',
+        'transactiondata',
         'status',
     ];
 }

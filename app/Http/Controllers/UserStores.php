@@ -63,9 +63,9 @@ class UserStores extends Controller
 
             //This is current user's referid
             $data->update([
-                'refercode' =>  Carbon::now()->year.'dba'.$data->id,
+                'refercode' => Carbon::now()->year . 'dba' . $data->id,
             ]);
-            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id,'otp' => $otp]]);
+            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp]]);
 
         } catch (Exception $e) {
             return response()->json(['msg' => 'failure']);
@@ -272,18 +272,47 @@ class UserStores extends Controller
 
     public function insertwallet(Request $request)
     {
+        // dd($request->all());
         try {
             $loggedinuser = Auth::guard('customer')->user();
+            $transactiondata = $request->input('transactiondata');
+            $walletdata = Wallet::create([
+                'userid' => $loggedinuser->id,
+                'transactiontype' => $request->input('transactiontype'),
+                'paymenttype' => $request->input('paymenttype'),
+                'amount' => $request->input('amount'),
+                'transactiondata' => $transactiondata,
+                'status' => 0,
+            ]);
+            Log::error('Wallet Recharged: ' . $walletdata);
+            return response()->json(['msg' => 'success', 'data' => $walletdata]);
+        } catch (Exception $e) {
+            Log::error('Wallet Insertion Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function paynow(Request $request)
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        //dd($request->all());
+        try {
             $walletdata = new Wallet();
             $walletdata->userid = $loggedinuser->id;
+            $walletdata->serviceid = $request->input('serviceid');
             $walletdata->transactiontype = $request->input('transactiontype');
             $walletdata->paymenttype = $request->input('paymenttype');
-            $walletdata->amount = $request->input('walletamount');
-            $walletdata->status = 0;
+            $walletdata->amount = $request->input('amount');
+            $walletdata->transactionid = $request->input('orderid');
+            $walletdata->status = 'Hold';
             $walletdata->save();
-            return back()->with('success', 'Wallet Recharged.');
+
+            $orderstatus = PurchaseService::where('id', $request->input('orderid'))->update([
+                'status' => 'Processing',
+            ]);
+            return redirect()->route('orderpage')->with('success', 'Order Placed.');
         } catch (Exception $e) {
-            return redirect()->route('wallet')->with('error', $e->getMessage());
+            return redirect()->route('proceedtopay')->with('error', $e->getMessage());
         }
     }
 

@@ -49,22 +49,27 @@
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('refer') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('refer') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
-                        <img class="" src="{{ asset('assets/images/campaign (1).png') }}" alt=""
-                            height="25" />&nbsp;<span class="fs-5">Refer A Friend</span>
+                    <a class="nav-link menu-link" href="{{ route('refer') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
+                        <i class=" ri-hand-heart-fill"></i>Refer A Friend</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('orderpage') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('orderpage') }}" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class=" ri-file-list-line"></i><span>My Orders</span>
+                    <a class="nav-link menu-link" href="{{ route('orderpage') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
+                        <i class=" ri-shopping-cart-fill"></i><span>My Orders</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('allrefers') ? 'active' : '' }}">
-                    <a class="nav-link menu-link" href="{{ route('allrefers') }}" role="button"
+                    <a class="nav-link menu-link" href="{{ route('allrefers') }}" role="button" aria-expanded="false"
+                        aria-controls="sidebarDashboards">
+                        <i class=" ri-team-fill"></i><span>All Refers</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('customercommission') ? 'active' : '' }}">
+                    <a class="nav-link menu-link" href="{{ route('customercommission') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class=" ri-file-list-line"></i><span>All Refers</span>
+                        <i class="ri-coins-fill"></i><span>Customer Commission</span>
                     </a>
                 </li>
 

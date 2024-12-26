@@ -15,6 +15,8 @@ class PurchaseService extends Model
         'discount',
         'servicecharge',
         'formdata',
+        'documents',
+        'note',
         'status',
     ];
 }

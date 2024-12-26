@@ -2,6 +2,7 @@
 #---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏---------------------------”
 use App\Http\Controllers\AdminStores;
 use App\Http\Controllers\AdminViews;
+use App\Http\Controllers\RazorPayController;
 use App\Http\Controllers\UserStores;
 use App\Http\Controllers\UserViews;
 use Illuminate\Support\Facades\Route;
@@ -39,11 +40,13 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/createform', 'createform')->name('createform');
     Route::get('admin/pricingdetails', 'pricingdetails')->name('pricingdetails');
     Route::get('admin/allcustomers', 'allcustomers')->name('allcustomers');
-    Route::get('admin/customersorders', 'customersorders')->name('customersorders');
+    Route::get('admin/customersorders/{status}', 'customersorders')->name('customersorders');
+    Route::get('admin/customersallorders', 'customersallorders')->name('customersallorders');
     Route::get('admin/orderdetails/{id}', 'orderdetailsadmin')->name('orderdetailsadmin');
     Route::get('admin/referincomelevel', 'referincomelevel')->name('referincomelevel');
     Route::get('admin/referedusers', 'referedusers')->name('referedusers');
     Route::get('admin/getchildren/{refercode}', 'getchildren')->name('getchildren');
+    Route::post('admin/datefilterorders', 'datefilterorders')->name('datefilterorders');
 
 });
 
@@ -76,13 +79,6 @@ Route::controller(AdminStores::class)->group(function () {
 
 
 
-
-
-
-
-
-
-
 //User Panel Routes
 Route::controller(UserViews::class)->group(function () {
     Route::get('user/login', 'userloginpage')->name('userloginpage');
@@ -101,8 +97,8 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('orderdetails/{id}', 'orderdetails')->name('orderdetails');
     Route::get('proceedtopay/{id}', 'proceedtopay')->name('proceedtopay');
     Route::get('allrefers', 'allrefers')->name('allrefers');
-
     Route::get('refer', 'refer')->name('refer');
+    Route::get('customercommission', 'customercommission')->name('customercommission');
 
 });
 
@@ -116,8 +112,18 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
     Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
     Route::post('insertwallet', 'insertwallet')->name('insertwallet');
+    Route::post('paynow', 'paynow')->name('paynow');
 
 });
+
+
+
+// Razorpay Routes
+Route::controller(RazorPayController::class)->group(function () {
+    Route::post('razorpay/payment', 'payment')->name('razorpay.payment');
+    // Route::post('insert/transactiondata', 'inserttransactiondata')->name('insert.transaction.data');
+});
+
 
 Route::controller(WebsiteViews::class)->group(function () {
     Route::get('/', 'home')->name('homepage');
@@ -133,4 +139,3 @@ Route::controller(WebsiteViews::class)->group(function () {
 // //Excel Routes
 // Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
 // Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
-

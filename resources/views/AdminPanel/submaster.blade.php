@@ -192,7 +192,8 @@
             const carlist = $(this).data('car-list');
             console.log(carlist);
             $('#modalbodyedit').empty();
-            const imageSrc = carlist.iconimage ? 'assets/images/Services/' + carlist.iconimage : '';
+            const imageSrc = carlist.iconimage ? '{{ asset('assets/images/Services/') }}/' + carlist.iconimage : '';
+            // const imageSrc = carlist.iconimage ? 'assets/images/Services/' + carlist.iconimage : '';
             console.log(imageSrc);
             const modalbody = `
                     <div class="mb-3 row">

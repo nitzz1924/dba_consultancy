@@ -112,16 +112,33 @@
             <div class="row my-3">
                 <div class="">
                     <div class="wallet-actions mt-3 d-flex justify-content-around">
-                        @if ($walletamount > $servicesum)
-                        <a href="#">
-                            <div class="btn btn-success rounded-pill fs-6 shadow-lg">
-                                <i class='bx bx-plus bg-light text-black p-2 rounded-pill me-1'></i>Pay Now
+                        @if ($walletamount > $servicesum && $purchasedata->status=='Unpaid')
+                        <form action="{{ route('paynow') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success rounded-pill fs-6 shadow-lg">
+                                <div class="">
+                                    <i class='lab la-amazon-pay bg-light text-black p-2 rounded-pill me-1'></i>Pay Now
+                                </div>
+                            </button>
+                            <input type="hidden" name="paymenttype" value="debit">
+                            <input type="hidden" name="transactiontype" value="serviceorder">
+                            <input type="hidden" name="amount" value="{{ $servicesum }}">
+                            <input type="hidden" name="serviceid" value="{{ $purchasedata->serviceid }}">
+                            <input type="hidden" name="orderid" value="{{ $purchasedata->id }}">
+                        </form>
+                        @elseif($purchasedata->status=='Processing')
+                            <div class="d-flex flex-column justify-content-center">
+                                <p class="text-success fw-bold text-center fs-5">Your Order is already Paid. Changes are Submitted.</p>
+                                <a href="/orderpage" class=" text-center">
+                                    <div class="btn btn-light">
+                                        <i class="ri-arrow-left-fill fs-4 text-black align-middle me-1"></i>My Orders
+                                    </div>
+                                </a>
                             </div>
-                        </a>
                         @else
-                        <a href="/">
+                        <a href="/wallet">
                             <div class="btn btn-info rounded-pill fs-6 shadow-lg">
-                                <i class='bx bx-plus bg-light text-black p-2 rounded-pill me-1'></i>Pay Later
+                                <i class='bx bx-plus bg-light text-black p-2 rounded-pill me-1'></i>Recharge Wallet
                             </div>
                         </a>
                         @endif

@@ -45,10 +45,19 @@ class AdminViews extends Controller
         $customers =  RegisterUser::orderBy('created_at','Desc')->get();
         return view('AdminPanel.allcustomers',compact('customers'));
     }
-    public function customersorders(){
+    public function customersorders($status){
         $orders =  PurchaseService::join('register_users','purchase_services.userid','=','register_users.id')
         ->select('register_users.username as customername','purchase_services.*')
-        ->orderBy('created_at','Desc')->get();
+        ->orderBy('created_at','Desc')
+        ->where('purchase_services.status',$status)
+        ->get();
+        return view('AdminPanel.allorders',compact('orders'));
+    }
+    public function customersallorders(){
+        $orders =  PurchaseService::join('register_users','purchase_services.userid','=','register_users.id')
+        ->select('register_users.username as customername','purchase_services.*')
+        ->orderBy('created_at','Desc')
+        ->get();
         return view('AdminPanel.allorders',compact('orders'));
     }
 
@@ -86,5 +95,14 @@ class AdminViews extends Controller
         ->where(  'parentreferid' , $refercode)->get();
         // dd($children);
         return response()->json($children);
+    }
+
+    public function datefilterorders(Request $request){
+        $datefrom = $request->input('datefrom');
+        $dateto = $request->input('dateto');
+        $data = PurchaseService::join('register_users','purchase_services.userid','=','register_users.id')
+        ->select('register_users.username as customername','purchase_services.*')->whereDate('purchase_services.created_at', '>=', $datefrom)->whereDate('purchase_services.created_at', '<=', $dateto)->orderby('purchase_services.created_at', 'desc')->get();
+        return response()->json($data);
+        // dd($data);
     }
 }

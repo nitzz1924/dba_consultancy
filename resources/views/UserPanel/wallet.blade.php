@@ -1,6 +1,6 @@
 @extends('layouts.UserPanelLayouts.usermain')
 @push('title')
-<title>Wallet | DBA Consultancy</title>
+    <title>Wallet | DBA Consultancy</title>
 @endpush
 @section('content')
 <div class="container-fluid  p-4 desktop-view">
@@ -13,9 +13,9 @@
                 </div>
                 <div class="ms-1 fs-5">
                     @if (Auth::guard('customer')->user())
-                    Hello, {{ Auth::guard('customer')->user()->username }}
+                        Hello, {{ Auth::guard('customer')->user()->username }}
                     @else
-                    Guest User
+                        Guest User
                     @endif
                 </div>
             </div>
@@ -35,23 +35,22 @@
             <div class="balance text-white">
                 Current Balance
                 <div class="wallet-amount">
-                    <i class='bx bx-rupee'></i>{{$walletamount}}
+                    <i class='bx bx-rupee'></i>{{ $walletamount }}
                 </div>
             </div>
-            <form action="{{ route('insertwallet') }}" method="post">
-                @csrf
+            <form id="walletform">
                 <div class="text-white z-3 position-relative">
                     <input type="text" name="walletamount" id="walletamount" class="form-control rounded-4 "
                         placeholder="Enter Amount" required>
-                    <input type="hidden" name="transactiontype" value="online">
-                    <input type="hidden" name="paymenttype" value="credit">
+                    <input type="hidden" name="transactiontype" id="transactiontype" value="online">
+                    <input type="hidden" name="paymenttype" id="paymenttype" value="credit">
                 </div>
                 <div class="wallet-actions mt-3 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-light rounded-pill fs-6 shadow-lg">
-                            <div >
-                                <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
-                            </div>
-                        </button>
+                    <button type="submit" id="rzp-button1" class="btn btn-light rounded-pill fs-6 shadow-lg">
+                        <div>
+                            <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
+                        </div>
+                    </button>
                 </div>
             </form>
         </div>
@@ -68,74 +67,140 @@
                 <a href="#" class="btn btn-outline-dark border-0 fs-6">See more</a>
             </div>
         </div>
-
-        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <i class='bx bx-minus-circle text-danger fs-1'></i>
-                </div>
-                <div class="fs-5">
-                    Legal Consulting
-                    <div class="">
-                        <div class="text-muted fs-6">
-                            10 Oct 2024
+        @foreach ($debithistory->take(10) as $row)
+            @if ($row->paymenttype == 'debit')
+                <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                            <i class=" ri-arrow-down-circle-fill  text-danger fs-1"></i>
+                        </div>
+                        <div class="fs-5">
+                            {{$row->servicename}}
+                            <div class="">
+                                <div class="text-muted fs-6">
+                                    {{ $row->created_date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="fs-3  text-danger fw-bold">
+                            <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-danger fs-6">&nbsp;&nbsp;<span
+                                    class="badge bg-danger">Debit</span></sub>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="fs-3 text-danger fw-bold">
-                    <i class='bx bx-rupee'></i>500
-                </div>
-            </div>
-        </div>
-
-        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <i class='bx bx-plus-circle text-success fs-1'></i>
-                </div>
-                <div class="fs-5">
-                    Referral Commission
-                    <div class="">
-                        <div class="text-muted fs-6">
-                            10 Oct 2024
+            @elseif ($row->paymenttype == 'credit')
+                <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                        <i class=" ri-arrow-up-circle-fill  text-success fs-1"></i>
+                        </div>
+                        <div class="fs-5">
+                            @if($row->transactiontype == 'online')
+                                Wallet Recharged
+                            @elseif($row->transactiontype == 'serviceorder')
+                                {{$row->servicename}}
+                            @endif
+                            <div class="">
+                                <div class="text-muted fs-6">
+                                    {{ $row->created_date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="fs-3 text-success fw-bold">
+                            <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-success fs-6">&nbsp;&nbsp;<span
+                                    class="badge bg-success">Credit</span></sub>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="fs-3 text-success fw-bold">
-                    <i class='bx bx-rupee'></i>750
-                </div>
-            </div>
-        </div>
-
-        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <i class='bx bx-minus-circle text-danger fs-1'></i>
-                </div>
-                <div class="fs-5">
-                    Justice Firm
-                    <div class="">
-                        <div class="text-muted fs-6">
-                            10 Oct 2024
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="fs-3 text-danger fw-bold">
-                    <i class='bx bx-rupee'></i>450
-                </div>
-            </div>
-        </div>
-
-
+            @endif
+        @endforeach
     </div>
-
-
-
 </div>
+<!-- RazorPay Checkout JS -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('submit', '#walletform', function (w) {
+            w.preventDefault();
+            var amount = $('#walletamount').val();
+            var transactiontype = $('#transactiontype').val();
+            var paymenttype = $('#paymenttype').val();
+
+            if (!amount || isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount.');
+                return;
+            }
+            $.ajax({
+                url: "/razorpay/payment",
+                type: "POST",
+                data: {
+                    walletamount: amount,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    console.log('Order created:', response);
+                    try {
+                        var options = {
+                            "key": "{{ env('RAZORPAY_KEY') }}",
+                            "amount": response.amount,
+                            "currency": "INR",
+                            "name": "DBA Consultancy",
+                            "description": "Test Transaction",
+                            'handler': function (response) {
+
+                                // Inserting Transaction data into wallet table
+                                var data = JSON.stringify(response);
+                                $.ajax({
+                                    url: "/insertwallet",
+                                    type: "POST",
+                                    data: {
+                                        transactiondata: data,
+                                        amount: amount,
+                                        transactiontype: transactiontype,
+                                        paymenttype: paymenttype,
+                                        _token: "{{ csrf_token() }}"
+                                    },
+                                    success: function (response) {
+                                        if (response.msg == 'success') {
+                                            Swal.fire("Success", "Wallet Recharged successfully!", "success");
+                                        } else {
+                                            Swal.fire("Error", "Transaction Data Insertion failed", "error");
+                                        }
+                                    },
+                                });
+                            },
+                            "image": "{{asset('assets/images/razorpaylogo.png')}}",
+                            "order_id": response.id,
+                            "prefill": {
+                                "name": "dummy name",
+                                "email": "dummyu@example.com",
+                                "contact": "9000090000"
+                            },
+                            "notes": {
+                                "address": "Razorpay Corporate Office"
+                            },
+                            "theme": {
+                                "color": "#3399cc"
+                            }
+                        };
+                        var rzp1 = new Razorpay(options);
+                        $('#rzp-button1').on('click', function (e) {
+                            rzp1.open();
+                            e.preventDefault();
+                        });
+                    } catch (error) {
+                        console.error('Error initializing Razorpay:', error);
+                        alert('Failed to initialize payment gateway. Please try again later.');
+                    }
+                }
+            });
+        });
+    });
+
+</script>
 @endsection

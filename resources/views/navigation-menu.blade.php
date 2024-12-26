@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('customersorders') }}" class="nav-link" data-key="t-one-page">
+                                <a href="{{ route('customersallorders') }}" class="nav-link" data-key="t-one-page">
                                     Orders
                                 </a>
                             </li>
