@@ -14,6 +14,7 @@ class Wallet extends Model
         'amount',
         'paymenttype',
         'transactiontype',
+        'transactiondata',
         'status',
     ];
 }

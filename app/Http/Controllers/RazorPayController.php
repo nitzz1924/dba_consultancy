@@ -30,4 +30,14 @@ class RazorPayController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    // function inserttransactiondata(Request $req)
+    // {
+    //     $data = $req->input('transactiondata');
+    //     // dd( $data['transactiondata']);
+    //     $wallet = new Wallet();
+    //     $wallet->transactiondata = $data['transactiondata'];
+    //     $wallet->save();
+    //     return response()->json(['success' => 'Transaction data inserted successfully!']);
+    // }
 }

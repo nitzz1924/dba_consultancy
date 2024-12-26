@@ -42,8 +42,8 @@
                 <div class="text-white z-3 position-relative">
                     <input type="text" name="walletamount" id="walletamount" class="form-control rounded-4 "
                         placeholder="Enter Amount" required>
-                    <input type="hidden" name="transactiontype" value="online">
-                    <input type="hidden" name="paymenttype" value="credit">
+                    <input type="hidden" name="transactiontype" id="transactiontype" value="online">
+                    <input type="hidden" name="paymenttype" id="paymenttype" value="credit">
                 </div>
                 <div class="wallet-actions mt-3 d-flex justify-content-center">
                     <button type="submit" id="rzp-button1" class="btn btn-light rounded-pill fs-6 shadow-lg">
@@ -72,7 +72,7 @@
                 <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex align-items-center">
                         <div class="me-2">
-                            <i class='bx bx-minus-circle text-danger fs-1'></i>
+                            <i class=" ri-arrow-down-circle-fill  text-danger fs-1"></i>
                         </div>
                         <div class="fs-5">
                             {{$row->servicename}}
@@ -90,24 +90,28 @@
                         </div>
                     </div>
                 </div>
-            @else
+            @elseif ($row->paymenttype == 'credit')
                 <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex align-items-center">
                         <div class="me-2">
-                            <i class='bx bx-plus-circle text-success fs-1'></i>
+                        <i class=" ri-arrow-up-circle-fill  text-success fs-1"></i>
                         </div>
                         <div class="fs-5">
-                            Referral Commission
+                            @if($row->transactiontype == 'online')
+                                Wallet Recharged
+                            @elseif($row->transactiontype == 'serviceorder')
+                                {{$row->servicename}}
+                            @endif
                             <div class="">
                                 <div class="text-muted fs-6">
-                                    10 Oct 2024
+                                    {{ $row->created_date }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div>
                         <div class="fs-3 text-success fw-bold">
-                            <i class='bx bx-rupee'></i>750<sub class="text-success fs-6">&nbsp;&nbsp;<span
+                            <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-success fs-6">&nbsp;&nbsp;<span
                                     class="badge bg-success">Credit</span></sub>
                         </div>
                     </div>
@@ -124,6 +128,9 @@
         $(document).on('submit', '#walletform', function (w) {
             w.preventDefault();
             var amount = $('#walletamount').val();
+            var transactiontype = $('#transactiontype').val();
+            var paymenttype = $('#paymenttype').val();
+
             if (!amount || isNaN(amount) || amount <= 0) {
                 alert('Please enter a valid amount.');
                 return;
@@ -145,8 +152,27 @@
                             "name": "DBA Consultancy",
                             "description": "Test Transaction",
                             'handler': function (response) {
-                                var paymentId = response.razorpay_payment_id;
-                                alert('Payment Successful: ' + paymentId);
+
+                                // Inserting Transaction data into wallet table
+                                var data = JSON.stringify(response);
+                                $.ajax({
+                                    url: "/insertwallet",
+                                    type: "POST",
+                                    data: {
+                                        transactiondata: data,
+                                        amount: amount,
+                                        transactiontype: transactiontype,
+                                        paymenttype: paymenttype,
+                                        _token: "{{ csrf_token() }}"
+                                    },
+                                    success: function (response) {
+                                        if (response.msg == 'success') {
+                                            Swal.fire("Success", "Wallet Recharged successfully!", "success");
+                                        } else {
+                                            Swal.fire("Error", "Transaction Data Insertion failed", "error");
+                                        }
+                                    },
+                                });
                             },
                             "image": "{{asset('assets/images/razorpaylogo.png')}}",
                             "order_id": response.id,

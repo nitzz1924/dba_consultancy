@@ -119,6 +119,7 @@ Route::controller(UserStores::class)->group(function () {
 // Razorpay Routes
 Route::controller(RazorPayController::class)->group(function () {
     Route::post('razorpay/payment', 'payment')->name('razorpay.payment');
+    // Route::post('insert/transactiondata', 'inserttransactiondata')->name('insert.transaction.data');
 });
 
 
