@@ -85,7 +85,7 @@
                                     <p>{{ SUBSTR($row->details, 0, 100)}}</p>
                                 </div>
                                 <div class="mt-3">
-                                    <a href="#" class="btn btn-primary ">
+                                    <a href="/servicedetail/{{$row->serviceid}}" class="btn btn-light ">
                                         Buy Now
                                     </a>
                                 </div>
