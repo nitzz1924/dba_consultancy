@@ -55,7 +55,7 @@ class UserViews extends Controller
             return view('UserPanel.home', compact('services', 'consulting', 'walletamount'));
         } else {
             return redirect()->route('userloginpage');
-        
+
         }
     }
     public function wallet()
@@ -172,6 +172,7 @@ class UserViews extends Controller
     public function orderdetails($id)
     {
         $loggedinuser = Auth::guard('customer')->user();
+
         // Fetch purchased data
         $purchasedata = PurchaseService::join('masters', 'purchase_services.serviceid', '=', 'masters.id')
             ->select('masters.*', 'purchase_services.*')
@@ -187,29 +188,34 @@ class UserViews extends Controller
             ->where('purchase_services.id', $id)
             ->get()
             ->toArray();
-        // dd($newformattributes);
+      
 
 
-        // Create a map of existing labels in $olddata for easy lookup
-        $existingLabels = array_column($olddata, 'label');
-
+        // Normalize existing labels in $olddata for comparison
+        $existingLabels = array_map(function ($data) {
+            return strtolower(str_replace('_', ' ', trim($data['label'])));
+        }, $olddata);
+       
         // Build the final JSON
         $finalData = $olddata;
-
+       
         foreach ($newformattributes as $attribute) {
-            if (!in_array($attribute['label'], $existingLabels)) {
+            // Normalize the new attribute label for comparison
+            $normalizedLabel = strtolower(str_replace('_', ' ', trim($attribute['label'])));
+            
+            if (!in_array($normalizedLabel, $existingLabels)) {
                 // Append missing attributes from $newformattributes
                 $finalData[] = [
-                    'label' => $attribute['label'],
-                    'value' => '',
-                    'type' => $attribute['inputtype'],
+                    'label' => $attribute['label'], // Keep the original label format
+                    'value' => '', // Default value for new attributes
+                    'type' => $attribute['inputtype'], // Attribute type
                 ];
             }
         }
-
         // Convert the final data back to JSON
         $finalJson = json_encode($finalData);
-
+        //dd( $finalJson);
+       
         $debitTotal = 0;
         $creditTotal = 0;
         $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
@@ -221,7 +227,7 @@ class UserViews extends Controller
     public function proceedtopay($id)
     {
         $loggedinuser = Auth::guard('customer')->user();
-        $purchasedata = PurchaseService::where('id', $id)->where('userid', $loggedinuser->id)->first();
+        $purchasedata = PurchaseService::where('serviceid', $id)->where('userid', $loggedinuser->id)->first();
         //dd( $purchasedata);
         $debitTotal = 0;
         $creditTotal = 0;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2024 at 10:50 AM
+-- Generation Time: Dec 28, 2024 at 05:46 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,12 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('admin@gmail.com|127.0.0.1', 'i:1;', 1735205174),
-('admin@gmail.com|127.0.0.1:timer', 'i:1735205174;', 1735205174),
-('c525a5357e97fef8d3db25841c86da1a', 'i:1;', 1735205173),
-('c525a5357e97fef8d3db25841c86da1a:timer', 'i:1735205173;', 1735205173),
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1735205178),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1735205178;', 1735205178);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1735300663),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1735300663;', 1735300663);
 
 -- --------------------------------------------------------
 
@@ -100,7 +96,10 @@ INSERT INTO `form_attributes` (`id`, `type`, `servicename`, `masterserviceid`, `
 (20, 'Services', 'GST No.', '214', 'Name', 'text', '2024-11-21 05:05:33', '2024-12-23 06:35:24'),
 (21, 'Services', 'GST No.', '214', 'Document', 'file', '2024-11-21 05:05:55', '2024-11-21 05:05:55'),
 (22, 'Services', 'GST No.', '214', 'Address', 'textarea', '2024-11-21 05:06:06', '2024-12-23 06:35:40'),
-(25, 'Services', 'File Tax Return', '215', 'Document', 'file', '2024-12-09 13:14:43', '2024-12-09 13:14:43');
+(25, 'Services', 'File Tax Return', '215', 'Document', 'file', '2024-12-09 13:14:43', '2024-12-09 13:14:43'),
+(26, 'Services', 'Business Pan Card', '222', 'Business Name', 'text', '2024-12-26 11:07:53', '2024-12-26 11:07:53'),
+(27, 'Services', 'Business Pan Card', '222', 'Type of Business', 'text', '2024-12-26 11:08:05', '2024-12-26 11:08:05'),
+(28, 'Services', 'Business Pan Card', '222', 'Business Address', 'textarea', '2024-12-26 11:08:27', '2024-12-26 11:08:27');
 
 -- --------------------------------------------------------
 
@@ -259,7 +258,7 @@ CREATE TABLE `pricing_details` (
 
 INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `disprice`, `duration`, `coverimage`, `documents`, `details`, `notereq`, `created_at`, `updated_at`) VALUES
 (6, 'Services', '214', '1500', '8', '9', 'service-bg.png', '[\"GST\",\"Aadhar Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 04:46:18', '2024-12-23 06:28:03'),
-(9, 'Services', '222', '60,000', '7500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2024-11-09 06:37:17'),
+(9, 'Services', '222', '1500', '500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2024-12-26 11:20:50'),
 (10, 'Services', '215', '2500', '100', '45', 'service-bg.png', '[\"Aadhar Card\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2024-12-23 07:27:17'),
 (11, 'Services', '223', '50000', '988', '55', 'service-bg.png', '[\"Aadhar Card\",\"Bank Passbook\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:53', '2024-11-09 06:37:20'),
 (13, 'Consulting', '225', '75000', '7500', '45', '1731134472_service-bg.png', '[\"Aadhar Card\"]', 'Consulting Services', 'Consulting Services', '2024-11-09 06:41:12', '2024-11-09 07:16:30');
@@ -292,7 +291,8 @@ CREATE TABLE `purchase_services` (
 
 INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `userid`, `servicename`, `servicecharge`, `formdata`, `documents`, `note`, `status`, `created_at`, `updated_at`) VALUES
 (46, 'Services', '214', '8', '45', 'GST No.', '1500', '[{\"label\":\"_token\",\"value\":\"9uFjzVKhWN9pWfv8vrIIUCXhlou79gkXrQjoqyQu\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Sneha\",\"type\":\"text\"},{\"label\":\"Address\",\"value\":\"Ajmer, Rajasthan\",\"type\":\"textarea\"},{\"label\":\"Document\",\"value\":\"1734936123_Anurag09.jpg\",\"type\":\"file\"}]', 'public/assets/images/documents/2c89109d42178de8a367c0228f169bf8.png,public/assets/images/documents/db53e24fbc4e5a62aaa6e92f6bd1167f.jpg', 'inprocess due to tech issuesss', 'Processing', '2024-12-23 06:42:03', '2024-12-26 09:27:56'),
-(47, 'Services', '215', '100', '45', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"L6kYwdUMHHFkUaKHidKbBE24D1yqDXtoiGYnJpHm\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1735015757_Anurag09.jpg\",\"type\":\"file\"}]', NULL, NULL, 'Processing', '2024-12-24 04:49:17', '2024-12-24 04:50:01');
+(47, 'Services', '215', '100', '45', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"L6kYwdUMHHFkUaKHidKbBE24D1yqDXtoiGYnJpHm\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1735015757_Anurag09.jpg\",\"type\":\"file\"}]', NULL, NULL, 'Processing', '2024-12-24 04:49:17', '2024-12-24 04:50:01'),
+(55, 'Services', '222', '500', '51', 'Business Pan Card', '1500', '[{\"label\":\"_token\",\"value\":\"GZQwFw5hPZIHXC84QoQJGUucUnPjzXSicWUAOhSX\",\"type\":\"text\"},{\"label\":\"Business_Name\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"},{\"label\":\"Type_of_Business\",\"value\":\"Network of BSNL\",\"type\":\"text\"},{\"label\":\"Business_Address\",\"value\":\"BSNL\",\"type\":\"text\"}]', NULL, NULL, 'Processing', '2024-12-27 11:13:29', '2024-12-27 11:37:24');
 
 -- --------------------------------------------------------
 
@@ -344,9 +344,9 @@ CREATE TABLE `register_users` (
 --
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`) VALUES
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-12-26 05:39:08', '282396', '2024refer45', NULL, 'Nitzz'),
-(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-11-22 07:35:56', '518127', '2024dba51', '2024refer45', 'Anshul'),
-(52, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba52', '2024dba51', 'kishan'),
+(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-12-27 11:03:20', '318417', '2024refer45', NULL, 'Nitzz'),
+(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-27 11:04:32', '603551', '2024dba51', '2024refer45', 'Anshul'),
+(52, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-12-27 11:55:45', '226104', '2024dba52', '2024refer45', 'kishan'),
 (53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing'),
 (56, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba54', '2024dba52', 'kishan Child');
 
@@ -370,7 +370,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('4dbexMHxktjl4Dv7OHBbb3WZ7C8oRVMuVCI82nML', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoieXYxVmVZM3A5Y1hNcVZBSTBiNjJDTExvakk0R1hqNDhQVjdtaXVKeCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC93YWxsZXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1735206552);
+('gS6FwoRzX4ibMXv0BPyoJaRdBcnzOUBELSkisxba', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo3OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0MzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2FkbWluL29yZGVyZGV0YWlscy81NSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJZMTE0ZVFCNjB2QWJLMkxOUG96dUxTVUR6SVA1OE9jMlhnS3V4ck12IjtzOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjUxO3M6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjt9', 1735306480);
 
 -- --------------------------------------------------------
 
@@ -416,6 +416,8 @@ CREATE TABLE `wallets` (
   `paymenttype` varchar(255) NOT NULL DEFAULT '"credit","debit"',
   `transactiontype` varchar(255) NOT NULL,
   `transactiondata` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`transactiondata`)),
+  `parentreferid` varchar(255) DEFAULT NULL,
+  `commissionamt` varchar(255) DEFAULT NULL,
   `status` varchar(255) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -425,14 +427,16 @@ CREATE TABLE `wallets` (
 -- Dumping data for table `wallets`
 --
 
-INSERT INTO `wallets` (`id`, `userid`, `serviceid`, `transactionid`, `amount`, `paymenttype`, `transactiontype`, `transactiondata`, `status`, `created_at`, `updated_at`) VALUES
-(22, '45', '12', '12', 5000, 'credit', 'online', NULL, '0', '2024-11-21 09:54:05', '2024-12-23 06:33:16'),
-(31, '45', NULL, NULL, 5000, 'credit', 'online', NULL, '0', '2024-12-23 06:16:34', '2024-12-23 06:33:20'),
-(34, '45', '214', '46', 1492, 'debit', 'serviceorder', NULL, '0', '2024-12-23 07:21:48', '2024-12-24 12:43:11'),
-(35, '45', '215', '47', 2400, 'debit', 'serviceorder', NULL, 'Hold', '2024-12-24 04:50:01', '2024-12-24 04:50:01'),
-(38, '45', NULL, NULL, 2000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_PbjNYbmjpcvNKd\",\"razorpay_order_id\":\"order_PbjNFQmBlE25Tk\",\"razorpay_signature\":\"9d02f1f0ca3e43acd6d73fb0b334e2687e1a693083622b8db517ccea62495d63\"}', '0', '2024-12-26 07:59:52', '2024-12-26 07:59:52'),
-(39, '45', NULL, NULL, 1000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_PbjRd7EOwXo7jb\",\"razorpay_order_id\":\"order_PbjRQv75msetAC\",\"razorpay_signature\":\"6a0f9cbead201ca8a20cb77629e5f9aaf4469825f8eee62beb2e51d8ec49fe63\"}', '0', '2024-12-26 08:03:31', '2024-12-26 08:19:54'),
-(40, '45', NULL, NULL, 200, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbjy1R6T7IcIH6\",\"razorpay_order_id\":\"order_PbjxSZtCDNgqbD\",\"razorpay_signature\":\"8c75dc18b7c8cc59bd8bb386441f1f0d7a8960f0e339584d285fbd988756519e\"}', '0', '2024-12-26 08:34:11', '2024-12-26 08:34:11');
+INSERT INTO `wallets` (`id`, `userid`, `serviceid`, `transactionid`, `amount`, `paymenttype`, `transactiontype`, `transactiondata`, `parentreferid`, `commissionamt`, `status`, `created_at`, `updated_at`) VALUES
+(22, '45', '12', '12', 5000, 'credit', 'online', NULL, NULL, NULL, '0', '2024-11-21 09:54:05', '2024-12-23 06:33:16'),
+(31, '45', NULL, NULL, 5000, 'credit', 'online', NULL, NULL, NULL, '0', '2024-12-23 06:16:34', '2024-12-23 06:33:20'),
+(34, '45', '214', '46', 1492, 'debit', 'serviceorder', NULL, NULL, NULL, '0', '2024-12-23 07:21:48', '2024-12-24 12:43:11'),
+(35, '52', '215', '47', 2400, 'debit', 'serviceorder', NULL, NULL, NULL, 'Hold', '2024-12-24 04:50:01', '2024-12-27 13:32:21'),
+(38, '45', NULL, NULL, 2000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_PbjNYbmjpcvNKd\",\"razorpay_order_id\":\"order_PbjNFQmBlE25Tk\",\"razorpay_signature\":\"9d02f1f0ca3e43acd6d73fb0b334e2687e1a693083622b8db517ccea62495d63\"}', NULL, NULL, '0', '2024-12-26 07:59:52', '2024-12-26 07:59:52'),
+(39, '45', NULL, NULL, 1000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_PbjRd7EOwXo7jb\",\"razorpay_order_id\":\"order_PbjRQv75msetAC\",\"razorpay_signature\":\"6a0f9cbead201ca8a20cb77629e5f9aaf4469825f8eee62beb2e51d8ec49fe63\"}', NULL, NULL, '0', '2024-12-26 08:03:31', '2024-12-26 08:19:54'),
+(40, '45', NULL, NULL, 200, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbjy1R6T7IcIH6\",\"razorpay_order_id\":\"order_PbjxSZtCDNgqbD\",\"razorpay_signature\":\"8c75dc18b7c8cc59bd8bb386441f1f0d7a8960f0e339584d285fbd988756519e\"}', NULL, NULL, '0', '2024-12-26 08:34:11', '2024-12-26 08:34:11'),
+(41, '51', NULL, NULL, 10000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbn08dvKdiC89n\",\"razorpay_order_id\":\"order_Pbmzlcn6h0p2MK\",\"razorpay_signature\":\"54b03b7887b11ce1820b9879c4c236b018bdca9035ae22397d1fa9ed12a7194b\"}', NULL, NULL, '0', '2024-12-26 11:32:19', '2024-12-26 11:32:19'),
+(42, '51', '222', '55', 1000, 'debit', 'serviceorder', NULL, '[\"2024refer45\"]', '100', 'Hold', '2024-12-27 11:37:24', '2024-12-27 13:34:40');
 
 --
 -- Indexes for dumped tables
@@ -561,7 +565,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `form_attributes`
 --
 ALTER TABLE `form_attributes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -597,7 +601,7 @@ ALTER TABLE `pricing_details`
 -- AUTO_INCREMENT for table `purchase_services`
 --
 ALTER TABLE `purchase_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `refer_incomes`
@@ -621,7 +625,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wallets`
 --
 ALTER TABLE `wallets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

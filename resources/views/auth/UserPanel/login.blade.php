@@ -31,14 +31,14 @@
                         <div class="col-lg-12 align-content-center">
                             <div class="p-lg-5 p-4">
                                 @if ($mymess = Session::get('success'))
-                                <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
-                                    <strong>{{ $mymess }}</strong>
-                                </div>
+                                    <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
+                                        <strong>{{ $mymess }}</strong>
+                                    </div>
                                 @endif
                                 @if ($mymess = Session::get('error'))
-                                <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
-                                    <strong>{{ $mymess }}</strong>
-                                </div>
+                                    <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
+                                        <strong>{{ $mymess }}</strong>
+                                    </div>
                                 @endif
                                 <div class="mt-4">
                                     <form action="#" method="POST" id="loginformid">
@@ -47,7 +47,9 @@
                                             <p class="text-muted text-center">Sign in to continue</p>
                                         </div>
                                         @csrf
-                                        <p id="demomobile" class="text-center fs-4">Demo Mobile No. : <strong>1234567890</strong></p>
+                                        <p id="demomobile" class="text-center fs-4">Demo Mobile No. :
+                                            <strong>1234567890</strong>
+                                        </p>
                                         <div class="mb-3">
                                             <label for="username" class="form-label fs-5">Phone Number</label>
                                             <input type="text" name="mobilenumber" class="form-control rounded-5 p-3"
@@ -76,21 +78,24 @@
                                                 class="fw-semibold">example@abc.com</span></p>
                                     </div>
                                     <div class="row">
-                                        @for ($i = 1; $i <= 6; $i++) <div class="col-2">
-                                            <input type="text"
-                                                class="form-control form-control-lg bg-light border-light text-center  otp-input"
-                                                maxlength="1" pattern="[0-9]" name="otptest{{ $i }}"
-                                                title="Please enter a number." required>
+                                        @for ($i = 1; $i <= 6; $i++)
+                                            <div class="col-2">
+                                                <input type="text"
+                                                    class="form-control form-control py-2 px-0 bg-light border-light text-center  otp-input"
+                                                    maxlength="1" pattern="[0-9]" name="otptest{{ $i }}"
+                                                    title="Please enter a number." required>
+                                            </div>
+                                        @endfor
+                                        <div class="text-center fs-3 text-bold mt-3" id="otpinput"></div>
+                                        <input type="hidden" name="registerid" value="" id="registerid">
                                     </div>
-                                    @endfor
-                                    <div class="text-center fs-3 text-bold mt-3" id="otpinput"></div>
-                                    <input type="hidden" name="registerid" value="" id="registerid">
+                                    <div class="mt-3">
+                                        <button style="background-color: #fa7823"
+                                            class="btn p-3 w-100 fs-5 rounded-5 text-white"
+                                            type="submit">Confirm</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="mt-3">
-                                <button style="background-color: #fa7823"
-                                    class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -99,40 +104,39 @@
     </div>
 </div>
 </div>
-</div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     //OTP Form Functionality
-        jQuery('#loginformid').submit(function(e) {
-            e.preventDefault();
-            var data = jQuery('#loginformid').serialize();
-            jQuery.ajax({
-                url: "{{ url('signup_user_otp') }}",
-                data: data,
-                type: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(data) {
-                    console.log(data);
-                    if (data.msg == 'success') {
-                        jQuery('#loginformid').hide();
-                        jQuery('#signinotp').show();
-                        jQuery('#registerid').val(data.data.id);
-                        $('#otpinput').text("OTP is : " + data.data.otp);
-                    }
+    jQuery('#loginformid').submit(function (e) {
+        e.preventDefault();
+        var data = jQuery('#loginformid').serialize();
+        jQuery.ajax({
+            url: "{{ url('signup_user_otp') }}",
+            data: data,
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.msg == 'success') {
+                    jQuery('#loginformid').hide();
+                    jQuery('#signinotp').show();
+                    jQuery('#registerid').val(data.data.id);
+                    $('#otpinput').text("OTP is : " + data.data.otp);
                 }
-            })
-        });
+            }
+        })
+    });
 </script>
 <script>
-    setTimeout(function() {
-            $('#successAlert').fadeOut('slow');
-        }, 2000);
+    setTimeout(function () {
+        $('#successAlert').fadeOut('slow');
+    }, 2000);
 
-        setTimeout(function() {
-            $('#dangerAlert').fadeOut('slow');
-        }, 2000);
+    setTimeout(function () {
+        $('#dangerAlert').fadeOut('slow');
+    }, 2000);
 </script>
 <script>
     //Move to Next Input Functionality

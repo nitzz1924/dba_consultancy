@@ -12,7 +12,7 @@ use App\Models\SubMaster;
 use App\Models\Master;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
-
+use Auth;
 class AdminStores extends Controller
 {
     public function storemaster(Request $req)
@@ -285,7 +285,30 @@ class AdminStores extends Controller
 
     public function updateorderstatus(Request $req)
     {
-        //dd($req->status);
+        $usrid = PurchaseService::where('id', $req->transactionid)->get()->pluck('userid');
+        // dd( $usrid);
+        if ($usrid) {
+            $parentreferid = RegisterUser::where('id', $usrid)->get()->pluck('parentreferid');
+            $childrenids = RegisterUser::where('parentreferid', $parentreferid)->get()->pluck('id');
+
+            $sums = [];
+            foreach ($childrenids as $childId) {
+                $sum = Wallet::where('userid', $childId)->sum('amount');
+                $sums[$childId] = $sum;
+                $totalSum = array_sum($sums);
+            }
+            if ($totalSum > 50000) {
+                $data = Wallet::where('transactionid', $req->transactionid)->update([
+                    'parentreferid' => $parentreferid,
+                    'commissionamt' => $req->servicetotal / 100 * 15,
+                ]);
+            }else{
+                $data = Wallet::where('transactionid', $req->transactionid)->update([
+                    'parentreferid' => $parentreferid,
+                    'commissionamt' => $req->servicetotal / 100 * 10,
+                ]);
+            }
+        }
         try {
             //Mutiple Image Upload
             $image = array();
@@ -303,8 +326,8 @@ class AdminStores extends Controller
             $purchasedata = PurchaseService::where('id', $req->userid)->first();
             if ($purchasedata) {
                 $purchasedata->status = $req->status == null ? $purchasedata->status : $req->status;
-                if($purchasedata->status == 'Completed'){
-                   Wallet::where('transactionid', $purchasedata->id)->where('status','=','Hold')->update(['status'=>0]);
+                if ($purchasedata->status == 'Completed') {
+                    Wallet::where('transactionid', $purchasedata->id)->where('status', '=', 'Hold')->update(['status' => 0]);
                 }
                 $purchasedata->documents = count($image) > 0 ? implode(',', $image) : $purchasedata->documents;
                 $purchasedata->note = $req->note == null ? $purchasedata->note : $req->note;

@@ -185,15 +185,17 @@ class UserStores extends Controller
 
     public function updateserviceform(Request $request)
     {
+        // dd($request->all());
         try {
             // Fetch the existing service record
-            $finaldata = PurchaseService::find($request->serviceid);
+            $finaldata = PurchaseService::find($request->orderid);
+            //dd( $finaldata);
             if (!$finaldata) {
                 return back()->with('error', 'Service not found.');
             }
 
             $data = $request->all();
-            unset($data['formtype'], $data['previousimage'], $data['servicename'], $data['amount'], $data['serviceid'], $data['discount']);
+            unset($data['formtype'], $data['previousimage'], $data['servicename'], $data['amount'], $data['serviceid'], $data['orderid'], $data['discount']);
 
             // Initialize an array to store form data
             $formData = [];

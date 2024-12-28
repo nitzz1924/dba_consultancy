@@ -108,35 +108,35 @@
                         <table class="table table-bordered border-light">
                             <tbody>
                                 @foreach ($formdata as $data)
-                                                            @if ($data['label'] !== '_token')
-                                                                                        <tr>
-                                                                                            <td>{{ $data['label'] }}</td>
-                                                                                            <td>
-                                                                                                @php
-                                                                                                    $filePath = asset('assets/images/users/' . $data['value']);
-                                                                                                    $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
-                                                                                                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                                                                                                @endphp
+                                @if ($data['label'] !== '_token')
+                                <tr>
+                                    <td>{{ $data['label'] }}</td>
+                                    <td>
+                                        @php
+                                            $filePath = asset('assets/images/users/' . $data['value']);
+                                            $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
+                                            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                                        @endphp
 
-                                                                                                @if (in_array(strtolower($fileExtension), $imageExtensions))
-                                                                                                    <div>
-                                                                                                        <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
-                                                                                                            style="width: 100px; height: 100px; object-fit: cover;">
-                                                                                                    </div>
-                                                                                                    <a href="{{ $filePath }}" download="{{ $data['value'] }}"
-                                                                                                        class="btn btn-dark btn-sm mt-2">Download</a>
-                                                                                                @elseif (strtolower($fileExtension) === 'pdf')
-                                                                                                    <!-- Display PDF in iframe with download link -->
-                                                                                                    <iframe src="{{ $filePath }}"
-                                                                                                        style="width: 100%; height: 200px; border: none;"></iframe>
-                                                                                                    <a href="{{ $filePath }}" download="{{ $data['value'] }}"
-                                                                                                        class="btn btn-dark btn-sm mt-2">Download PDF</a>
-                                                                                                @else
-                                                                                                    {{ $data['value'] }}
-                                                                                                @endif
-                                                                                            </td>
-                                                                                        </tr>
-                                                            @endif
+                                        @if (in_array(strtolower($fileExtension), $imageExtensions))
+                                            <div>
+                                                <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            </div>
+                                            <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                                class="btn btn-dark btn-sm mt-2">Download</a>
+                                        @elseif (strtolower($fileExtension) === 'pdf')
+                                            <!-- Display PDF in iframe with download link -->
+                                            <iframe src="{{ $filePath }}"
+                                                style="width: 100%; height: 200px; border: none;"></iframe>
+                                            <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                                class="btn btn-dark btn-sm mt-2">Download PDF</a>
+                                        @else
+                                            {{ $data['value'] }}
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -190,6 +190,9 @@
                                 <select name="status" class="form-select orderstatus" id="orderStatus"
                                     aria-label="Default select example">
                                     <option>--select to change--</option>
+                                    <option value="Cancel" {{ $orderdetails->status == 'Unpaid' ? 'selected' : '' }}>
+                                        Unpaid
+                                    </option>
                                     <option value="Cancel" {{ $orderdetails->status == 'Cancel' ? 'selected' : '' }}>
                                         Cancel
                                     </option>
@@ -211,7 +214,8 @@
                                 <input class="form-control" type="text" placeholder="Write a Note......." id="note"
                                     name="note">
                             </div>
-                            <input type="hidden" id="userid" name="userid" value="{{ $orderdetails->id }}">
+                            <input type="hidden" id="transactionid" name="transactionid" value="{{ $orderdetails->id }}">
+                            <input type="hidden" id="servicetotal" name="servicetotal" value="{{ $total }}">
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-center">
