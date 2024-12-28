@@ -48,7 +48,7 @@
             </li>
         </ul>
         <div class="tab-content mt-2" id="myTabContent">
-            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+            <div class="tab-pane fade show active custom-tab" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
                 tabindex="0">
                 @foreach ($purchasedata as $value)
                 @if($value->status == 'Unpaid')
@@ -79,7 +79,7 @@
                 @endif
                 @endforeach
             </div>
-            <div class="tab-pane fade " id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+            <div class="tab-pane fade custom-tab" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                 tabindex="0">
                 @foreach ($purchasedata as $value)
                 @if($value->status == 'Processing')

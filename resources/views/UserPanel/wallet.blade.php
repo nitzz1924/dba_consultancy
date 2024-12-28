@@ -62,59 +62,75 @@
             <div class="sectionHeading">
                 Transaction History
             </div>
-            <div>
-                <a href="#" class="btn btn-outline-dark border-0 fs-6">See more</a>
-            </div>
         </div>
-        @foreach ($debithistory->take(10) as $row)
-        @if ($row->paymenttype == 'debit')
-        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <i class=" ri-arrow-down-circle-fill  text-danger fs-1"></i>
-                </div>
-                <div class="fs-5">
-                    {{$row->servicename}}
-                    <div class="">
-                        <div class="text-muted fs-6">
-                            {{ $row->created_date }}
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active text-danger fw-bold fs-5" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Debits</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-success fw-bold fs-5" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Credits</button>
+            </li>
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                @foreach ($debithistory as $row)
+                @if($row->paymenttype == 'debit')
+                <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                            <i class=" ri-arrow-down-circle-fill  text-danger fs-1"></i>
+                        </div>
+                        <div class="fs-5">
+                            {{$row->servicename}}
+                            <div class="">
+                                <div class="text-muted fs-6">
+                                    {{ $row->created_date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="fs-3  text-danger fw-bold">
+                            <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-danger fs-6">&nbsp;&nbsp;<span class="badge {{$row->status != 'Hold'? 'bg-danger' : 'bg-secondary'}}">{{$row->status != 'Hold'? 'Debit' : 'Debit Hold'}}</span></sub>
                         </div>
                     </div>
                 </div>
+                @endif
+                @endforeach
             </div>
-            <div>
-                <div class="fs-3  text-danger fw-bold">
-                    <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-danger fs-6">&nbsp;&nbsp;<span class="badge {{$row->status != 'Hold'? 'bg-danger' : 'bg-secondary'}}">{{$row->status != 'Hold'? 'Debit' : 'Debit Hold'}}</span></sub>
-                </div>
-            </div>
-        </div>
-        @elseif ($row->paymenttype == 'credit')
-        <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-                <div class="me-2">
-                    <i class=" ri-arrow-up-circle-fill  text-success fs-1"></i>
-                </div>
-                <div class="fs-5">
-                    @if($row->transactiontype == 'online')
-                    Wallet Recharged
-                    @elseif($row->transactiontype == 'serviceorder')
-                    {{$row->servicename}}
-                    @endif
-                    <div class="">
-                        <div class="text-muted fs-6">
-                            {{ $row->created_date }}
+            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                @foreach ($credithistory as $row)
+                @if($row->paymenttype == 'credit')
+                <div class="p-2 shadow-lg rounded-4 d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                            <i class=" ri-arrow-up-circle-fill  text-success fs-1"></i>
+                        </div>
+                        <div class="fs-5">
+                            @if($row->transactiontype == 'online')
+                            Wallet Recharged
+                            @elseif($row->transactiontype == 'serviceorder')
+                            {{$row->servicename}}
+                            @elseif($row->transactiontype == 'commission')
+                            Commission Received
+                            @endif
+                            <div class="">
+                                <div class="text-muted fs-6">
+                                    {{ $row->created_date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="fs-3 text-success fw-bold">
+                            <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-success fs-6">&nbsp;&nbsp;<span class="badge bg-success">Credit</span></sub>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="fs-3 text-success fw-bold">
-                    <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-success fs-6">&nbsp;&nbsp;<span class="badge bg-success">Credit</span></sub>
-                </div>
+                @endif
+                @endforeach
             </div>
         </div>
-        @endif
-        @endforeach
     </div>
 </div>
 <!-- RazorPay Checkout JS -->

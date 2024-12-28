@@ -214,7 +214,7 @@
                                 <input class="form-control" type="text" placeholder="Write a Note......." id="note"
                                     name="note">
                             </div>
-                            <input type="hidden" id="transactionid" name="transactionid" value="{{ $orderdetails->id }}">
+                            <input type="hidden" id="purchaseid" name="purchaseid" value="{{ $orderdetails->id }}">
                             <input type="hidden" id="servicetotal" name="servicetotal" value="{{ $total }}">
                         </div>
                         <div class="card-footer">

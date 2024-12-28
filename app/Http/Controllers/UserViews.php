@@ -68,16 +68,16 @@ class UserViews extends Controller
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
 
-            $debithistory = Wallet::join('purchase_services', 'purchase_services.userid', '=', 'wallets.userid')
+            $debithistory = Wallet::join('purchase_services', 'purchase_services.id', '=', 'wallets.transactionid')
                 ->select('wallets.*', 'purchase_services.servicename as servicename')
                 ->where('purchase_services.userid', $loggedinuser->id)
                 ->get();
 
-            //dd($debithistory);
+            $credithistory = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->get();
             foreach ($debithistory as $debit) {
                 $debit->created_date = Carbon::parse($debit->created_at)->format('d/M/Y');
             }
-            return view('UserPanel.wallet', compact('walletamount', 'debithistory'));
+            return view('UserPanel.wallet', compact('walletamount', 'debithistory', 'credithistory'));
         } else {
             return redirect()->route('userloginpage');
         }
@@ -188,21 +188,21 @@ class UserViews extends Controller
             ->where('purchase_services.id', $id)
             ->get()
             ->toArray();
-      
+
 
 
         // Normalize existing labels in $olddata for comparison
         $existingLabels = array_map(function ($data) {
             return strtolower(str_replace('_', ' ', trim($data['label'])));
         }, $olddata);
-       
+
         // Build the final JSON
         $finalData = $olddata;
-       
+
         foreach ($newformattributes as $attribute) {
             // Normalize the new attribute label for comparison
             $normalizedLabel = strtolower(str_replace('_', ' ', trim($attribute['label'])));
-            
+
             if (!in_array($normalizedLabel, $existingLabels)) {
                 // Append missing attributes from $newformattributes
                 $finalData[] = [
@@ -215,7 +215,7 @@ class UserViews extends Controller
         // Convert the final data back to JSON
         $finalJson = json_encode($finalData);
         //dd( $finalJson);
-       
+
         $debitTotal = 0;
         $creditTotal = 0;
         $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
