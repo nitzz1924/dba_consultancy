@@ -13,6 +13,7 @@ use App\Models\Master;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Auth;
+use Log;
 class AdminStores extends Controller
 {
     public function storemaster(Request $req)
@@ -309,9 +310,10 @@ class AdminStores extends Controller
 
                     //Commission Calculation
                     $usrid = PurchaseService::where('id', $req->purchaseid)->value('userid');
-                    // dd($usrid);
+
                     if ($usrid) {
                         $parentreferid = RegisterUser::where('id', $usrid)->value('parentreferid');
+
                         $childrenids = RegisterUser::where('parentreferid', $parentreferid)->get()->pluck('id');
 
                         $sums = [];
@@ -320,17 +322,21 @@ class AdminStores extends Controller
                             $sums[$childId] = $sum;
                             $totalSum = array_sum($sums);
                         }
+
                         if ($totalSum > 50000) {
                             $data = Wallet::where('transactionid', $req->purchaseid)->update([
                                 'parentreferid' => $parentreferid,
                                 'commissionamt' => $req->servicetotal / 100 * 15,
+                               
                             ]);
+                            $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
                             $parentid = RegisterUser::where('refercode', $parentreferid)->value('id');
                             $insertcommamt = $req->servicetotal / 100 * 15;
                             $data = Wallet::create([
                                 'amount' => $insertcommamt,
                                 'userid' => $parentid,
                                 'paymenttype' => 'credit',
+                                'commissionby' => $mainwalletid,
                                 'transactiontype' => 'commission',
                                 'status' => 0,
                             ]);
@@ -340,14 +346,21 @@ class AdminStores extends Controller
                                 'commissionamt' => $req->servicetotal / 100 * 10,
                             ]);
                             $parentid = RegisterUser::where('refercode', $parentreferid)->get()->value('id');
+                            $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
                             $insertcommamt = $req->servicetotal / 100 * 10;
                             $data = Wallet::create([
                                 'amount' => $insertcommamt,
                                 'userid' => $parentid,
+                                'commissionby' => $mainwalletid,
                                 'paymenttype' => 'credit',
                                 'transactiontype' => 'commission',
                                 'status' => 0,
                             ]);
+                            if ($data) {
+                                Log::info('Commission Data:', $data->toArray());
+                            } else {
+                                Log::error('Commission Data not found.');
+                            }
                         }
                     }
                 }

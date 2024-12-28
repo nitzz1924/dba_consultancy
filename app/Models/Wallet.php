@@ -17,6 +17,7 @@ class Wallet extends Model
         'transactiondata',
         'parentreferid',
         'commissionamt',
+        'commissionby',
         'status',
     ];
 }

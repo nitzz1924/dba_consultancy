@@ -66,12 +66,12 @@
                         <i class=" ri-team-fill"></i><span>All Refers</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('customercommission') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('customercommission') ? 'active' : '' }}">
                     <a class="nav-link menu-link" href="{{ route('customercommission') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-coins-fill"></i><span>Customer Commission</span>
                     </a>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

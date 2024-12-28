@@ -103,6 +103,18 @@
                             height="20" />&nbsp;&nbsp;<span class="fs-5">My Refered Users</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('wallethistory') }}">
+                        <img class="" src="{{ asset('assets/images/payment.png')}}" alt=""
+                            height="20" />&nbsp;<span class="fs-5">Customer Wallet History</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('allcommissionslist') }}">
+                        <img class="" src="{{ asset('assets/images/payment.png')}}" alt=""
+                            height="20" />&nbsp;<span class="fs-5">All Commissions</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

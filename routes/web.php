@@ -47,6 +47,9 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/referedusers', 'referedusers')->name('referedusers');
     Route::get('admin/getchildren/{refercode}', 'getchildren')->name('getchildren');
     Route::post('admin/datefilterorders', 'datefilterorders')->name('datefilterorders');
+    Route::get('admin/wallethistory', 'wallethistory')->name('wallethistory');
+    Route::post('admin/datefilterwallethistory', 'datefilterwallethistory')->name('datefilterwallethistory');
+    Route::get('admin/allcommissionslist', 'allcommissionslist')->name('allcommissionslist');
 
 });
 
@@ -124,7 +127,7 @@ Route::controller(RazorPayController::class)->group(function () {
     // Route::post('insert/transactiondata', 'inserttransactiondata')->name('insert.transaction.data');
 });
 
-
+// Website Routes
 Route::controller(WebsiteViews::class)->group(function () {
     Route::get('/', 'home')->name('homepage');
     Route::get('/about', 'about')->name('about');
