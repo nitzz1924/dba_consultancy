@@ -26,15 +26,14 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('AdminPanel.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [AdminViews::class, 'dashboard'])->name('dashboard');
 });
 
 
 
 //Admin Panel Routes
 Route::controller(AdminViews::class)->group(function () {
+    Route::get('admin/dashboard', 'dashboard')->name('admindashboard');
     Route::get('admin/master', 'master')->name('master');
     Route::get('admin/submaster', 'submaster')->name('submaster');
     Route::get('admin/createform', 'createform')->name('createform');
@@ -50,6 +49,8 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/wallethistory', 'wallethistory')->name('wallethistory');
     Route::post('admin/datefilterwallethistory', 'datefilterwallethistory')->name('datefilterwallethistory');
     Route::get('admin/allcommissionslist', 'allcommissionslist')->name('allcommissionslist');
+    Route::post('admin/datefiltercommissions', 'datefiltercommissions')->name('datefiltercommissions');
+
 
 });
 
@@ -75,8 +76,7 @@ Route::controller(AdminStores::class)->group(function () {
     Route::post('/updateorderstatus', 'updateorderstatus')->name('updateorderstatus');
     Route::post('/insertincomelevel', 'insertincomelevel')->name('insertincomelevel');
     Route::get('/deleteincome/{id}', 'deleteincome')->name('deleteincome');
-
-
+    Route::post('admin/udpatereferincome', 'udpatereferincome')->name('udpatereferincome');
 });
 
 
@@ -139,6 +139,7 @@ Route::controller(WebsiteViews::class)->group(function () {
     Route::get('/returnandrefund', 'returnandrefund')->name('returnandrefund');
 
 });
+
 // //Excel Routes
 // Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
 // Route::post('/import-excel', [ExcelContactSheet::class, 'import']);

@@ -31,7 +31,7 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('dashboard')}}">
+                    <a class="nav-link menu-link" href="{{ route('admindashboard')}}">
                         <img class="" src="{{ asset('assets/images/dashboard.png') }}" alt=""
                             height="20" />&nbsp;&nbsp;<span class="fs-5">Dashboard</span>
                     </a>
@@ -111,7 +111,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('allcommissionslist') }}">
-                        <img class="" src="{{ asset('assets/images/payment.png')}}" alt=""
+                        <img class="" src="{{ asset('assets/images/commission.png')}}" alt=""
                             height="20" />&nbsp;<span class="fs-5">All Commissions</span>
                     </a>
                 </li>

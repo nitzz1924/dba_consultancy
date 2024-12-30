@@ -49,7 +49,6 @@
             <div class="layout-width">
                 <div class="navbar-header">
                     <div class="d-flex">
-                        <!-- LOGO -->
                         <div class="navbar-brand-box horizontal-logo">
                             <a href="index.html" class="logo logo-dark">
                                 <span class="logo-sm">
@@ -79,6 +78,10 @@
                                 <span></span>
                             </span>
                         </button>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="fw-bold text-uppercase text-white align-items-center fs-5">Admin Panel - @yield('title')</div>
                     </div>
 
                     <div class="d-flex align-items-center">

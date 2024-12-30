@@ -26,6 +26,33 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="listjs-table col-md-12" id="customerList">
+                            <form>
+                                <div class="row g-4 mb-3">
+                                    <div class="col-sm-auto d-flex justify-content-sm-start gap-2 align-items-end flex-wrap">
+                                        <div>
+                                            <label for="exampleInputdate" class="form-label">From</label>
+                                            <input type="date" name="datefrom" class="form-control" id="datefrom">
+                                        </div>
+                                        <div>
+                                            <label for="exampleInputdate" class="form-label">To</label>
+                                            <input type="date" name="dateto" class="form-control" id="dateto">
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-success add-btn datebtn"><i class="ri-search-eye-line align-bottom me-1"></i>Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -51,6 +78,14 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                 @if($commissions->isNotEmpty())
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <td colspan="4" class="fw-bold fs-5">Total</td>
+                                        <td class="fw-bold fs-5" id="total-sum"></td>
+                                    </tr>
+                                </tfoot>
+                                @endif
                             </table>
                         </div>
                     </div>
@@ -60,12 +95,12 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <!-- Date Filter Code -----------------------DEKHA Bhul gaya naa tu aagaya naa main kaam -- -->
-    <script>
-        $(document).ready(function() {
-            calculateTotalSum();
+  <!-- Date Filter Code -----------------------DEKHA Bhul gaya naa tu aagaya naa main kaam -- -->
+   <script>
+    $(document).ready(function () {
+        calculateTotalSum();
 
-            // Initialize DataTable
+     // Initialize DataTable
             var dataTableCustomer = $('#example').DataTable({
                 layout: {
                     topStart: {
@@ -74,71 +109,67 @@
                 }
             });
 
-            // Handle date filter button click
-            $('.datebtn').on('click', function() {
-                // Get date filter values
-                const datefrom = $('#datefrom').val();
-                const dateto = $('#dateto').val();
+        // Handle date filter button click
+        $('.datebtn').on('click', function () {
+            // Get date filter values
+            const datefrom = $('#datefrom').val();
+            const dateto = $('#dateto').val();
 
-                console.log("Date From:", datefrom);
-                console.log("Date To:", dateto);
+            console.log("Date From:", datefrom);
+            console.log("Date To:", dateto);
 
-                // AJAX request for date filtering
-                $.ajax({
-                    url: '/admin/datefilterwallethistory'
-                    , method: 'POST'
-                    , data: {
-                        datefrom: datefrom
-                        , dateto: dateto
+            // AJAX request for date filtering
+            $.ajax({
+                url: '/admin/datefiltercommissions',
+                method: 'POST',
+                data: {
+                    datefrom: datefrom,
+                    dateto: dateto
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    console.log("Filtered data:", response);
+
+                    // Clear existing DataTable and rows
+                    if ($.fn.DataTable.isDataTable('#example')) {
+                        dataTableCustomer.destroy();
                     }
-                    , headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                    , success: function(response) {
-                        console.log("Filtered data:", response);
+                    $('#table-body').empty();
 
-                        // Clear existing DataTable and rows
-                        if ($.fn.DataTable.isDataTable('#example')) {
-                            dataTableCustomer.destroy();
-                        }
-                        $('#table-body').empty();
-
-                        // Populate table with filtered data
-                        if (Array.isArray(response) && response.length > 0) {
-                            response.forEach(function(row, index) {
-                                const dateObj = new Date(row.created_at);
-                                const formattedDate = dateObj.toLocaleDateString('en-GB', {
-                                    day: 'numeric'
-                                    , month: 'short'
-                                    , year: 'numeric'
-                                });
-                                const formattedTime = dateObj.toLocaleTimeString('en-US', {
-                                    hour: 'numeric'
-                                    , minute: '2-digit'
-                                    , hour12: true
-                                });
-
-                                const html = `
-                                <tr>
-                                    <th>${index + 1}</th>
-                                    <td>${formattedDate} | ${formattedTime}</td>
-                                    <td>${row.customername}</td>
-                                    <td>₹ ${row.amount}/-</td>
-                                    <td>
-                                        ${row.transactiontype === 'online' 
-                                            ? 'Wallet Recharged' 
-                                            : row.transactiontype.charAt(0).toUpperCase() + row.transactiontype.slice(1)}
-                                    </td>
-                                </tr>
-                            `;
-
-                                $('#table-body').append(html);
+                    // Populate table with filtered data
+                    if (Array.isArray(response) && response.length > 0) {
+                        response.forEach(function (row, index) {
+                            const dateObj = new Date(row.created_at);
+                            const formattedDate = dateObj.toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric'
+                            });
+                            const formattedTime = dateObj.toLocaleTimeString('en-US', {
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                hour12: true
                             });
 
-                            // Recalculate the total sum
-                            calculateTotalSum();
+                            const html = `
+                             <tr>
+                                <th>${index + 1}</th>
+                                <td>${formattedDate} | ${formattedTime}</td>
+                                <td>${row.customername}</td>
+                                <td>${row.servicename}</td>
+                                <td>${row.commissionamt}/-</td>
+                            </tr>
+                            `;
 
-                            // Reinitialize DataTable
+                            $('#table-body').append(html);
+                        });
+
+                        // Recalculate the total sum
+                        calculateTotalSum();
+
+                        // Reinitialize DataTable
                             dataTableCustomer = $('#example').DataTable({
                                 layout: {
                                     topStart: {
@@ -146,31 +177,30 @@
                                     }
                                 }
                             });
-                        } else {
-                            // No data found for the selected date range
-                            $('#table-body').html(`
+                    } else {
+                        // No data found for the selected date range
+                        $('#table-body').html(`
                             <tr>
                                 <td colspan="5" class="text-center">No orders found for the selected date range.</td>
                             </tr>
                         `);
-                            calculateTotalSum();
-                        }
+                        calculateTotalSum(); 
                     }
-                });
+                }
             });
         });
+    });
 
-        // Function to calculate total sum of the "Amount" column
-        function calculateTotalSum() {
-            let totalSum = 0;
-            $('#table-body tr td:nth-child(4)').each(function() {
-                const value = parseFloat($(this).text().replace(/[₹/-]/g, '').trim());
-                if (!isNaN(value)) totalSum += value;
-            });
-            $('#total-sum').text(`₹ ${totalSum}/-`);
-        }
-
-    </script>
+    // Function to calculate total sum of the "Amount" column
+    function calculateTotalSum() {
+        let totalSum = 0;
+        $('#table-body tr td:nth-child(5)').each(function () {
+            const value = parseFloat($(this).text().replace(/[₹/-]/g, '').trim());
+            if (!isNaN(value)) totalSum += value;
+        });
+        $('#total-sum').text(`₹ ${totalSum}/-`);
+    }
+</script>
 
 
 </x-app-layout>

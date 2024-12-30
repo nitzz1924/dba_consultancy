@@ -401,4 +401,19 @@ class AdminStores extends Controller
         return back()->with('success', "Deleted....!!!");
     }
 
+    public function udpatereferincome(Request $rq)
+    {
+        try {
+            $data = ReferIncome::where('id', $rq->referid)->update([
+                'incomename' => $rq->incomename,
+                'criteria' => $rq->criteria,
+                'amount' => $rq->amount,
+                'lessthangreater' => $rq->lessthangreater,
+            ]);
+            return back()->with('success', "Updated..!!!");
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
 }

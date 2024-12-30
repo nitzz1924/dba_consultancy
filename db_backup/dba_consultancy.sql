@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2024 at 12:14 PM
+-- Generation Time: Dec 30, 2024 at 01:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1735384396),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1735384396;', 1735384396);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1735558964),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1735558964;', 1735558964);
 
 -- --------------------------------------------------------
 
@@ -317,8 +317,7 @@ CREATE TABLE `refer_incomes` (
 
 INSERT INTO `refer_incomes` (`id`, `incomename`, `criteria`, `amount`, `lessthangreater`, `status`, `created_at`, `updated_at`) VALUES
 (4, 'Referral Bonus', '15%', '50000', 'beyond', '0', '2024-11-22 06:14:20', '2024-11-22 06:14:20'),
-(5, 'Direct Referral', '10%', '50000', 'upto', '0', '2024-11-22 06:14:39', '2024-11-22 06:14:39'),
-(6, 'New Referal', '10%', '50000', 'beyond', '0', '2024-12-21 10:19:45', '2024-12-21 10:19:45');
+(5, 'Direct Referral', '10%', '50000', 'upto', '0', '2024-11-22 06:14:39', '2024-12-30 09:16:11');
 
 -- --------------------------------------------------------
 
@@ -344,7 +343,7 @@ CREATE TABLE `register_users` (
 --
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`) VALUES
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-12-28 05:39:54', '152961', '2024refer45', NULL, 'Nitzz'),
+(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-12-30 07:36:30', '427739', '2024refer45', NULL, 'Nitzz'),
 (51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-28 10:01:39', '219595', '2024dba51', '2024refer45', 'Anshul'),
 (52, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-12-27 11:55:45', '226104', '2024dba52', '2024refer45', 'kishan'),
 (53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing'),
@@ -370,7 +369,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('nXPHLgEohlrN3o6amjA3ETLGc4MNhMwNB9Bs2RPz', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo3OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0NjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2FkbWluL2FsbGNvbW1pc3Npb25zbGlzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJZU1AxM2gwRkZVbUFBeU1QYW9yRXdqR3pLcGZrVm13bXRmWFA2OWlWIjtzOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjUxO3M6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjt9', 1735384341);
+('9PwjJbu0AMm8MUf1d6Dgr6eeHkqHXgMB69RPxlSY', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNDFNWWo5dGVOejZLcjdvZXRFbEhCWG1SM3N1cGZ2T01zd29VSjNmVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1735560118);
 
 -- --------------------------------------------------------
 
@@ -399,7 +398,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
-(1, 'Harish', 'db@gmail.com', NULL, '$2y$12$l6.03Ub7zM/dwLJXXhDn2.SgsJM804w6Qcj18/t1UiVxoAeMsKFHi', NULL, NULL, NULL, 'i0pJuWnp0ael6gGkJfHvUUhpgyw4mmca3EDwF0ZP5KVaL19RtPKDat5OXbI3', NULL, NULL, '2024-09-04 04:20:07', '2024-09-04 04:20:07');
+(1, 'Harish', 'db@gmail.com', NULL, '$2y$12$l6.03Ub7zM/dwLJXXhDn2.SgsJM804w6Qcj18/t1UiVxoAeMsKFHi', NULL, NULL, NULL, 'XE1VJxNfrfwwM56JiNUHMyBCu7PU2hbt8OGjLPvFfclZEPWmwO42ytVvVGpp', NULL, NULL, '2024-09-04 04:20:07', '2024-09-04 04:20:07');
 
 -- --------------------------------------------------------
 
