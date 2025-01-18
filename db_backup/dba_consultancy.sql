@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2024 at 01:03 PM
+-- Generation Time: Jan 18, 2025 at 08:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1735558964),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1735558964;', 1735558964);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1737118953),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1737118953;', 1737118953);
 
 -- --------------------------------------------------------
 
@@ -335,19 +335,26 @@ CREATE TABLE `register_users` (
   `otp` varchar(22) DEFAULT NULL,
   `refercode` varchar(255) DEFAULT NULL,
   `parentreferid` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL
+  `username` varchar(255) DEFAULT NULL,
+  `profileimage` varchar(255) DEFAULT NULL,
+  `permaddress` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `pancard` varchar(255) DEFAULT NULL,
+  `aadharcard` varchar(255) DEFAULT NULL,
+  `gstnum` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `register_users`
 --
 
-INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`) VALUES
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-12-30 07:36:30', '427739', '2024refer45', NULL, 'Nitzz'),
-(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-28 10:01:39', '219595', '2024dba51', '2024refer45', 'Anshul'),
-(52, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-12-27 11:55:45', '226104', '2024dba52', '2024refer45', 'kishan'),
-(53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing'),
-(56, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba54', '2024dba52', 'kishan Child');
+INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`, `profileimage`, `permaddress`, `city`, `state`, `pancard`, `aadharcard`, `gstnum`) VALUES
+(45, '1234567890', 'niteshyuvmedia@gmail.com', '1', '2024-11-08 12:32:41', '2025-01-18 07:52:46', '254585', '2024refer45', NULL, 'nitzz', 'Pulizie-Vetrine-Vetrate-Insegne-Impresa-Pulizie-Multicervice_02.webp', NULL, NULL, NULL, NULL, NULL, NULL),
+(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-28 10:01:39', '219595', '2024dba51', '2024refer45', 'Anshul', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(52, '9429158300', 'anshulyuvmedia@gmail.com', '1', '2024-11-22 09:07:06', '2025-01-18 07:53:01', '473072', '2024dba52', '2024refer45', 'Anshul KM', '1737179886_pngegg.png', 'ajmer', 'ajmer', 'Rajasthan', '9876543214', '1234567895', '1239876546'),
+(53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(56, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba54', '2024dba52', 'kishan Child', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -369,7 +376,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('9PwjJbu0AMm8MUf1d6Dgr6eeHkqHXgMB69RPxlSY', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNDFNWWo5dGVOejZLcjdvZXRFbEhCWG1SM3N1cGZ2T01zd29VSjNmVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1735560118);
+('D3ePIRY7NHriIYh5ySvIZtjFx1Dzj06dyd1cpqXG', NULL, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT0UxbzFGTWVSTk5xYmtMZzVhUmlXc0RmSGo1Tzc4S3J5aFFoNVdxeCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC93YWxsZXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjUyO30=', 1737186674);
 
 -- --------------------------------------------------------
 
