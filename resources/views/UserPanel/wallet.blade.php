@@ -6,26 +6,22 @@
 <div class="container-fluid  p-4 desktop-view">
     {{-- Header bar --}}
     <div class="row">
-        <div class="col-6">
+        <div class="col-10">
             <div class="d-flex justify-content-start align-items-center">
                 <div class="p-2 rounded-pill bg-danger">
-                    <i class='bx bx-user fs-5 text-white'></i>
+                    <i class='bx bx-money text-white' ></i>
                 </div>
                 <div class="ms-1 fs-5">
-                    @if (Auth::guard('customer')->user())
-                    Hello, {{ Auth::guard('customer')->user()->username }}
-                    @else
-                    Guest User
-                    @endif
+                    Add Money to Wallet
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="d-flex justify-content-end">
-                <div class="p-2">
-                    {{-- <i class='bx bx-bell fs-2 text-danger'></i> --}}
+        <div class="col-2 ">
+            <a href="/home">
+                <div class="btn btn-outline-dark border-0 rounded-pill">
+                    <i class='bx bx-chevron-left fs-1'></i>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -47,7 +43,7 @@
                 <div class="wallet-actions mt-3 d-flex justify-content-center">
                     <button type="submit" id="rzp-button1" class="btn btn-light rounded-pill fs-6 shadow-lg">
                         <div>
-                            <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
+                            <i class='bx bx-plus bg-success text-white p-2 rounded-pill me-1'></i>Deposit Amount
                         </div>
                     </button>
                 </div>

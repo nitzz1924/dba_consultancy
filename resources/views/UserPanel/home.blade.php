@@ -50,16 +50,17 @@
                     </div>
                 </div>
                 <div class="wallet-actions mt-3 d-flex justify-content-around">
-                    <a href="/wallet">
+                    <a href="{{ route('wallet')}}">
                         <div class="btn btn-light rounded-pill fs-6 shadow-lg">
-                            <i class='bx bx-minus bg-dark text-white p-2 rounded-pill me-1'></i>Withdraw
+                            <i class='bx bx-plus bg-success text-white p-2 rounded-pill me-1'></i>Deposit
                         </div>
                     </a>
-                    <a href="/wallet">
+                    <a href="{{ route('withdraw')}}">
                         <div class="btn btn-light rounded-pill fs-6 shadow-lg">
-                            <i class='bx bx-plus bg-dark text-white p-2 rounded-pill me-1'></i>Deposit
+                            <i class='bx bx-minus bg-danger text-white p-2 rounded-pill me-1'></i>Withdraw
                         </div>
                     </a>
+                    
                 </div>
             </div>
         </div>

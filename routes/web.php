@@ -76,6 +76,8 @@ Route::controller(AdminStores::class)->group(function () {
     Route::post('/updateorderstatus', 'updateorderstatus')->name('updateorderstatus');
     Route::post('/insertincomelevel', 'insertincomelevel')->name('insertincomelevel');
     Route::get('/deleteincome/{id}', 'deleteincome')->name('deleteincome');
+    Route::get('/aprrovedwithdraw/{id}', 'aprrovedwithdraw')->name('aprrovedwithdraw');
+    Route::post('/approvedwithdraw/{id}', 'approvedwithdraw')->name('approvedwithdraw');
     Route::post('admin/udpatereferincome', 'udpatereferincome')->name('udpatereferincome');
 });
 
@@ -90,6 +92,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
     Route::get('home', 'home')->name('home');
     Route::get('wallet', 'wallet')->name('wallet');
+    Route::get('withdraw', 'withdraw')->name('withdraw');
     Route::get('servicedetail/{id}', 'servicedetail')->name('servicedetail');
     Route::get('userprofile', 'userprofile')->name('userprofile');
     Route::get('editprofile', 'editprofile')->name('editprofile');
@@ -115,6 +118,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('insertserviceform', 'insertserviceform')->name('insertserviceform');
     Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
     Route::post('insertwallet', 'insertwallet')->name('insertwallet');
+    Route::post('withdrawrequest', 'withdrawrequest')->name('withdrawrequest');
     Route::post('paynow', 'paynow')->name('paynow');
     Route::post('updateprofile', 'updateprofile')->name('updateprofile');
 

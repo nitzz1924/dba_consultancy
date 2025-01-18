@@ -54,7 +54,7 @@ class UserViews extends Controller
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
 
-            
+
 
             return view('UserPanel.home', compact('services', 'consulting', 'walletamount'));
         } else {
@@ -85,6 +85,31 @@ class UserViews extends Controller
             return redirect()->route('userloginpage');
         }
     }
+
+    public function withdraw()
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        if (Auth::guard('customer')->check()) {
+            $debitTotal = 0;
+            $creditTotal = 0;
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+            $walletamount = ($creditTotal - $debitTotal);
+
+
+            $widthrawhistory = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->where('transactiontype', 'withdraw')->get();
+            foreach ($widthrawhistory as $debit) {
+                $debit->created_date = Carbon::parse($debit->created_at)->format('d/M/Y');
+            }
+            // dd($widthrawhistory);
+            return view('UserPanel.withdraw', compact('walletamount', 'widthrawhistory'));
+        } else {
+            return redirect()->route('userloginpage');
+        }
+    }
+
+
+
     public function servicedetail($id)
     {
         if (Auth::guard('customer')->check()) {
@@ -270,4 +295,5 @@ class UserViews extends Controller
             return view('auth.UserPanel.login');
         }
     }
+    
 }

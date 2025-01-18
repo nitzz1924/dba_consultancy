@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2025 at 08:55 AM
+-- Generation Time: Jan 18, 2025 at 01:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1737118953),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1737118953;', 1737118953);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1737196358),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1737196358;', 1737196358);
 
 -- --------------------------------------------------------
 
@@ -376,7 +376,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('D3ePIRY7NHriIYh5ySvIZtjFx1Dzj06dyd1cpqXG', NULL, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT0UxbzFGTWVSTk5xYmtMZzVhUmlXc0RmSGo1Tzc4S3J5aFFoNVdxeCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC93YWxsZXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjUyO30=', 1737186674);
+('bA2LMf6SUSsqiIwMfZQIlUkmByYLEqDmfJaUfQkl', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoid1lna0MwcTZsd24xdjFDSlNYdllLNjI4dXh4cHNOZ05Yd1hucjhUciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi93YWxsZXRoaXN0b3J5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1MjtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjt9', 1737201473);
 
 -- --------------------------------------------------------
 
@@ -444,7 +444,9 @@ INSERT INTO `wallets` (`id`, `userid`, `serviceid`, `transactionid`, `amount`, `
 (40, '45', NULL, NULL, 200, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbjy1R6T7IcIH6\",\"razorpay_order_id\":\"order_PbjxSZtCDNgqbD\",\"razorpay_signature\":\"8c75dc18b7c8cc59bd8bb386441f1f0d7a8960f0e339584d285fbd988756519e\"}', NULL, NULL, NULL, '0', '2024-12-26 08:34:11', '2024-12-26 08:34:11'),
 (41, '51', NULL, NULL, 10000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbn08dvKdiC89n\",\"razorpay_order_id\":\"order_Pbmzlcn6h0p2MK\",\"razorpay_signature\":\"54b03b7887b11ce1820b9879c4c236b018bdca9035ae22397d1fa9ed12a7194b\"}', NULL, NULL, NULL, '0', '2024-12-26 11:32:19', '2024-12-26 11:32:19'),
 (53, '51', '222', '56', 1000, 'debit', 'serviceorder', NULL, '2024refer45', '100', NULL, '0', '2024-12-28 10:02:17', '2024-12-28 10:35:25'),
-(58, '45', NULL, NULL, 100, 'credit', 'commission', NULL, NULL, NULL, '53', '0', '2024-12-28 10:35:25', '2024-12-28 10:35:25');
+(58, '45', NULL, NULL, 100, 'credit', 'commission', NULL, NULL, NULL, '53', '0', '2024-12-28 10:35:25', '2024-12-28 10:35:25'),
+(59, '52', NULL, '1234', 50, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'withdrawn', '2025-01-18 09:26:47', '2025-01-18 11:11:19'),
+(60, '52', NULL, NULL, 50, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'requested', '2025-01-18 09:27:39', '2025-01-18 09:46:21');
 
 --
 -- Indexes for dumped tables
@@ -633,7 +635,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wallets`
 --
 ALTER TABLE `wallets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

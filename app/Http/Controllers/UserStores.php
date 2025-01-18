@@ -291,6 +291,26 @@ class UserStores extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+    public function withdrawrequest(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $loggedinuser = Auth::guard('customer')->user();
+
+            $walletdata = Wallet::create([
+                'userid' => $loggedinuser->id,
+                'transactiontype' => $request->input('transactiontype'),
+                'paymenttype' => $request->input('paymenttype'),
+                'amount' => $request->input('walletamount'),
+                'status' => 'requested',
+            ]);
+            // Log::error('Wallet Recharged: ' . $walletdata);
+            return redirect()->route('withdraw')->with('success', 'Withdraw request sent to admin!!!');
+        } catch (Exception $e) {
+            // Log::error('Wallet Insertion Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 
     public function paynow(Request $request)
     {

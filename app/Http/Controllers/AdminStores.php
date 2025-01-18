@@ -400,6 +400,7 @@ class AdminStores extends Controller
         $data->delete();
         return back()->with('success', "Deleted....!!!");
     }
+    
 
     public function udpatereferincome(Request $rq)
     {
@@ -415,5 +416,29 @@ class AdminStores extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+    public function approvedwithdraw($id, Request $request)
+{
+    try {
+        $transactionNumber = $request->input('transactionNumber');
+        if (!$transactionNumber) {
+            return response()->json(['success' => false, 'error' => "Transaction number is required."]);
+        }
+
+        $requestdata = Wallet::find($id);
+        if (!$requestdata) {
+            return response()->json(['success' => false, 'error' => "Request not found."]);
+        }
+
+        $requestdata->update([
+            'status' => 'withdrawn',
+            'transactionid' => $transactionNumber,
+        ]);
+
+        return response()->json(['success' => true, 'message' => "Request Approved!"]);
+    } catch (Exception $e) {
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
+}
+
 
 }

@@ -154,10 +154,11 @@ class AdminViews extends Controller
         $credithistory = Wallet::join('register_users', 'wallets.userid', 'register_users.id')
             ->select('register_users.username as customername', 'wallets.*')
             ->orderby('wallets.created_at', 'DESC')
-            ->where('wallets.paymenttype', 'credit')
+            // ->where('wallets.paymenttype', 'credit')
             ->where(function ($query) {
                 $query->where('wallets.transactiontype', 'commission')
-                    ->orWhere('wallets.transactiontype', 'online');
+                    ->orWhere('wallets.transactiontype', 'online')
+                    ->orWhere('wallets.transactiontype', 'withdraw');
             })
             ->get();
         return view('AdminPanel.wallethistory', compact('credithistory'));
