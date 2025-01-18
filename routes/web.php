@@ -116,6 +116,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('updateserviceform', 'updateserviceform')->name('updateserviceform');
     Route::post('insertwallet', 'insertwallet')->name('insertwallet');
     Route::post('paynow', 'paynow')->name('paynow');
+    Route::post('updateprofile', 'updateprofile')->name('updateprofile');
 
 });
 

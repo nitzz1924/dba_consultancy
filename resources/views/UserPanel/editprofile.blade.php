@@ -6,8 +6,8 @@
     <div class="container-fluid desktop-view">
         {{-- Header bar --}}
         <div class="row mt-3">
-            <div class="col-6">
-                <div class="sectionHeading">
+            <div class="col-6 d-flex justify-content-start align-items-center">
+                <div class="sectionHeading mb-0">
                     Edit Profile
                 </div>
             </div>
@@ -24,58 +24,61 @@
         {{-- Profile Details --}}
         <div class="card mt-4 rounded-4">
             <div class="card-body">
-                <form>
+                <form method="post" action="{{ route('updateprofile') }}" enctype="multipart/form-data">
+                    @csrf
                     {{-- Image Preview --}}
                     <div class="text-center mb-3">
-                        <img id="imagePreview" src="/assets/images/users/user-dummy-img.jpg" alt="Profile Image Preview"
-                            class="border"
+                        <img id="imagePreview" src="{{ asset('/assets/images/user-dummy-pic.png') }}"
+                            alt="Profile Image Preview" class="border"
                             style="display: block; width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-inline: auto;">
                     </div>
                     <div class="mb-3 text-center">
                         <label for="formFileLg" class="form-label">Select Profile Image</label>
-                        <input class="form-control form-control-lg" id="formFileLg" type="file" accept="image/*"
-                            onchange="previewImage(event)">
+                        <input class="form-control form-control-lg" name="profileimage" id="formFileLg" type="file"
+                            accept="image/*" onchange="previewImage(event)">
                     </div>
 
                     <hr>
                     <div class="form-floating mb-3 ">
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username">
                         <label for="username">Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="Email" name="Email"
+                        <input type="email" class="form-control" id="email" name="email"
                             placeholder="user@dbaconsultancy.in">
-                        <label for="Email">Email address</label>
+                        <label for="email">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="tel" class="form-control" id="Mobile" name="Mobile" placeholder="Mobile">
-                        <label for="Mobile">Mobile</label>
+                        <input type="tel" class="form-control" id="mobilenumber" name="mobilenumber"
+                            placeholder="Enter Your Mobile">
+                        <label for="mobilenumber">Mobile</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Enter your address" id="Address" name="Address" style="height: 100px"></textarea>
-                        <label for="Address">Permanent Address</label>
+                        <textarea class="form-control" placeholder="Enter your address" id="permaddress" name="permaddress"
+                            style="height: 100px"></textarea>
+                        <label for="permaddress">Permanent Address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="City" name="City" placeholder="City">
-                        <label for="City">City</label>
+                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter your city">
+                        <label for="city">City</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="State" name="State" placeholder="State">
-                        <label for="State">State</label>
+                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter Your State">
+                        <label for="state">State</label>
                     </div>
                     <hr>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="PAN" name="PAN"
-                            placeholder="PAN Card Number">
-                        <label for="PAN">PAN Card Number</label>
+                        <input type="text" class="form-control" id="pancard" name="pancard"
+                            placeholder="Enter Your PAN Card Number">
+                        <label for="pancard">PAN Card Number</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="Aadhaar" name="Aadhaar"
+                        <input type="text" class="form-control" id="aadharcard" name="aadharcard"
                             placeholder="Aadhaar Card Number">
-                        <label for="Aadhaar">Aadhaar Card Number</label>
+                        <label for="aadharcard">Aadhaar Card Number</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="GST" name="GST" placeholder="GST Number">
+                        <input type="text" class="form-control" id="gstnum" name="gstnum" placeholder="GST Number">
                         <label for="GST">GST Number</label>
                     </div>
 

@@ -17,6 +17,7 @@ use Auth;
 use Exception;
 use Carbon\Carbon;
 use Log;
+
 class UserStores extends Controller
 {
     public function registeruser(Request $rq)
@@ -36,7 +37,6 @@ class UserStores extends Controller
                 'parentreferid' => $rq->parentreferid,
             ]);
             return back()->with('success', 'Registration Successfull..!!!!');
-
         } catch (Exception $e) {
             return redirect()->route('createform')->with('error', $e->getMessage());
             //return redirect()->route('createform')->with('error', 'Not Added Try Again...!!!!');
@@ -66,7 +66,6 @@ class UserStores extends Controller
                 'refercode' => Carbon::now()->year . 'dba' . $data->id,
             ]);
             return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp]]);
-
         } catch (Exception $e) {
             return response()->json(['msg' => 'failure']);
         }
@@ -235,7 +234,6 @@ class UserStores extends Controller
                             'type' => 'file',
                         ];
                     }
-
                 } else {
                     // If no file is uploaded, retain the previous image or fallback to the current value
                     $foundKey = false;
@@ -318,5 +316,58 @@ class UserStores extends Controller
         }
     }
 
+
+    public function updateprofile(Request $request)
+{
+    $loggedinuser = Auth::guard('customer')->user();
+
+    // Initialize the filename as null
+    $filename = null;
+
+    // Handle the uploaded profile image
+    if ($request->hasFile('profileimage')) {
+        $file = $request->file('profileimage');
+
+        // Validate the uploaded file
+        $request->validate([
+            'profileimage' => 'file|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        // Generate a unique filename
+        $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+
+        // Move the file to the desired directory
+        $file->move(public_path('assets/images/userprofile'), $filename);
+    }
+
+    try {
+        // Find the logged-in user's record
+        $user = RegisterUser::find($loggedinuser->id);
+
+        // Prepare the updated data
+        $updatedData = [];
+
+        foreach (['username', 'email', 'mobilenumber', 'permaddress', 'city', 'state', 'pancard', 'aadharcard', 'gstnum'] as $field) {
+            // Update fields only if new data is provided and different from the current value
+            if ($request->has($field) && !is_null($request->$field) && $request->$field != $user->$field) {
+                $updatedData[$field] = $request->$field;
+            }
+        }
+
+        // Add the profile image to the updated data if it's uploaded
+        if ($filename) {
+            $updatedData['profileimage'] = $filename;
+        }
+
+        // Update the user only if there are changes
+        if (!empty($updatedData)) {
+            $user->update($updatedData);
+        }
+
+        return redirect()->route('userprofile')->with('success', 'Profile Updated !!!');
+    } catch (Exception $e) {
+        return redirect()->route('userprofile')->with('error', $e->getMessage());
+    }
 }
 
+}

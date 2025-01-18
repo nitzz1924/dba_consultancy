@@ -17,5 +17,13 @@ class RegisterUser extends Authenticatable
         'username',
         'refercode',
         'parentreferid',
+        'profileimage',
+        'mobilenumber',
+        'permaddress',
+        'city',
+        'state',
+        'pancard',
+        'aadharcard',
+        'gstnum',
     ];
 }

@@ -8,9 +8,9 @@
     <div class="row">
         <div class="col-6">
             <div class="d-flex justify-content-start align-items-center">
-                <div class="p-2 rounded-pill bg-danger">
+                {{-- <div class="p-2 rounded-pill bg-danger">
                     <i class='bx bx-user fs-5 text-white'></i>
-                </div>
+                </div> --}}
                 <div class="ms-1 fs-5">
                     @if (Auth::guard('customer')->user())
                     Hello, {{ Auth::guard('customer')->user()->username }}
@@ -23,7 +23,7 @@
         <div class="col-6">
             <div class="d-flex justify-content-end">
                 <div class="p-2">
-                    <i class='bx bx-bell fs-2 text-danger'></i>
+                    {{-- <i class='bx bx-bell fs-2 text-danger'></i> --}}
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                         <div class="card mb-1 rounded-4">
                             <div class="card-body p-1">
                                 <img src="{{ asset('assets/images/exchanging.png')}}" alt="icon"
-                                    class="img-fluid">
+                                    class="img-fluid"  width="75">
                             </div>
                         </div>
                     </div>

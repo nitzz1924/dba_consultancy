@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Http;
 use Session;
 use Auth;
 use Carbon\Carbon;
+
 class UserViews extends Controller
 {
     public function userloginpage()
@@ -52,10 +53,12 @@ class UserViews extends Controller
             $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
+
+            
+
             return view('UserPanel.home', compact('services', 'consulting', 'walletamount'));
         } else {
             return redirect()->route('userloginpage');
-
         }
     }
     public function wallet()
@@ -97,7 +100,12 @@ class UserViews extends Controller
     public function userprofile()
     {
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.userprofile');
+
+            $loggedinuser = Auth::guard('customer')->user();
+
+            $userprofile = RegisterUser::where('id', $loggedinuser->id)->first();
+
+            return view('UserPanel.userprofile', compact('userprofile'));
         } else {
             return redirect()->route('userloginpage');
         }
@@ -105,6 +113,7 @@ class UserViews extends Controller
     public function editprofile()
     {
         if (Auth::guard('customer')->check()) {
+
             return view('UserPanel.editprofile');
         } else {
             return redirect()->route('userloginpage');
@@ -146,8 +155,7 @@ class UserViews extends Controller
     {
         $loggedinuser = Auth::guard('customer')->user();
         $pricingdata = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
-            ->select('masters.value as servicename', 'pricing_details.*')->
-            where('serviceid', $id)->first();
+            ->select('masters.value as servicename', 'pricing_details.*')->where('serviceid', $id)->first();
         $serviceid = $id;
         $formattributes = FormAttribute::where('masterserviceid', $id)->get();
 

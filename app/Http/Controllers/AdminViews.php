@@ -117,10 +117,9 @@ class AdminViews extends Controller
     }
     public function referedusers()
     {
-        $loggedinuser = Auth::user();
-        $myrefercode = $loggedinuser->refercode;
-        $list = RegisterUser::orderby('created_at', 'DESC')
-            ->where('parentreferid', '=', $myrefercode)->get();
+        // $loggedinuser = Auth::user();
+        // $myrefercode = $loggedinuser->refercode;
+        $list = RegisterUser::orderby('created_at', 'DESC')->get();
         // $array = [];
         // foreach ($list as $row) {
         //     $finaldata = RegisterUser::where('parentreferid', '=', $row->refercode)->get();

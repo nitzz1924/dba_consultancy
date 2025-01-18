@@ -98,8 +98,17 @@
                             <button type="button" class="btn" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user"
-                                        src="{{ asset('assets/images/defaultuser.png') }}" alt="Header Avatar" />
+
+                                    @if (Auth::guard('customer')->user() && !is_null(Auth::guard('customer')->user()->profileimage))
+                                        <div class="border rounded-pill border-danger">
+                                            <img src="{{ asset('/assets/images/userprofile/' . Auth::guard('customer')->user()->profileimage) }}"
+                                                class="img-fluid" alt="userprofile" width="25">
+                                        </div>
+                                    @else
+                                        <img class="rounded-circle header-profile-user"
+                                            src="{{ asset('assets/images/defaultuser.png') }}" alt="Header Avatar" />
+                                    @endif
+
                                     <span class="text-start ms-xl-2">
                                         <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
                                             @if (Auth::guard('customer')->user())

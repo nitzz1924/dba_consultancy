@@ -185,3 +185,20 @@
     background-color: #ff7d69;
     border-radius: 10px;
 }
+
+.orders .nav-link {
+    color: #6f6f6f;
+}
+.orders .nav-link.active {
+    background-color: #ff7c4c;
+    font-weight: 600;
+}
+.mobnav .nav-item.active {
+    color: #ff7c4c;
+}
+
+
+    
+ .navbar-header .topbar-user.dropdown .dropdown-menu {
+    width: 40%;
+}

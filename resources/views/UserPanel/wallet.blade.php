@@ -23,7 +23,7 @@
         <div class="col-6">
             <div class="d-flex justify-content-end">
                 <div class="p-2">
-                    <i class='bx bx-bell fs-2 text-danger'></i>
+                    {{-- <i class='bx bx-bell fs-2 text-danger'></i> --}}
                 </div>
             </div>
         </div>
