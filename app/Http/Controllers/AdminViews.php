@@ -106,7 +106,7 @@ class AdminViews extends Controller
             ->join('masters', 'masters.id', '=', 'purchase_services.serviceid')
             ->select('register_users.*', 'purchase_services.*', 'masters.iconimage as serviceimage')
             ->where('purchase_services.id', $id)->first();
-        //dd($orderdetails);
+        // dd($orderdetails);
         return view('AdminPanel.orderdetails', compact('orderdetails'));
     }
 

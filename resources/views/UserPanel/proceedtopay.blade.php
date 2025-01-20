@@ -74,7 +74,7 @@
                                 Wallet Balance
                             </div>
                             <div class="p-1">
-                                ₹ {{ $walletamount }}/-
+                                ₹ {{ number_format($walletamount, 2) }}/-
                             </div>
                         </div>
                         <hr>

@@ -123,7 +123,7 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="/userprofile"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
-                                    <span class="align-middle">Profile</span></a>
+                                    <span class="align-middle">My Profile</span></a>
                                 <hr>
                                 <form method="GET" action="{{ route('logoutuserpanel') }}">
                                     @csrf

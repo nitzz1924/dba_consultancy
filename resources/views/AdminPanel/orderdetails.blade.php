@@ -95,53 +95,93 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-sm-flex align-items-center">
-                            <h5 class="card-title flex-grow-1 mb-0">Form Details</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-sm-flex align-items-center">
+                                    <h5 class="card-title flex-grow-1 mb-0">Form Details</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @php
+                                    $formdata = json_decode($orderdetails->formdata, true);
+                                @endphp
+                                <table class="table table-bordered border-light">
+                                    <tbody>
+                                        @foreach ($formdata as $data)
+                                        @if ($data['label'] !== '_token')
+                                        <tr>
+                                            <td>{{ $data['label'] }}</td>
+                                            <td>
+                                                @php
+                                                    $filePath = asset('assets/images/users/' . $data['value']);
+                                                    $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
+                                                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                                                @endphp
+        
+                                                @if (in_array(strtolower($fileExtension), $imageExtensions))
+                                                    <div>
+                                                        <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
+                                                            style="width: 100px; height: 100px; object-fit: cover;">
+                                                    </div>
+                                                    <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                                        class="btn btn-dark btn-sm mt-2">Download</a>
+                                                @elseif (strtolower($fileExtension) === 'pdf')
+                                                    <!-- Display PDF in iframe with download link -->
+                                                    <iframe src="{{ $filePath }}"
+                                                        style="width: 100%; height: 200px; border: none;"></iframe>
+                                                    <a href="{{ $filePath }}" download="{{ $data['value'] }}"
+                                                        class="btn btn-dark btn-sm mt-2">Download PDF</a>
+                                                @else
+                                                    {{ $data['value'] }}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        @php
-                            $formdata = json_decode($orderdetails->formdata, true);
-                        @endphp
-                        <table class="table table-bordered border-light">
-                            <tbody>
-                                @foreach ($formdata as $data)
-                                @if ($data['label'] !== '_token')
-                                <tr>
-                                    <td>{{ $data['label'] }}</td>
-                                    <td>
-                                        @php
-                                            $filePath = asset('assets/images/users/' . $data['value']);
-                                            $fileExtension = pathinfo($data['value'], PATHINFO_EXTENSION);
-                                            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                                        @endphp
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex">
+                                    <h5 class="card-title flex-grow-1 mb-0">Submitted by Admin</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
 
-                                        @if (in_array(strtolower($fileExtension), $imageExtensions))
-                                            <div>
-                                                <img src="{{ $filePath }}" alt="{{ $data['label'] }}"
-                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                <div class="alert alert-info" role="alert">
+                                    Note: {{$orderdetails->note}}
+                                </div>
+                                <hr>
+                                <ul class="list-unstyled mb-0 vstack gap-3">
+                                    @php
+                                        $documents = explode(',', $orderdetails->documents);
+                                    @endphp
+                                    @foreach ($documents as $document)
+                                        <li>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0">
+                                                    <img src="{{ asset($document) }}" alt="" class="avatar-sm rounded img-fluid">
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="fs-14 mb-1">{{ basename($document) }}</h6>
+                                                    <a href="{{ asset($document) }}" download class="btn btn-dark btn-sm mt-2">Download</a>
+                                                </div>
                                             </div>
-                                            <a href="{{ $filePath }}" download="{{ $data['value'] }}"
-                                                class="btn btn-dark btn-sm mt-2">Download</a>
-                                        @elseif (strtolower($fileExtension) === 'pdf')
-                                            <!-- Display PDF in iframe with download link -->
-                                            <iframe src="{{ $filePath }}"
-                                                style="width: 100%; height: 200px; border: none;"></iframe>
-                                            <a href="{{ $filePath }}" download="{{ $data['value'] }}"
-                                                class="btn btn-dark btn-sm mt-2">Download PDF</a>
-                                        @else
-                                            {{ $data['value'] }}
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
+                                        </li>
+                                    @endforeach
+                                    
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                
+            </div>
             </div>
             <div class="col-xl-3">
                 <div class="card">
@@ -224,6 +264,8 @@
                         </div>
                     </div>
                 </form>
+
+                
             </div>
         </div>
     </div>

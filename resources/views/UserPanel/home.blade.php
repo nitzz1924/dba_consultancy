@@ -46,7 +46,7 @@
                 <div class="balance text-white">
                     Current Balance
                     <div class="wallet-amount">
-                        <i class='bx bx-rupee'></i>{{ $walletamount }}
+                        <i class='bx bx-rupee'></i>{{ number_format($walletamount, 2) }}
                     </div>
                 </div>
                 <div class="wallet-actions mt-3 d-flex justify-content-around">

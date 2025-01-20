@@ -1,6 +1,7 @@
 <?php
 #{{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏-----------------------------}}
 namespace App\Http\Controllers;
+
 use App\Models\GroupType;
 use App\Models\PricingDetail;
 use App\Models\PurchaseService;
@@ -14,6 +15,7 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Auth;
 use Log;
+
 class AdminStores extends Controller
 {
     public function storemaster(Request $req)
@@ -25,7 +27,6 @@ class AdminStores extends Controller
             ]);
             Master::create($masterdata);
             return back()->with('success', 'Master Added..!!!!');
-
         } catch (Exception $e) {
             return redirect()->route('master')->with('error', $e->getMessage());
             //return redirect()->route('master')->with('error', 'Not Added Try Again...!!!!');
@@ -52,7 +53,6 @@ class AdminStores extends Controller
             // dd($submasterdata);
             Master::create($submasterdata);
             return back()->with('success', 'Sub-Master Added..!!!!');
-
         } catch (Exception $e) {
             return redirect()->route('submaster')->with('error', $e->getMessage());
             //return redirect()->route('submaster')->with('error', 'Not Added Try Again...!!!!');
@@ -63,7 +63,6 @@ class AdminStores extends Controller
     {
         $data = Master::where('type', '=', $selectedCat)->get();
         return response()->json($data);
-
     }
 
     public function updatesubmaster(Request $request)
@@ -145,7 +144,6 @@ class AdminStores extends Controller
                 'inputtype' => $rq->inputtype,
             ]);
             return back()->with('success', 'Form Attributes Created..!!!!');
-
         } catch (Exception $e) {
             return redirect()->route('createform')->with('error', $e->getMessage());
             //return redirect()->route('createform')->with('error', 'Not Added Try Again...!!!!');
@@ -213,7 +211,6 @@ class AdminStores extends Controller
             ]);
             //dd($data);
             return back()->with('success', 'Pricing Added..!!!!');
-
         } catch (Exception $e) {
             return redirect()->route('pricingdetails')->with('error', $e->getMessage());
             //return redirect()->route('pricingdetails')->with('error', 'Not Added Try Again...!!!!');
@@ -292,28 +289,41 @@ class AdminStores extends Controller
             $image = array();
             if ($files = $req->file('documents')) {
                 foreach ($files as $file) {
-                    $image_name = md5(rand(1000, 10000));
-                    $extension = strtolower($file->getClientOriginalExtension());
-                    $image_fullname = $image_name . '.' . $extension;
+                    $image_name = $file->getClientOriginalName();
+                    // $extension = strtolower($file->getClientOriginalExtension());
+                    // $image_fullname = $image_name . '.' . $extension;
                     $uploaded_path = "public/assets/images/documents/";
-                    $image_url = $uploaded_path . $image_fullname;
-                    $file->move($uploaded_path, $image_fullname);
+                    $image_url = $uploaded_path . $image_name;
+                    $file->move($uploaded_path, $image_name);
                     $image[] = $image_url;
                 }
             }
             $purchasedata = PurchaseService::where('id', $req->purchaseid)->first();
 
             if ($purchasedata) {
-                $purchasedata->status = $req->status == null ? $purchasedata->status : $req->status;
+                // Update purchase status
+                $purchasedata->status = $req->status ?? $purchasedata->status;
+
                 if ($purchasedata->status == 'Completed') {
-                    Wallet::where('transactionid', $purchasedata->id)->where('status', '=', 'Hold')->update(['status' => 0]);
+                    // Release wallet hold
+                    Wallet::where('transactionid', $purchasedata->id)
+                        ->where('status', '=', 'Hold')
+                        ->update(['status' => 0]);
 
                     //Commission Calculation
-                    $usrid = PurchaseService::where('id', $req->purchaseid)->value('userid');
+                    $usrid = $purchasedata->userid;
+                    if (!$usrid) {
+                        Log::warning('User ID not found for Purchase ID: ' . $req->purchaseid);
+                        return back()->with('error', 'User ID missing. Cannot process commission.');
+                    }
 
                     if ($usrid) {
                         $parentreferid = RegisterUser::where('id', $usrid)->value('parentreferid');
-
+                        if (!$parentreferid) {
+                            Log::warning('Parent referral ID not found for User ID: ' . $usrid);
+                            return back()->with('error', 'Parent referral ID missing.');
+                        }
+                        
                         $childrenids = RegisterUser::where('parentreferid', $parentreferid)->get()->pluck('id');
 
                         $sums = [];
@@ -327,7 +337,7 @@ class AdminStores extends Controller
                             $data = Wallet::where('transactionid', $req->purchaseid)->update([
                                 'parentreferid' => $parentreferid,
                                 'commissionamt' => $req->servicetotal / 100 * 15,
-                               
+
                             ]);
                             $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
                             $parentid = RegisterUser::where('refercode', $parentreferid)->value('id');
@@ -387,7 +397,6 @@ class AdminStores extends Controller
                 'lessthangreater' => $rq->lessthangreater,
             ]);
             return back()->with('success', 'Income Added..!!!!');
-
         } catch (Exception $e) {
             return redirect()->route('referincomelevel')->with('error', $e->getMessage());
             //return redirect()->route('referincomelevel')->with('error', 'Not Added Try Again...!!!!');
@@ -400,7 +409,7 @@ class AdminStores extends Controller
         $data->delete();
         return back()->with('success', "Deleted....!!!");
     }
-    
+
 
     public function udpatereferincome(Request $rq)
     {
@@ -417,28 +426,26 @@ class AdminStores extends Controller
         }
     }
     public function approvedwithdraw($id, Request $request)
-{
-    try {
-        $transactionNumber = $request->input('transactionNumber');
-        if (!$transactionNumber) {
-            return response()->json(['success' => false, 'error' => "Transaction number is required."]);
+    {
+        try {
+            $transactionNumber = $request->input('transactionNumber');
+            if (!$transactionNumber) {
+                return response()->json(['success' => false, 'error' => "Transaction number is required."]);
+            }
+
+            $requestdata = Wallet::find($id);
+            if (!$requestdata) {
+                return response()->json(['success' => false, 'error' => "Request not found."]);
+            }
+
+            $requestdata->update([
+                'status' => 'withdrawn',
+                'transactionid' => $transactionNumber,
+            ]);
+
+            return response()->json(['success' => true, 'message' => "Request Approved!"]);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
-
-        $requestdata = Wallet::find($id);
-        if (!$requestdata) {
-            return response()->json(['success' => false, 'error' => "Request not found."]);
-        }
-
-        $requestdata->update([
-            'status' => 'withdrawn',
-            'transactionid' => $transactionNumber,
-        ]);
-
-        return response()->json(['success' => true, 'message' => "Request Approved!"]);
-    } catch (Exception $e) {
-        return response()->json(['success' => false, 'error' => $e->getMessage()]);
     }
-}
-
-
 }

@@ -290,10 +290,22 @@ class UserViews extends Controller
     {
         $loggedinuser = Auth::guard('customer')->user();
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.customercommission');
+
+            $commissions = Wallet::join('register_users', 'register_users.id', 'wallets.userid')
+            ->join('purchase_services', 'purchase_services.id', 'wallets.transactionid')
+            ->select('register_users.username as customername', 'wallets.*', 'purchase_services.servicename as servicename')
+            ->where('wallets.parentreferid', $loggedinuser->refercode)
+            ->where('wallets.transactiontype', 'serviceorder')
+            ->get();
+
+            foreach ($commissions as $commission) {
+            $commission->commissionpercent = ($commission->commissionamt / $commission->amount) * 100;
+            }
+            
+            // dd($commissions);
+            return view('UserPanel.customercommission', compact('commissions'));
         } else {
             return view('auth.UserPanel.login');
         }
     }
-    
 }
