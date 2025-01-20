@@ -12,7 +12,7 @@
                         <div class="card mb-1 rounded-4">
                             <div class="card-body p-1">
                                 <img src="{{ asset('assets/images/atm-card.png') }}" alt="icon"
-                                    class="img-fluid">
+                                    class="img-fluid" width="75">
                             </div>
                         </div>
                     </div>

@@ -12,7 +12,7 @@
                         <div class="bg-white py-2 px-2 mb-1 rounded-4">
                             <div class=" p-1">
                                 <img src="{{ asset('assets/images/Services/clipboard.png')}}" alt="icon" width="50"
-                                    class="img-fluid">
+                                    class="img-fluid" width="75">
                             </div>
                         </div>
                     </div>
