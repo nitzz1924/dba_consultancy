@@ -7,17 +7,17 @@
     <div class="row my-3">
         <div class="wallet-box">
             <div class="balance text-white text-center">
-                <div class="d-flex flex-row justify-content-center align-items-center ">
+                <div class="d-flex flex-row justify-content-start align-items-center ">
                     <div class="col-md-3">
                         <div class="card mb-1 rounded-4">
                             <div class="card-body p-1">
-                                <img src="{{ asset('assets/images/Services/' . $masterdata->iconimage) }}" alt="icon" class="img-fluid">
+                                <img src="{{ asset('assets/images/Services/' . $masterdata->iconimage) }}" alt="icon" class="img-fluid" width="75">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-9 px-3">
                         <div class="mt-2 text-start service-name">{{ $masterdata->type }}</div>
-                        <div class="fs-3 text-start">
+                        <div class="fs-2 fw-bold text-start">
                             {{ $pricingdata->servicename }}
                         </div>
                         <div class="fs-5 text-start">
@@ -77,7 +77,7 @@
                         Wallet Balance
                     </div>
                     <div class="p-1">
-                        ₹ {{ $walletamount }}/-
+                        ₹ {{ number_format($walletamount, 2) }}/-
                     </div>
                 </div>
                 <hr>

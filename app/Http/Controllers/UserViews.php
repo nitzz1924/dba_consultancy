@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Http;
 use Session;
 use Auth;
 use Carbon\Carbon;
+
 class UserViews extends Controller
 {
     public function userloginpage()
@@ -52,10 +53,12 @@ class UserViews extends Controller
             $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
+
+
+
             return view('UserPanel.home', compact('services', 'consulting', 'walletamount'));
         } else {
             return redirect()->route('userloginpage');
-
         }
     }
     public function wallet()
@@ -82,6 +85,31 @@ class UserViews extends Controller
             return redirect()->route('userloginpage');
         }
     }
+
+    public function withdraw()
+    {
+        $loggedinuser = Auth::guard('customer')->user();
+        if (Auth::guard('customer')->check()) {
+            $debitTotal = 0;
+            $creditTotal = 0;
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+            $walletamount = ($creditTotal - $debitTotal);
+
+
+            $widthrawhistory = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->where('transactiontype', 'withdraw')->get();
+            foreach ($widthrawhistory as $debit) {
+                $debit->created_date = Carbon::parse($debit->created_at)->format('d/M/Y');
+            }
+            // dd($widthrawhistory);
+            return view('UserPanel.withdraw', compact('walletamount', 'widthrawhistory'));
+        } else {
+            return redirect()->route('userloginpage');
+        }
+    }
+
+
+
     public function servicedetail($id)
     {
         if (Auth::guard('customer')->check()) {
@@ -97,7 +125,12 @@ class UserViews extends Controller
     public function userprofile()
     {
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.userprofile');
+
+            $loggedinuser = Auth::guard('customer')->user();
+
+            $userprofile = RegisterUser::where('id', $loggedinuser->id)->first();
+
+            return view('UserPanel.userprofile', compact('userprofile'));
         } else {
             return redirect()->route('userloginpage');
         }
@@ -105,6 +138,7 @@ class UserViews extends Controller
     public function editprofile()
     {
         if (Auth::guard('customer')->check()) {
+
             return view('UserPanel.editprofile');
         } else {
             return redirect()->route('userloginpage');
@@ -146,8 +180,7 @@ class UserViews extends Controller
     {
         $loggedinuser = Auth::guard('customer')->user();
         $pricingdata = PricingDetail::join('masters', 'pricing_details.serviceid', '=', 'masters.id')
-            ->select('masters.value as servicename', 'pricing_details.*')->
-            where('serviceid', $id)->first();
+            ->select('masters.value as servicename', 'pricing_details.*')->where('serviceid', $id)->first();
         $serviceid = $id;
         $formattributes = FormAttribute::where('masterserviceid', $id)->get();
 
@@ -257,7 +290,20 @@ class UserViews extends Controller
     {
         $loggedinuser = Auth::guard('customer')->user();
         if (Auth::guard('customer')->check()) {
-            return view('UserPanel.customercommission');
+
+            $commissions = Wallet::join('register_users', 'register_users.id', 'wallets.userid')
+            ->join('purchase_services', 'purchase_services.id', 'wallets.transactionid')
+            ->select('register_users.username as customername', 'wallets.*', 'purchase_services.servicename as servicename')
+            ->where('wallets.parentreferid', $loggedinuser->refercode)
+            ->where('wallets.transactiontype', 'serviceorder')
+            ->get();
+
+            foreach ($commissions as $commission) {
+            $commission->commissionpercent = ($commission->commissionamt / $commission->amount) * 100;
+            }
+            
+            // dd($commissions);
+            return view('UserPanel.customercommission', compact('commissions'));
         } else {
             return view('auth.UserPanel.login');
         }

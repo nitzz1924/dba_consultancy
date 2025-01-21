@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2024 at 01:03 PM
+-- Generation Time: Jan 20, 2025 at 11:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1735558964),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1735558964;', 1735558964);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1737351465),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1737351465;', 1737351465);
 
 -- --------------------------------------------------------
 
@@ -290,8 +290,8 @@ CREATE TABLE `purchase_services` (
 --
 
 INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `userid`, `servicename`, `servicecharge`, `formdata`, `documents`, `note`, `status`, `created_at`, `updated_at`) VALUES
-(46, 'Services', '214', '8', '45', 'GST No.', '1500', '[{\"label\":\"_token\",\"value\":\"9uFjzVKhWN9pWfv8vrIIUCXhlou79gkXrQjoqyQu\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Sneha\",\"type\":\"text\"},{\"label\":\"Address\",\"value\":\"Ajmer, Rajasthan\",\"type\":\"textarea\"},{\"label\":\"Document\",\"value\":\"1734936123_Anurag09.jpg\",\"type\":\"file\"}]', 'public/assets/images/documents/2c89109d42178de8a367c0228f169bf8.png,public/assets/images/documents/db53e24fbc4e5a62aaa6e92f6bd1167f.jpg', 'inprocess due to tech issuesss', 'Processing', '2024-12-23 06:42:03', '2024-12-26 09:27:56'),
-(47, 'Services', '215', '100', '45', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"L6kYwdUMHHFkUaKHidKbBE24D1yqDXtoiGYnJpHm\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1735015757_Anurag09.jpg\",\"type\":\"file\"}]', NULL, NULL, 'Processing', '2024-12-24 04:49:17', '2024-12-24 04:50:01'),
+(46, 'Services', '214', '8', '45', 'GST No.', '1500', '[{\"label\":\"_token\",\"value\":\"9uFjzVKhWN9pWfv8vrIIUCXhlou79gkXrQjoqyQu\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Sneha\",\"type\":\"text\"},{\"label\":\"Address\",\"value\":\"Ajmer, Rajasthan\",\"type\":\"textarea\"},{\"label\":\"Document\",\"value\":\"1734936123_Anurag09.jpg\",\"type\":\"file\"}]', 'public/assets/images/documents/Untitled design (8).png.png', 'Inprocess due to tech', 'Completed', '2024-12-23 06:42:03', '2025-01-20 07:32:49'),
+(47, 'Services', '215', '100', '45', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"L6kYwdUMHHFkUaKHidKbBE24D1yqDXtoiGYnJpHm\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1735015757_Anurag09.jpg\",\"type\":\"file\"}]', 'public/assets/images/documents/pngegg.png', 'Inprocess due to tech', 'Processing', '2024-12-24 04:49:17', '2025-01-20 10:31:59'),
 (56, 'Services', '222', '500', '51', 'Business Pan Card', '1500', '[{\"label\":\"_token\",\"value\":\"0aBitMlXSc5eVJ5DX6hy5unyYxF5B0WZoA9z9017\",\"type\":\"text\"},{\"label\":\"Business_Name\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"},{\"label\":\"Type_of_Business\",\"value\":\"Network\",\"type\":\"text\"},{\"label\":\"Business_Address\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"}]', NULL, 'completed', 'Completed', '2024-12-28 10:02:08', '2024-12-28 10:35:25');
 
 -- --------------------------------------------------------
@@ -335,19 +335,26 @@ CREATE TABLE `register_users` (
   `otp` varchar(22) DEFAULT NULL,
   `refercode` varchar(255) DEFAULT NULL,
   `parentreferid` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL
+  `username` varchar(255) DEFAULT NULL,
+  `profileimage` varchar(255) DEFAULT NULL,
+  `permaddress` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `pancard` varchar(255) DEFAULT NULL,
+  `aadharcard` varchar(255) DEFAULT NULL,
+  `gstnum` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `register_users`
 --
 
-INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`) VALUES
-(45, '1234567890', 'nb@gmail.com', '1', '2024-11-08 12:32:41', '2024-12-30 07:36:30', '427739', '2024refer45', NULL, 'Nitzz'),
-(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-28 10:01:39', '219595', '2024dba51', '2024refer45', 'Anshul'),
-(52, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-12-27 11:55:45', '226104', '2024dba52', '2024refer45', 'kishan'),
-(53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing'),
-(56, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba54', '2024dba52', 'kishan Child');
+INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`, `profileimage`, `permaddress`, `city`, `state`, `pancard`, `aadharcard`, `gstnum`) VALUES
+(45, '1234567890', 'niteshyuvmedia@gmail.com', '1', '2024-11-08 12:32:41', '2025-01-20 10:12:15', '995792', '2024refer45', NULL, 'nitzz', '1737179886_pngegg.png', NULL, NULL, NULL, NULL, NULL, NULL),
+(51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-28 10:01:39', '219595', '2024dba51', '2024refer45', 'Anshul', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(52, '9429158300', 'anshulyuvmedia@gmail.com', '1', '2024-11-22 09:07:06', '2025-01-18 07:53:01', '473072', '2024dba52', '2024refer45', 'Anshul KM', '1737179886_pngegg.png', 'ajmer', 'ajmer', 'Rajasthan', '9876543214', '1234567895', '1239876546'),
+(53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba53', '2024dba51', 'Testing', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(56, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2024-11-22 09:07:12', '226104', '2024dba54', '2024dba52', 'kishan Child', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -369,7 +376,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('9PwjJbu0AMm8MUf1d6Dgr6eeHkqHXgMB69RPxlSY', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNDFNWWo5dGVOejZLcjdvZXRFbEhCWG1SM3N1cGZ2T01zd29VSjNmVyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEyJGw2LjAzVWI3ek0vZHdMSlhYaERuMi5TZ3NKTTgwNHc2UWNqMTgvdDFVaVZ4b0FlTXNLRkhpIjtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1735560118);
+('17KEk33f5ePGICKBg79mPyK6Q5H2zXBrb701MpOA', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSzlhN3hyeDNUUG1UbmMzRzVNYmM1eUE0N09Ya2taR1JJMUFUZ0VpMyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9vcmRlcmRldGFpbHMvNDciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkbDYuMDNVYjd6TS9kd0xKWFhoRG4yLlNnc0pNODA0dzZRY2oxOC90MVVpVnhvQWVNc0tGSGkiO30=', 1737369119);
 
 -- --------------------------------------------------------
 
@@ -430,14 +437,17 @@ CREATE TABLE `wallets` (
 INSERT INTO `wallets` (`id`, `userid`, `serviceid`, `transactionid`, `amount`, `paymenttype`, `transactiontype`, `transactiondata`, `parentreferid`, `commissionamt`, `commissionby`, `status`, `created_at`, `updated_at`) VALUES
 (22, '45', '12', '12', 5000, 'credit', 'online', NULL, NULL, NULL, NULL, '0', '2024-11-21 09:54:05', '2024-12-23 06:33:16'),
 (31, '45', NULL, NULL, 5000, 'credit', 'online', NULL, NULL, NULL, NULL, '0', '2024-12-23 06:16:34', '2024-12-23 06:33:20'),
-(34, '45', '214', '46', 1492, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, '0', '2024-12-23 07:21:48', '2024-12-24 12:43:11'),
+(34, '45', '214', '46', 1492, 'debit', 'serviceorder', NULL, '2024refer45', '149.2', NULL, '0', '2024-12-23 07:21:48', '2025-01-20 07:32:49'),
 (35, '52', '215', '47', 2400, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2024-12-24 04:50:01', '2024-12-27 13:32:21'),
 (38, '45', NULL, NULL, 2000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_PbjNYbmjpcvNKd\",\"razorpay_order_id\":\"order_PbjNFQmBlE25Tk\",\"razorpay_signature\":\"9d02f1f0ca3e43acd6d73fb0b334e2687e1a693083622b8db517ccea62495d63\"}', NULL, NULL, NULL, '0', '2024-12-26 07:59:52', '2024-12-26 07:59:52'),
 (39, '45', NULL, NULL, 1000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_PbjRd7EOwXo7jb\",\"razorpay_order_id\":\"order_PbjRQv75msetAC\",\"razorpay_signature\":\"6a0f9cbead201ca8a20cb77629e5f9aaf4469825f8eee62beb2e51d8ec49fe63\"}', NULL, NULL, NULL, '0', '2024-12-26 08:03:31', '2024-12-26 08:19:54'),
 (40, '45', NULL, NULL, 200, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbjy1R6T7IcIH6\",\"razorpay_order_id\":\"order_PbjxSZtCDNgqbD\",\"razorpay_signature\":\"8c75dc18b7c8cc59bd8bb386441f1f0d7a8960f0e339584d285fbd988756519e\"}', NULL, NULL, NULL, '0', '2024-12-26 08:34:11', '2024-12-26 08:34:11'),
 (41, '51', NULL, NULL, 10000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbn08dvKdiC89n\",\"razorpay_order_id\":\"order_Pbmzlcn6h0p2MK\",\"razorpay_signature\":\"54b03b7887b11ce1820b9879c4c236b018bdca9035ae22397d1fa9ed12a7194b\"}', NULL, NULL, NULL, '0', '2024-12-26 11:32:19', '2024-12-26 11:32:19'),
 (53, '51', '222', '56', 1000, 'debit', 'serviceorder', NULL, '2024refer45', '100', NULL, '0', '2024-12-28 10:02:17', '2024-12-28 10:35:25'),
-(58, '45', NULL, NULL, 100, 'credit', 'commission', NULL, NULL, NULL, '53', '0', '2024-12-28 10:35:25', '2024-12-28 10:35:25');
+(58, '45', NULL, NULL, 100, 'credit', 'commission', NULL, NULL, NULL, '53', '0', '2024-12-28 10:35:25', '2024-12-28 10:35:25'),
+(59, '52', NULL, '1234', 50, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'withdrawn', '2025-01-18 09:26:47', '2025-01-18 11:11:19'),
+(60, '52', NULL, NULL, 50, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'requested', '2025-01-18 09:27:39', '2025-01-18 09:46:21'),
+(61, '45', NULL, NULL, 149.2, 'credit', 'commission', NULL, NULL, NULL, '34', '0', '2025-01-20 07:32:49', '2025-01-20 07:32:49');
 
 --
 -- Indexes for dumped tables
@@ -626,7 +636,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wallets`
 --
 ALTER TABLE `wallets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

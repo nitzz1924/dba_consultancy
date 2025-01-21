@@ -106,7 +106,7 @@ class AdminViews extends Controller
             ->join('masters', 'masters.id', '=', 'purchase_services.serviceid')
             ->select('register_users.*', 'purchase_services.*', 'masters.iconimage as serviceimage')
             ->where('purchase_services.id', $id)->first();
-        //dd($orderdetails);
+        // dd($orderdetails);
         return view('AdminPanel.orderdetails', compact('orderdetails'));
     }
 
@@ -117,10 +117,9 @@ class AdminViews extends Controller
     }
     public function referedusers()
     {
-        $loggedinuser = Auth::user();
-        $myrefercode = $loggedinuser->refercode;
-        $list = RegisterUser::orderby('created_at', 'DESC')
-            ->where('parentreferid', '=', $myrefercode)->get();
+        // $loggedinuser = Auth::user();
+        // $myrefercode = $loggedinuser->refercode;
+        $list = RegisterUser::orderby('created_at', 'DESC')->get();
         // $array = [];
         // foreach ($list as $row) {
         //     $finaldata = RegisterUser::where('parentreferid', '=', $row->refercode)->get();
@@ -155,10 +154,11 @@ class AdminViews extends Controller
         $credithistory = Wallet::join('register_users', 'wallets.userid', 'register_users.id')
             ->select('register_users.username as customername', 'wallets.*')
             ->orderby('wallets.created_at', 'DESC')
-            ->where('wallets.paymenttype', 'credit')
+            // ->where('wallets.paymenttype', 'credit')
             ->where(function ($query) {
                 $query->where('wallets.transactiontype', 'commission')
-                    ->orWhere('wallets.transactiontype', 'online');
+                    ->orWhere('wallets.transactiontype', 'online')
+                    ->orWhere('wallets.transactiontype', 'withdraw');
             })
             ->get();
         return view('AdminPanel.wallethistory', compact('credithistory'));

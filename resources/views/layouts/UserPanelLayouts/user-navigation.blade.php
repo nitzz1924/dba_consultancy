@@ -45,13 +45,13 @@
                 <li class="nav-item {{ request()->routeIs('allservices') ? 'active' : '' }}">
                     <a class="nav-link menu-link" href="{{ route('allservices') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarDashboards">
-                        <i class=" ri-list-settings-line"></i>All Services</span>
+                        <i class=" ri-list-settings-line"></i>&nbsp;<span class="fs-5">All Services</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('refer') ? 'active' : '' }}">
                     <a class="nav-link menu-link" href="{{ route('refer') }}" role="button" aria-expanded="false"
                         aria-controls="sidebarDashboards">
-                        <i class=" ri-hand-heart-fill"></i>Refer A Friend</span>
+                        <i class=" ri-hand-heart-fill"></i>&nbsp;<span class="fs-5">Refer A Friend</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('orderpage') ? 'active' : '' }}">
@@ -66,12 +66,12 @@
                         <i class=" ri-team-fill"></i><span>All Refers</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item {{ request()->routeIs('customercommission') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('customercommission') ? 'active' : '' }}">
                     <a class="nav-link menu-link" href="{{ route('customercommission') }}" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="ri-coins-fill"></i><span>Customer Commission</span>
+                        <i class="ri-coins-fill"></i><span>Commission</span>
                     </a>
-                </li> --}}
+                </li>
 
             </ul>
         </div>

@@ -9,10 +9,10 @@
             <div class="balance text-white text-center">
                 <div class="d-flex flex-row justify-content-center align-items-center ">
                     <div class="col-md-3">
-                        <div class="card mb-1 rounded-4">
-                            <div class="card-body p-1">
-                                <img src="{{ asset('assets/images/Services/clipboard.png')}}" alt="icon"
-                                    class="img-fluid">
+                        <div class="bg-white py-2 px-2 mb-1 rounded-4">
+                            <div class=" p-1">
+                                <img src="{{ asset('assets/images/Services/clipboard.png')}}" alt="icon" width="50"
+                                    class="img-fluid" width="75">
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
         </div>
     </div>
     {{-- History --}}
-    <div class="row my-3">
+    <div class="row my-3 orders">
         <div class="d-flex justify-content-between align-content-center">
             <div class="sectionHeading">
                 Orders List
@@ -33,7 +33,7 @@
                 <a href="#" class="btn btn-outline-dark border-0 fs-6">See more</a>
             </div> --}}
         </div>
-        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+        <ul class="nav nav-tabs nav-pills  nav-fill" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
                     type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Unpaid</button>

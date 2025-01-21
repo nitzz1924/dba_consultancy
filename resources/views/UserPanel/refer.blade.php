@@ -54,7 +54,7 @@
                                     Copy Code
                                 </button>
                                 <button
-                                    onclick="shareOnWhatsapp('{{ Auth::guard('customer')->user()->id ?? 'Guest' }}')"
+                                    onclick="shareOnWhatsapp('{{ Auth::guard('customer')->user()->refercode ?? 'Guest' }}')"
                                     class="btn btn-success fs-4">
                                     <i class="bx bxl-whatsapp"></i> Share Code
                                 </button>
