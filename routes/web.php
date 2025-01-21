@@ -45,7 +45,7 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/referincomelevel', 'referincomelevel')->name('referincomelevel');
     Route::get('admin/referedusers', 'referedusers')->name('referedusers');
     Route::get('admin/getchildren/{refercode}', 'getchildren')->name('getchildren');
-    Route::post('admin/datefilterorders', 'datefilterorders')->name('datefilterorders');
+     
     Route::get('admin/wallethistory', 'wallethistory')->name('wallethistory');
     Route::post('admin/datefilterwallethistory', 'datefilterwallethistory')->name('datefilterwallethistory');
     Route::get('admin/allcommissionslist', 'allcommissionslist')->name('allcommissionslist');
