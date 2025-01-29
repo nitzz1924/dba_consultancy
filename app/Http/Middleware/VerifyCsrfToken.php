@@ -13,6 +13,7 @@ class VerifyCsrfToken
      */
     protected $except = [
         'webhook/whatsapp', // Add your webhook route here
+        '/phonepe-response'
     ];
 
     /**

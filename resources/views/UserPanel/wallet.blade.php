@@ -34,7 +34,8 @@
                     <i class='bx bx-rupee'></i>{{ number_format($walletamount, 2) }}
                 </div>
             </div>
-            <form id="walletform">
+            <form id="walletform" action="{{ route('phonepe.payment')}}" method="GET">
+            @csrf
                 <div class="text-white z-3 position-relative">
                     <input type="text" name="walletamount" id="walletamount" class="form-control rounded-4 " placeholder="Enter Amount" required>
                     <input type="hidden" name="transactiontype" id="transactiontype" value="online">
@@ -132,7 +133,7 @@
 <!-- RazorPay Checkout JS -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+{{-- <script>
     $(document).ready(function() {
         $(document).on('submit', '#walletform', function(w) {
             w.preventDefault();
@@ -211,5 +212,5 @@
         });
     });
 
-</script>
+</script> --}}
 @endsection

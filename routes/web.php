@@ -2,6 +2,7 @@
 #---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏---------------------------”
 use App\Http\Controllers\AdminStores;
 use App\Http\Controllers\AdminViews;
+use App\Http\Controllers\PhonePeController;
 use App\Http\Controllers\RazorPayController;
 use App\Http\Controllers\UserStores;
 use App\Http\Controllers\UserViews;
@@ -145,6 +146,8 @@ Route::controller(WebsiteViews::class)->group(function () {
 
 });
 
-// //Excel Routes
-// Route::get('/import-excel', [ExcelContactSheet::class, 'index'])->name('import.excel');
-// Route::post('/import-excel', [ExcelContactSheet::class, 'import']);
+//Phone Pe Routes
+Route::controller(PhonePeController::class)->group(function () {
+    Route::get('phonepe', 'phonepe')->name('phonepe.payment');
+    Route::any('phonepe-response', 'response')->name('response');
+});
