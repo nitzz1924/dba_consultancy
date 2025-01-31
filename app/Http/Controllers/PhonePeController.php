@@ -3,53 +3,139 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Ixudra\Curl\Facades\Curl;
-use Log;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Wallet;
 use Auth;
+use Log;
 class PhonePeController extends Controller
 {
     public function phonepe(Request $request)
     {
-        $loggedinUser = Auth::guard('customer')->user();
-        $transactionId = "MT" . time() . rand(1000, 9999);
-        $data = [
-            "merchantId" => env('PHONEPE_MERCHANT_ID'),
-            "merchantTransactionId" => $transactionId,
-            "merchantUserId" => "MUID{$loggedinUser->id}",
-            "amount" => $request->walletamount * 100,
-            "redirectUrl" => route('response'),
-            "redirectMode" => "REDIRECT",
-            "callbackUrl" => route('response'),
-            "mobileNumber" => $loggedinUser->mobilenumber,
-            "paymentInstrument" => [
-                "type" => "PAY_PAGE"
-            ],
-        ];
-        Log::info('PhonePe Request: ', $data);
-        $encode = base64_encode(json_encode($data));
-        $saltkey = env('PHONEPE_SALT_KEY');
-        $saltIndex = env('PHONEPE_SALT_INDEX');
+        $loggedinuser = Auth::guard('customer')->user();
+        $amount = $request->input('walletamount');
 
-        $string = $encode . '/pg/v1/pay' . $saltkey;
-        $sha256 = hash('sha256', $string);
+        if ($amount) {
 
-        $finalXHeader = $sha256 . '###' . $saltIndex;
+            $merchantId = env('PHONEPE_MERCHANT_ID');
+            $apiKey = env('PHONEPE_SALT_KEY');
+            $redirectUrl = route('response');
+            $order_id = uniqid();
+            $aftersuccessURL = route('payment.success');
 
+            $transaction_data = array(
+                'merchantId' => "$merchantId",
+                'merchantTransactionId' => "$order_id",
+                "merchantUserId" => $order_id,
+                'amount' => $amount * 100,
+                'redirectUrl' => "$aftersuccessURL",
+                'redirectMode' => "POST",
+                'callbackUrl' => "$redirectUrl",
+                "paymentInstrument" => array(
+                    "type" => "PAY_PAGE",
+                )
+            );
 
-        $response = Curl::to(env('API_URL'))
-            ->withHeader('Content-Type: application/json')
-            ->withHeader('X-VERIFY: ' . $finalXHeader)
-            ->withData(json_encode(['request' => $encode]))
-            ->post();
+            $encode = json_encode($transaction_data);
+            $payloadMain = base64_encode($encode);
+            $salt_index = 1; //key index 1
+            $payload = $payloadMain . "/pg/v1/pay" . $apiKey;
+            $sha256 = hash("sha256", $payload);
+            $final_x_header = $sha256 . '###' . $salt_index;
+            $request = json_encode(array('request' => $payloadMain));
 
-        $rawData = json_decode($response);
-        //    dd(  $rawData);
-        return redirect()->to($rawData->data->instrumentResponse->redirectInfo->url);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => env('API_URL'),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => $request,
+                CURLOPT_HTTPHEADER => [
+                    "Content-Type: application/json",
+                    "X-VERIFY: " . $final_x_header,
+                    "accept: application/json"
+                ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                $res = json_decode($response);
+
+                //dd('Data Inserted' . $walletdata);
+                // end database insert
+
+                if (isset($res->code) && ($res->code == 'PAYMENT_INITIATED')) {
+                    // Store information into database
+                    $data = [
+                        'amount' => $amount,
+                        'transaction_id' => $order_id,
+                        'status' => $res->code,
+                    ];
+
+                    $walletdata = Wallet::create([
+                        'userid' => $loggedinuser->id,
+                        'transactiontype' => 'online',
+                        'transactionid' => $order_id,
+                        'paymenttype' => 'credit',
+                        'amount' => $amount,
+                        'transactiondata' => json_encode($data),
+                        'status' => 0,
+                    ]);
+                    $payUrl = $res->data->instrumentResponse->redirectInfo->url;
+                    return redirect()->away($payUrl);
+                } else {
+                    //HANDLE YOUR ERROR MESSAGE HERE
+                    dd('ERROR : ');
+                }
+            }
+        }
     }
 
     public function response(Request $request)
     {
-        $input = $request->all();
-        dd($input);
+        // dd($request->all());
+        if ($request->code == 'PAYMENT_SUCCESS') {
+            $transactionId = $request->transactionId;
+            $merchantId = $request->merchantId;
+            $providerReferenceId = $request->providerReferenceId;
+            $merchantOrderId = $request->merchantOrderId;
+            $checksum = $request->checksum;
+            $amount = $request->amount;
+            $status = $request->code;
+
+            // Store information into database
+            $data = [
+                'providerReferenceId' => $providerReferenceId,
+                'checksum' => $checksum,
+                'amount' => $amount,
+                'transaction_id' => $transactionId,
+                'status' => $status,
+                'merchantOrderId' => $merchantOrderId,
+            ];
+
+            if ($merchantOrderId != '') {
+                $data['merchantOrderId'] = $merchantOrderId;
+            }
+
+            Wallet::where('transactionid', $transactionId)->update([
+                'transactiondata' => json_encode($data),
+            ]);
+
+            return response()->json(['status' => 'success', 'message' => 'Payment recorded'], 200);
+
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Payment failed'], 400);
+        }
+
     }
 }

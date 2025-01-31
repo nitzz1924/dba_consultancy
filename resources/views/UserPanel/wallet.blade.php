@@ -9,7 +9,7 @@
         <div class="col-10">
             <div class="d-flex justify-content-start align-items-center">
                 <div class="p-2 rounded-pill bg-danger">
-                    <i class='bx bx-money text-white' ></i>
+                    <i class='bx bx-money text-white'></i>
                 </div>
                 <div class="ms-1 fs-5">
                     Add Money to Wallet
@@ -34,8 +34,18 @@
                     <i class='bx bx-rupee'></i>{{ number_format($walletamount, 2) }}
                 </div>
             </div>
+            @if ($message = Session::get('success'))
+            <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
+                <strong>{{ $message }}</strong>
+            </div>
+            @endif
+            @if ($message = Session::get('error'))
+            <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
+                <strong>{{ $message }}</strong>
+            </div>
+            @endif
             <form id="walletform" action="{{ route('phonepe.payment')}}" method="GET">
-            @csrf
+                @csrf
                 <div class="text-white z-3 position-relative">
                     <input type="text" name="walletamount" id="walletamount" class="form-control rounded-4 " placeholder="Enter Amount" required>
                     <input type="hidden" name="transactiontype" id="transactiontype" value="online">
@@ -151,66 +161,66 @@
                 , data: {
                     walletamount: amount
                     , _token: "{{ csrf_token() }}"
-                }
-                , success: function(response) {
-                    console.log('Order created:', response);
-                    try {
-                        var options = {
-                            "key": "{{ env('RAZORPAY_KEY') }}"
-                            , "amount": response.amount
-                            , "currency": "INR"
-                            , "name": "DBA Consultancy"
-                            , "description": "Test Transaction"
-                            , 'handler': function(response) {
+}
+, success: function(response) {
+console.log('Order created:', response);
+try {
+var options = {
+"key": "{{ env('RAZORPAY_KEY') }}"
+, "amount": response.amount
+, "currency": "INR"
+, "name": "DBA Consultancy"
+, "description": "Test Transaction"
+, 'handler': function(response) {
 
-                                // Inserting Transaction data into wallet table
-                                var data = JSON.stringify(response);
-                                $.ajax({
-                                    url: "/insertwallet"
-                                    , type: "POST"
-                                    , data: {
-                                        transactiondata: data
-                                        , amount: amount
-                                        , transactiontype: transactiontype
-                                        , paymenttype: paymenttype
-                                        , _token: "{{ csrf_token() }}"
-                                    }
-                                    , success: function(response) {
-                                        if (response.msg == 'success') {
-                                            Swal.fire("Success", "Wallet Recharged successfully!", "success");
-                                        } else {
-                                            Swal.fire("Error", "Transaction Data Insertion failed", "error");
-                                        }
-                                    }
-                                , });
-                            }
-                            , "image": "{{asset('assets/images/razorpaylogo.png')}}"
-                            , "order_id": response.id
-                            , "prefill": {
-                                "name": "dummy name"
-                                , "email": "dummyu@example.com"
-                                , "contact": "9000090000"
-                            }
-                            , "notes": {
-                                "address": "Razorpay Corporate Office"
-                            }
-                            , "theme": {
-                                "color": "#3399cc"
-                            }
-                        };
-                        var rzp1 = new Razorpay(options);
-                        $('#rzp-button1').on('click', function(e) {
-                            rzp1.open();
-                            e.preventDefault();
-                        });
-                    } catch (error) {
-                        console.error('Error initializing Razorpay:', error);
-                        alert('Failed to initialize payment gateway. Please try again later.');
-                    }
-                }
-            });
-        });
-    });
+// Inserting Transaction data into wallet table
+var data = JSON.stringify(response);
+$.ajax({
+url: "/insertwallet"
+, type: "POST"
+, data: {
+transactiondata: data
+, amount: amount
+, transactiontype: transactiontype
+, paymenttype: paymenttype
+, _token: "{{ csrf_token() }}"
+}
+, success: function(response) {
+if (response.msg == 'success') {
+Swal.fire("Success", "Wallet Recharged successfully!", "success");
+} else {
+Swal.fire("Error", "Transaction Data Insertion failed", "error");
+}
+}
+, });
+}
+, "image": "{{asset('assets/images/razorpaylogo.png')}}"
+, "order_id": response.id
+, "prefill": {
+"name": "dummy name"
+, "email": "dummyu@example.com"
+, "contact": "9000090000"
+}
+, "notes": {
+"address": "Razorpay Corporate Office"
+}
+, "theme": {
+"color": "#3399cc"
+}
+};
+var rzp1 = new Razorpay(options);
+$('#rzp-button1').on('click', function(e) {
+rzp1.open();
+e.preventDefault();
+});
+} catch (error) {
+console.error('Error initializing Razorpay:', error);
+alert('Failed to initialize payment gateway. Please try again later.');
+}
+}
+});
+});
+});
 
 </script> --}}
 @endsection

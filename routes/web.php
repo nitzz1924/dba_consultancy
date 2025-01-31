@@ -149,5 +149,10 @@ Route::controller(WebsiteViews::class)->group(function () {
 //Phone Pe Routes
 Route::controller(PhonePeController::class)->group(function () {
     Route::get('phonepe', 'phonepe')->name('phonepe.payment');
-    Route::any('phonepe-response', 'response')->name('response');
+    Route::match(['get', 'post'], 'phonepe/response', 'response')->name('response');
 });
+
+//After Payment Success Route
+Route::get('/payment-success', function() {
+    return redirect()->route('wallet')->with('success', 'Payment Successful');
+})->name('payment.success');
