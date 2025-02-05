@@ -13,5 +13,6 @@ Route::controller(UserStores::class)->group(function() {
     Route::get('/getscheduledcam', 'getscheduledcam')->name('getscheduledcam');
 });
 
+
 Route::post('phonepe/response', [PhonePeController::class, 'response'])->name('response');
 

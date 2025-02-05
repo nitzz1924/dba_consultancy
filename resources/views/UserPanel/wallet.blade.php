@@ -34,16 +34,6 @@
                     <i class='bx bx-rupee'></i>{{ number_format($walletamount, 2) }}
                 </div>
             </div>
-            @if ($message = Session::get('success'))
-            <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
-            @if ($message = Session::get('error'))
-            <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
             <form id="walletform" action="{{ route('phonepe.payment')}}" method="GET">
                 @csrf
                 <div class="text-white z-3 position-relative">
@@ -123,16 +113,34 @@
                             @endif
                             <div class="">
                                 <div class="text-muted fs-6">
-                                    {{ $row->created_date }}
+                                    {{ $row->created_at->format('d/M/y') }}
                                 </div>
                             </div>
+                            <a href="#" data-bs-toggle="modal" data-transaction="{{json_encode($row)}}" data-bs-target="#myModal" accesskey="" class="text-muted fs-6 text-decoration-underline editbtnmodal">See Transaction details</a>
                         </div>
                     </div>
+                    @php
+                    $trasacdata = !empty($row->transactiondata) ? json_decode($row->transactiondata, true) : null;
+                    @endphp
                     <div>
                         <div class="fs-3 text-success fw-bold">
-                            <i class='bx bx-rupee'></i>{{ $row->amount }}<sub class="text-success fs-6">&nbsp;&nbsp;<span class="badge bg-success">Credit</span></sub>
+                            <i class='bx bx-rupee'></i>
+                            <span class="fs-5"> {{ $row->amount ?? 'N/A' }}</span>
+                            <sub class="text-success fs-6">
+                                &nbsp;&nbsp;
+                                @if($row->transactiontype == 'online')
+                                <span class="badge {{ ($trasacdata['status'] ?? '') != 'PAYMENT_INITIATED' ? 'bg-secondary' : 'bg-success' }}">
+                                    {{ ($trasacdata['status'] ?? '') != 'PAYMENT_INITIATED' ? 'Processing' : 'Credit' }}
+                                </span>
+                                @elseif($row->transactiontype == 'commission')
+                                <span class="badge bg-success">
+                                    Credit
+                                </span>
+                                @endif
+                            </sub>
                         </div>
                     </div>
+
                 </div>
                 @endif
                 @endforeach
@@ -140,9 +148,55 @@
         </div>
     </div>
 </div>
+<div id="myModal" class="modal zoomIn " tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-fullscreen-md-down  modal-dialog-centered">
+        <div class="modal-content shadow-sm rounded-5">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel fs-5 fw-bold text-black">Transaction Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body" id="modalbodyedit">
+
+            </div>
+        </div>
+    </div>
+</div>
 <!-- RazorPay Checkout JS -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+{{-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> --}}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $('.editbtnmodal').on('click', function() {
+        const trasacdata = $(this).data('transaction');
+        console.log(JSON.parse(trasacdata.transactiondata));
+        const details = JSON.parse(trasacdata.transactiondata);
+        $('#modalbodyedit').html(`
+                    <table class="table border-0 border-light">
+                    <tbody>
+                        <tr>
+                            <td>Amount Paid</td>
+                            <td class="text-end">
+                                <strong>Rs.<span id="amount-paid">${details.amount}</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Id</td>
+                            <td class="text-end">
+                                <strong id="transaction-id">${details.transaction_id}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Reference Id</td>
+                            <td class="text-end">
+                                <strong id="reference-id">${details.providerReferenceId}</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                `);
+    });
+
+</script>
 {{-- <script>
     $(document).ready(function() {
         $(document).on('submit', '#walletform', function(w) {

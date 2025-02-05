@@ -11,7 +11,7 @@ class VerifyCsrfToken
     /**
      * @var array
      */
-    protected $except = [
+     protected $except = [
         'webhook/whatsapp', // Add your webhook route here
         'api/phonepe/response'
     ];
