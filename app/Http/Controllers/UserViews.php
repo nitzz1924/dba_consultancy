@@ -19,6 +19,8 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Session;
 use Auth;
+use Cache;
+use Log;
 use Carbon\Carbon;
 
 class UserViews extends Controller
@@ -67,7 +69,9 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             $debitTotal = 0;
             $creditTotal = 0;
-            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)
+                ->where('status', 'PAYMENT_SUCCESS')
+                ->where('paymenttype', 'credit')->sum('amount');
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
 
@@ -107,8 +111,6 @@ class UserViews extends Controller
             return redirect()->route('userloginpage');
         }
     }
-
-
 
     public function servicedetail($id)
     {
@@ -292,20 +294,34 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
 
             $commissions = Wallet::join('register_users', 'register_users.id', 'wallets.userid')
-            ->join('purchase_services', 'purchase_services.id', 'wallets.transactionid')
-            ->select('register_users.username as customername', 'wallets.*', 'purchase_services.servicename as servicename')
-            ->where('wallets.parentreferid', $loggedinuser->refercode)
-            ->where('wallets.transactiontype', 'serviceorder')
-            ->get();
+                ->join('purchase_services', 'purchase_services.id', 'wallets.transactionid')
+                ->select('register_users.username as customername', 'wallets.*', 'purchase_services.servicename as servicename')
+                ->where('wallets.parentreferid', $loggedinuser->refercode)
+                ->where('wallets.transactiontype', 'serviceorder')
+                ->get();
 
             foreach ($commissions as $commission) {
-            $commission->commissionpercent = ($commission->commissionamt / $commission->amount) * 100;
+                $commission->commissionpercent = ($commission->commissionamt / $commission->amount) * 100;
             }
-            
+
             // dd($commissions);
             return view('UserPanel.customercommission', compact('commissions'));
         } else {
             return view('auth.UserPanel.login');
         }
+    }
+
+    public function paymentStatus()
+    {
+        $paymentData = Cache::get('payment_status');
+
+        if (!$paymentData) {
+            // Handle case where cache has expired or doesn't exist
+            return redirect()->route('paymentStatus'); // or show an error
+        }
+
+        Log::info("Cached Data on Payment Status Page", $paymentData);
+
+        return view('UserPanel.paymentStatus', compact('paymentData'));
     }
 }

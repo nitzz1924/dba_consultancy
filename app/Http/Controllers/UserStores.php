@@ -59,18 +59,41 @@ class UserStores extends Controller
                 'email' => $rq->email,
                 'otp' => $otp,
                 'parentreferid' => $rq->parentreferid,
-            ]);
-
+            ]); 
             //This is current user's referid
             $data->update([
                 'refercode' => Carbon::now()->year . 'dba' . $data->id,
             ]);
+            // $this->SendOTP($rq->mobilenumber,$otp);
             return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp]]);
         } catch (Exception $e) {
             return response()->json(['msg' => 'failure']);
         }
     }
+    public function SendOTP($mobilenumber,$otpnumber)
+    {
+       
+        $name = "DBA CONSULTANCY";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://sms.jaipursmshub.in/api_v2/message/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('sender_id' => 'PTPSMS', 'dlt_template_id' => '1207168605001414924', 'message' => 'Hi Your User OTP is:' .$otpnumber. 'Thank you ! ' .$name. ' PTPSMS', 'mobile_no' => $mobilenumber),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . env('SMS_KEY')
+            ),
+        ));
 
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+    }
     public function verifyotp(Request $request)
     {
         try {
@@ -94,6 +117,7 @@ class UserStores extends Controller
             $data->update([
                 'otp' => $otp,
             ]);
+            // $this->SendOTP($request->mobilenumber,$otp);
             return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp, 'mobilenumber' => $credentials]]);
         } else {
             return redirect()->route('userloginpage')->with('error', 'Invalid credentials');
@@ -103,10 +127,10 @@ class UserStores extends Controller
     public function LoginOtpVerify(Request $request)
     {
         try {
-            $user = RegisterUser::find($request->registerid);
-            if ($user && $user->otp == implode('', array_slice($request->all(), 1, 6))) {
+            $userdata = RegisterUser::where('id', $request->registerid)->first();
+            if ($userdata && $userdata->otp == implode('', array_slice($request->all(), 1, 6))) {
                 // Log in the user with Auth guard for customer
-                Auth::guard('customer')->login($user);
+                Auth::guard('customer')->login($userdata);
                 // if (Auth::guard('customer')->check()) {
                 //     dd("I am logged in");
                 // }
@@ -338,56 +362,56 @@ class UserStores extends Controller
 
 
     public function updateprofile(Request $request)
-{
-    $loggedinuser = Auth::guard('customer')->user();
+    {
+        $loggedinuser = Auth::guard('customer')->user();
 
-    // Initialize the filename as null
-    $filename = null;
+        // Initialize the filename as null
+        $filename = null;
 
-    // Handle the uploaded profile image
-    if ($request->hasFile('profileimage')) {
-        $file = $request->file('profileimage');
+        // Handle the uploaded profile image
+        if ($request->hasFile('profileimage')) {
+            $file = $request->file('profileimage');
 
-        // Validate the uploaded file
-        $request->validate([
-            'profileimage' => 'file|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
+            // Validate the uploaded file
+            $request->validate([
+                'profileimage' => 'file|mimes:jpeg,png,jpg,webp|max:2048',
+            ]);
 
-        // Generate a unique filename
-        $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+            // Generate a unique filename
+            $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
 
-        // Move the file to the desired directory
-        $file->move(public_path('assets/images/userprofile'), $filename);
-    }
+            // Move the file to the desired directory
+            $file->move(public_path('assets/images/userprofile'), $filename);
+        }
 
-    try {
-        // Find the logged-in user's record
-        $user = RegisterUser::find($loggedinuser->id);
+        try {
+            // Find the logged-in user's record
+            $user = RegisterUser::find($loggedinuser->id);
 
-        // Prepare the updated data
-        $updatedData = [];
+            // Prepare the updated data
+            $updatedData = [];
 
-        foreach (['username', 'email', 'mobilenumber', 'permaddress', 'city', 'state', 'pancard', 'aadharcard', 'gstnum'] as $field) {
-            // Update fields only if new data is provided and different from the current value
-            if ($request->has($field) && !is_null($request->$field) && $request->$field != $user->$field) {
-                $updatedData[$field] = $request->$field;
+            foreach (['username', 'email', 'mobilenumber', 'permaddress', 'city', 'state', 'pancard', 'aadharcard', 'gstnum'] as $field) {
+                // Update fields only if new data is provided and different from the current value
+                if ($request->has($field) && !is_null($request->$field) && $request->$field != $user->$field) {
+                    $updatedData[$field] = $request->$field;
+                }
             }
-        }
 
-        // Add the profile image to the updated data if it's uploaded
-        if ($filename) {
-            $updatedData['profileimage'] = $filename;
-        }
+            // Add the profile image to the updated data if it's uploaded
+            if ($filename) {
+                $updatedData['profileimage'] = $filename;
+            }
 
-        // Update the user only if there are changes
-        if (!empty($updatedData)) {
-            $user->update($updatedData);
-        }
+            // Update the user only if there are changes
+            if (!empty($updatedData)) {
+                $user->update($updatedData);
+            }
 
-        return redirect()->route('userprofile')->with('success', 'Profile Updated !!!');
-    } catch (Exception $e) {
-        return redirect()->route('userprofile')->with('error', $e->getMessage());
+            return redirect()->route('userprofile')->with('success', 'Profile Updated !!!');
+        } catch (Exception $e) {
+            return redirect()->route('userprofile')->with('error', $e->getMessage());
+        }
     }
-}
 
 }

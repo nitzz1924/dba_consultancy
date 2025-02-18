@@ -348,7 +348,7 @@ class AdminStores extends Controller
                                 'paymenttype' => 'credit',
                                 'commissionby' => $mainwalletid,
                                 'transactiontype' => 'commission',
-                                'status' => 0,
+                                'status' => 'PAYMENT_SUCCESS',
                             ]);
                         } else {
                             $data = Wallet::where('transactionid', $req->purchaseid)->update([
@@ -364,7 +364,7 @@ class AdminStores extends Controller
                                 'commissionby' => $mainwalletid,
                                 'paymenttype' => 'credit',
                                 'transactiontype' => 'commission',
-                                'status' => 0,
+                                'status' => 'PAYMENT_SUCCESS',
                             ]);
                             if ($data) {
                                 Log::info('Commission Data:', $data->toArray());

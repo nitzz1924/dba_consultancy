@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Wallet;
 use Auth;
 use Log;
+use Cache;
 class PhonePeController extends Controller
 {
     public function phonepe(Request $request)
@@ -20,7 +21,7 @@ class PhonePeController extends Controller
             $apiKey = env('PHONEPE_SALT_KEY');
             $redirectUrl = route('response');
             $order_id = uniqid();
-            $aftersuccessURL = route('payment.success');
+            $aftersuccessURL = route('paymentStatus');
 
             $transaction_data = array(
                 'merchantId' => "$merchantId",
@@ -28,7 +29,7 @@ class PhonePeController extends Controller
                 "merchantUserId" => $order_id,
                 'amount' => $amount * 100,
                 'redirectUrl' => "$aftersuccessURL",
-                'redirectMode' => "POST",
+                'redirectMode' => "GET",
                 'callbackUrl' => "$redirectUrl",
                 "paymentInstrument" => array(
                     "type" => "PAY_PAGE",
@@ -103,17 +104,47 @@ class PhonePeController extends Controller
 
     public function response(Request $request)
     {
-        // dd($request->all());
-        if ($request->code == 'PAYMENT_SUCCESS') {
-            $transactionId = $request->transactionId;
-            $merchantId = $request->merchantId;
-            $providerReferenceId = $request->providerReferenceId;
-            $merchantOrderId = $request->merchantOrderId;
-            $checksum = $request->checksum;
-            $amount = $request->amount;
-            $status = $request->code;
+        try {
+            // Decode JSON request body
+            $responseArray = json_decode($request->getContent(), true);
 
-            // Store information into database
+            if (!isset($responseArray['response'])) {
+                Log::error("Missing 'response' field.");
+                return response()->json(['error' => 'Missing response field'], 400);
+            }
+
+            // Decode base64 response
+            $decodedJson = base64_decode($responseArray['response']);
+
+            if (!$decodedJson) {
+                Log::error("Base64 decoding failed.");
+                return response()->json(['error' => 'Failed to decode base64 response'], 400);
+            }
+
+            // Convert JSON string to array
+            $decodedResponse = json_decode($decodedJson, true);
+
+            if (!$decodedResponse) {
+                Log::error("JSON decoding failed.", ['decodedJson' => $decodedJson]);
+                return response()->json(['error' => 'Invalid JSON format'], 400);
+            }
+
+
+            // Extract necessary values
+            $status = $decodedResponse['code'] ?? 'UNKNOWN_STATUS';
+            $transactionId = $decodedResponse['data']['transactionId'] ?? null;
+            $merchantOrderId = $decodedResponse['data']['merchantTransactionId'] ?? null;
+            $amount = $decodedResponse['data']['amount'] ?? 0;
+            $providerReferenceId = $decodedResponse['data']['merchantId'] ?? null;
+            $checksum = null;
+
+
+            // If values are null, log an error
+            if (!$transactionId || !$merchantOrderId || !$status) {
+                Log::error("Missing transaction data", compact('transactionId', 'merchantOrderId', 'status'));
+            }
+
+            // Prepare data for database
             $data = [
                 'providerReferenceId' => $providerReferenceId,
                 'checksum' => $checksum,
@@ -123,19 +154,36 @@ class PhonePeController extends Controller
                 'merchantOrderId' => $merchantOrderId,
             ];
 
-            if ($merchantOrderId != '') {
-                $data['merchantOrderId'] = $merchantOrderId;
-            }
+            // Map PhonePe status to wallet status
+            $statusMapping = [
+                'PAYMENT_SUCCESS' => 'PAYMENT_SUCCESS',
+                'PAYMENT_CANCELLED' => 'PAYMENT_CANCELLED',
+                'PAYMENT_FAILED' => 'PAYMENT_FAILED',
+                'PAYMENT_ERROR' => 'PAYMENT_ERROR',
+            ];
+            $walletStatus = $statusMapping[$status] ?? 'failed';
 
-            Wallet::where('transactionid', $transactionId)->update([
+            // Update wallet transaction
+            Wallet::where('transactionid', $merchantOrderId)->update([
                 'transactiondata' => json_encode($data),
+                'status' => $walletStatus,
             ]);
 
-            return response()->json(['status' => 'success', 'message' => 'Payment recorded'], 200);
+            Cache::forget('payment_status');
+            Cache::put('payment_status', [
+                'status' => $status,
+                'transaction_id' => $transactionId,
+                'merchantOrderId' => $merchantOrderId
+            ], 15); // Cache for 60 minutes
 
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Payment failed'], 400);
+
+            return redirect()->route('paymentStatus');
+
+
+        } catch (\Exception $e) {
+            Log::error("Exception in response method", ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Internal Server Error'], 500);
         }
-
     }
+
 }

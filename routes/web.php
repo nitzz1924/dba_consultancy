@@ -1,4 +1,3 @@
-ls
 <?php
 #---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏---------------------------”
 use App\Http\Controllers\AdminStores;
@@ -107,6 +106,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('allrefers', 'allrefers')->name('allrefers');
     Route::get('refer', 'refer')->name('refer');
     Route::get('customercommission', 'customercommission')->name('customercommission');
+    Route::get('user/paymentStatus', 'paymentStatus')->name('paymentStatus');
 
 });
 
