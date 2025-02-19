@@ -27,9 +27,19 @@
                                         <span class="color--theme">WITH YOU</span>
                                     </strong>
                                 </h1>
-                                <a href="{{ route('contact') }}" class="cr-btn">
-                                    <span>Contact Now</span>
-                                </a>
+                                <div class="d-flex">
+                                    <div>
+                                        <a href="{{ route('contact') }}" class="cr-btn">
+                                            <span>Contact Now</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="{{ asset('/assets/websiteAssets/DBA-Consultancy.apk') }}" download>
+                                            <img src="{{ asset('/assets/websiteAssets/images/Playstore.webp') }}"
+                                                alt="Playstore" class=" mt-4 ms-3" style="width: 145px">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,9 +66,19 @@
                                         <span class="color--theme">Advisors</span>
                                     </strong>
                                 </h1>
-                                <a href="{{ route('contact') }}" class="cr-btn">
-                                    <span>Contact Now</span>
-                                </a>
+                                <div class="d-flex">
+                                    <div>
+                                        <a href="{{ route('contact') }}" class="cr-btn">
+                                            <span>Contact Now</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="{{ asset('/assets/websiteAssets/DBA-Consultancy.apk') }}" download>
+                                            <img src="{{ asset('/assets/websiteAssets/images/Playstore.webp') }}"
+                                                alt="Playstore" class=" mt-4 ms-3" style="width: 145px">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,9 +105,19 @@
                                         <span class="color--theme">Advisors</span>
                                     </strong>
                                 </h1>
-                                <a href="{{ route('contact') }}" class="cr-btn">
-                                    <span>Contact Now</span>
-                                </a>
+                                <div class="d-flex">
+                                    <div>
+                                        <a href="{{ route('contact') }}" class="cr-btn">
+                                            <span>Contact Now</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href="{{ asset('/assets/websiteAssets/DBA-Consultancy.apk') }}" download>
+                                            <img src="{{ asset('/assets/websiteAssets/images/Playstore.webp') }}"
+                                                alt="Playstore" class="mt-4 ms-3" style="width: 145px">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -108,7 +108,7 @@
                     jQuery('#loginformid').hide();
                     jQuery('#signinotp').show();
                     jQuery('#registerid').val(data.data.id);
-                    /*$('#otpinput').text("OTP is : " + data.data.otp);*/
+                    $('#otpinput').text("OTP is : " + data.data.otp);
                 }
             }
         })

@@ -139,6 +139,12 @@
                                         <img src="{{ asset('assets/images/dbalogo.png') }}" alt="footer logo"
                                             width="150px">
                                     </a>
+                                    <div>
+                                        <a href="{{ asset('/assets/websiteAssets/DBA-Consultancy.apk') }}" download>
+                                            <img src="{{ asset('/assets/websiteAssets/images/Playstore.webp') }}"
+                                                alt="Playstore" class="w-75 mt-4 ms-3">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </section>
