@@ -52,7 +52,8 @@ class UserViews extends Controller
                 ->select('pricing_details.price as price', 'masters.*')->where('type', '=', 'Consulting')->get();
             $debitTotal = 0;
             $creditTotal = 0;
-            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')
+            ->where('status', 'PAYMENT_SUCCESS')->sum('amount');
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
 
@@ -69,11 +70,17 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             $debitTotal = 0;
             $creditTotal = 0;
+
+
             $creditTotal = Wallet::where('userid', $loggedinuser->id)
                 ->where('status', 'PAYMENT_SUCCESS')
                 ->where('paymenttype', 'credit')->sum('amount');
-            $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
-            $walletamount = ($creditTotal - $debitTotal);
+                
+                $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
+                
+                
+                $walletamount = ($creditTotal - $debitTotal);
+                // dd(  $walletamount);
 
             $debithistory = Wallet::join('purchase_services', 'purchase_services.id', '=', 'wallets.transactionid')
                 ->select('wallets.*', 'purchase_services.servicename as servicename')

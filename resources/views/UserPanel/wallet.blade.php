@@ -128,9 +128,13 @@
                             <span class="fs-5"> {{ $row->amount ?? 'N/A' }}</span>
                             <sub class="text-success fs-6">
                                 &nbsp;&nbsp;
-                                @if($row->transactiontype == 'online')
-                                <span class="badge {{ ($trasacdata['status'] ?? '') != 'PAYMENT_INITIATED' ? 'bg-secondary' : 'bg-success' }}">
-                                    {{ ($trasacdata['status'] ?? '') != 'PAYMENT_INITIATED' ? 'Processing' : 'Credit' }}
+                                @if($row->transactiontype == 'Wallet Recharged')
+                                <span class="badge {{ ($trasacdata['status'] ?? '') == 'PAYMENT_ERROR' ? 'bg-danger' : 'bg-success' }}">
+                                    @if(($trasacdata['status'] ?? '') == 'PAYMENT_ERROR')
+                                    Failed
+                                    @else
+                                    {{ ($trasacdata['status'] ?? '') != 'PAYMENT_SUCCESS' ? 'Processing' : 'Credit' }}
+                                    @endif
                                 </span>
                                 @elseif($row->transactiontype == 'commission')
                                 <span class="badge bg-success">
@@ -170,13 +174,14 @@
         const trasacdata = $(this).data('transaction');
         console.log(JSON.parse(trasacdata.transactiondata));
         const details = JSON.parse(trasacdata.transactiondata);
+        const amount = details.amount.toString().slice(0, -2);
         $('#modalbodyedit').html(`
                     <table class="table border-0 border-light">
                     <tbody>
                         <tr>
                             <td>Amount Paid</td>
                             <td class="text-end">
-                                <strong>Rs.<span id="amount-paid">${details.amount}</span></strong>
+                                <strong>Rs.<span id="amount-paid">${amount}</span></strong>
                             </td>
                         </tr>
                         <tr>

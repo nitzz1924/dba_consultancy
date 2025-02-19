@@ -46,12 +46,11 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/referincomelevel', 'referincomelevel')->name('referincomelevel');
     Route::get('admin/referedusers', 'referedusers')->name('referedusers');
     Route::get('admin/getchildren/{refercode}', 'getchildren')->name('getchildren');
-
     Route::get('admin/wallethistory', 'wallethistory')->name('wallethistory');
     Route::post('admin/datefilterwallethistory', 'datefilterwallethistory')->name('datefilterwallethistory');
     Route::get('admin/allcommissionslist', 'allcommissionslist')->name('allcommissionslist');
     Route::post('admin/datefiltercommissions', 'datefiltercommissions')->name('datefiltercommissions');
-
+    Route::get('admin/cancelledtransactions', 'cancelledtransactions')->name('cancelledtransactions');
 
 });
 

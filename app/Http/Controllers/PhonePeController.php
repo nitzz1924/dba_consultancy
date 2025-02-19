@@ -85,7 +85,7 @@ class PhonePeController extends Controller
 
                     $walletdata = Wallet::create([
                         'userid' => $loggedinuser->id,
-                        'transactiontype' => 'online',
+                        'transactiontype' => 'Wallet Recharged',
                         'transactionid' => $order_id,
                         'paymenttype' => 'credit',
                         'amount' => $amount,

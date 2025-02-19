@@ -210,4 +210,13 @@ class AdminViews extends Controller
             ->get();
         return response()->json($commissions);
     }
+
+    public function cancelledtransactions(){
+        $cancelledorders = Wallet::join('register_users', 'wallets.userid', '=', 'register_users.id')
+        ->select('register_users.username as customername', 'wallets.*')
+        ->where('wallets.status', 'PAYMENT_ERROR')
+        ->orderBy('created_at', 'Desc')
+        ->get();
+        return view('AdminPanel.cancelledtransactions', compact('cancelledorders'));
+    }
 }

@@ -93,6 +93,11 @@
                                     Customer Wallet History
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('cancelledtransactions') }}">
+                                   Cancelled Transactions
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

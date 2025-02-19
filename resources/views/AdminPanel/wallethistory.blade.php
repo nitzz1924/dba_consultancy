@@ -1,3 +1,4 @@
+
 {{-- ---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏--------------------------- --}}
 <x-app-layout>
     @section('title', 'Wallet History')
@@ -9,6 +10,7 @@
         table.dataTable td.dt-type-date {
             text-align: left !important;
         }
+
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -31,8 +33,7 @@
                         <div class="listjs-table col-md-12" id="customerList">
                             <form>
                                 <div class="row g-4 mb-3">
-                                    <div
-                                        class="col-sm-auto d-flex justify-content-sm-start gap-2 align-items-end flex-wrap">
+                                    <div class="col-sm-auto d-flex justify-content-sm-start gap-2 align-items-end flex-wrap">
                                         <div>
                                             <label for="exampleInputdate" class="form-label">From</label>
                                             <input type="date" name="datefrom" class="form-control" id="datefrom">
@@ -42,8 +43,7 @@
                                             <input type="date" name="dateto" class="form-control" id="dateto">
                                         </div>
                                         <div>
-                                            <button type="button" class="btn btn-success add-btn datebtn"><i
-                                                    class="ri-search-eye-line align-bottom me-1"></i>Search</button>
+                                            <button type="button" class="btn btn-success add-btn datebtn"><i class="ri-search-eye-line align-bottom me-1"></i>Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -58,8 +58,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered  hover dt-responsive nowrap"
-                                style="width: 100%;">
+                            <table id="example" class="table table-bordered  hover dt-responsive nowrap" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>SNo.</th>
@@ -74,51 +73,51 @@
                                 </thead>
                                 <tbody id="table-body">
                                     @foreach ($credithistory as $index => $data)
-                                        <tr>
-                                            <th>{{ $index + 1 }}</th>
-                                            <td>{{ $data->created_at->format('d M Y | h:i A') }}</td>
-                                            <td>{{ $data->customername }}</td>
-                                            <td>₹ {{ $data->amount }}/-</td>
-                                            <td>
-                                                @if ($data->paymenttype == 'debit')
-                                                    <span class="badge bg-danger">{{ ucfirst($data->paymenttype) }}</span>
-                                                @else
-                                                    <span class="badge bg-success">{{ ucfirst($data->paymenttype) }}</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->transactiontype == 'online')
-                                                    Wallet Recharged
-                                                @else
-                                                    {{ ucfirst($data->transactiontype) }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->status != '0')
-                                                    {{ $data->status }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($data->status == 'requested')
-                                                    <button class="btn btn-danger fw-bold btn-sm rounded-pill " onclick="approvedwithdraw('{{ $data->id }}')">
-                                                        Complete request
-                                                    </button>
-                                                @elseif ($data->status == 'withdrawn')
-                                                    <div class="  fs-6">
-                                                        Transaction No: {{ $data->transactionid }}
-                                                    </div>
-                                                @endif
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <th>{{ $index + 1 }}</th>
+                                        <td>{{ $data->created_at->format('d M Y | h:i A') }}</td>
+                                        <td>{{ $data->customername }}</td>
+                                        <td>₹ {{ $data->amount }}/-</td>
+                                        <td>
+                                            @if ($data->paymenttype == 'debit')
+                                            <span class="badge bg-danger">{{ ucfirst($data->paymenttype) }}</span>
+                                            @else
+                                            <span class="badge bg-success">{{ ucfirst($data->paymenttype) }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($data->transactiontype == 'online')
+                                            Wallet Recharged
+                                            @else
+                                            {{ ucfirst($data->transactiontype) }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($data->status != '0')
+                                            {{ ucfirst($data->status) }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($data->status == 'requested')
+                                            <button class="btn btn-danger fw-bold btn-sm rounded-pill " onclick="approvedwithdraw('{{ $data->id }}')">
+                                                Complete request
+                                            </button>
+                                            @elseif ($data->status == 'withdrawn')
+                                            <div class="  fs-6">
+                                                Transaction No: {{ $data->transactionid }}
+                                            </div>
+                                            @endif
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                                 @if ($credithistory->isNotEmpty())
-                                    <tfoot class="table-light">
-                                        <tr>
-                                            <td colspan="3" class="fw-bold fs-5">Total</td>
-                                            <td class="fw-bold fs-5" id="total-sum"></td>
-                                        </tr>
-                                    </tfoot>
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <td colspan="3" class="fw-bold fs-5">Total</td>
+                                        <td class="fw-bold fs-5" id="total-sum"></td>
+                                    </tr>
+                                </tfoot>
                                 @endif
                             </table>
                         </div>
@@ -154,16 +153,16 @@
 
                 // AJAX request for date filtering
                 $.ajax({
-                    url: '/admin/datefilterwallethistory',
-                    method: 'POST',
-                    data: {
-                        datefrom: datefrom,
-                        dateto: dateto
-                    },
-                    headers: {
+                    url: '/admin/datefilterwallethistory'
+                    , method: 'POST'
+                    , data: {
+                        datefrom: datefrom
+                        , dateto: dateto
+                    }
+                    , headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
+                    }
+                    , success: function(response) {
                         console.log("Filtered data:", response);
 
                         // Clear existing DataTable and rows
@@ -178,15 +177,15 @@
                                 const dateObj = new Date(row.created_at);
                                 const formattedDate = dateObj.toLocaleDateString(
                                     'en-GB', {
-                                        day: 'numeric',
-                                        month: 'short',
-                                        year: 'numeric'
+                                        day: 'numeric'
+                                        , month: 'short'
+                                        , year: 'numeric'
                                     });
                                 const formattedTime = dateObj.toLocaleTimeString(
                                     'en-US', {
-                                        hour: 'numeric',
-                                        minute: '2-digit',
-                                        hour12: true
+                                        hour: 'numeric'
+                                        , minute: '2-digit'
+                                        , hour12: true
                                     });
 
                                 const html = `
@@ -213,8 +212,8 @@
                             dataTableCustomer = $('#example').DataTable({
                                 layout: {
                                     topStart: {
-                                        buttons: ['copy', 'csv', 'excel', 'pdf',
-                                            'print'
+                                        buttons: ['copy', 'csv', 'excel', 'pdf'
+                                            , 'print'
                                         ]
                                     }
                                 }
@@ -242,58 +241,63 @@
             });
             $('#total-sum').text(`₹ ${totalSum}/-`);
         }
+
     </script>
 
     <script>
         function approvedwithdraw(id) {
-    Swal.fire({
-        title: "Are you sure?",
-        html: `
+            Swal.fire({
+                title: "Are you sure?"
+                , html: `
             <p>You want to complete the withdrawal request?</p>
             <input type="text" id="transactionNumber" class="swal2-input mx-auto" placeholder="Enter Transaction Number">
-        `,
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#4caf50",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, complete it!",
-        cancelButtonText: "Cancel",
-        preConfirm: () => {
-            const transactionNumber = Swal.getPopup().querySelector('#transactionNumber').value;
-            if (!transactionNumber) {
-                Swal.showValidationMessage(`Please enter a transaction number`);
-            }
-            return { transactionNumber: transactionNumber };
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            const transactionNumber = result.value.transactionNumber;
-
-            // Send the POST request using fetch
-            fetch(`/approvedwithdraw/${id}`, {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ transactionNumber: transactionNumber })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire("Success!", data.message, "success").then(() => {
-                            location.reload(); // Reload the page or redirect if needed
-                        });
-                    } else {
-                        Swal.fire("Error!", data.error || "Something went wrong.", "error");
+        `
+                , icon: "warning"
+                , showCancelButton: true
+                , confirmButtonColor: "#4caf50"
+                , cancelButtonColor: "#d33"
+                , confirmButtonText: "Yes, complete it!"
+                , cancelButtonText: "Cancel"
+                , preConfirm: () => {
+                    const transactionNumber = Swal.getPopup().querySelector('#transactionNumber').value;
+                    if (!transactionNumber) {
+                        Swal.showValidationMessage(`Please enter a transaction number`);
                     }
-                })
-                .catch(error => {
-                    Swal.fire("Error!", "Unable to process your request.", "error");
-                });
+                    return {
+                        transactionNumber: transactionNumber
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const transactionNumber = result.value.transactionNumber;
+
+                    // Send the POST request using fetch
+                    fetch(`/approvedwithdraw/${id}`, {
+                            method: "POST"
+                            , headers: {
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                                , "Content-Type": "application/json"
+                            }
+                            , body: JSON.stringify({
+                                transactionNumber: transactionNumber
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire("Success!", data.message, "success").then(() => {
+                                    location.reload(); // Reload the page or redirect if needed
+                                });
+                            } else {
+                                Swal.fire("Error!", data.error || "Something went wrong.", "error");
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire("Error!", "Unable to process your request.", "error");
+                        });
+                }
+            });
         }
-    });
-}
 
     </script>
 
