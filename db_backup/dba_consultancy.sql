@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2025 at 12:42 PM
+-- Generation Time: Feb 19, 2025 at 10:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,14 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1739940571),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1739940571;', 1739940571);
 
 -- --------------------------------------------------------
 
@@ -342,7 +350,7 @@ CREATE TABLE `register_users` (
 --
 
 INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`, `profileimage`, `permaddress`, `city`, `state`, `pancard`, `aadharcard`, `gstnum`) VALUES
-(45, '8209165518', 'niteshyuvmedia@gmail.com', '1', '2024-11-08 12:32:41', '2025-02-18 09:36:54', '841888', '2024refer45', NULL, 'nitzz', '1738243376_avatar-3.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
+(45, '8209165518', 'niteshyuvmedia@gmail.com', '1', '2024-11-08 12:32:41', '2025-02-19 06:28:50', '739160', '2024refer45', NULL, 'nitzz', '1738243376_avatar-3.jpg', NULL, NULL, NULL, NULL, NULL, NULL),
 (51, '5458965848', 'ans@gmail.com', '1', '2024-11-22 07:35:49', '2024-12-28 10:01:39', '219595', '2024dba51', '2024refer45', 'Anshul', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (52, '9429158300', 'anshulyuvmedia@gmail.com', '1', '2024-11-22 09:07:06', '2025-02-18 09:24:06', '116160', '2024dba52', '2024refer45', 'Anshul KM', '1737179886_pngegg.png', 'ajmer', 'ajmer', 'Rajasthan', '9876543214', '1234567895', '1239876546'),
 (53, '1234567890', 'ks@gmail.com', '1', '2024-11-22 09:07:06', '2025-02-18 09:34:25', '608519', '2024dba53', '2024dba51', 'Testing', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -369,7 +377,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('WP6sX6NbtcEVSJIJpYUTMugkjQl1li5OmNi1iAt2', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo0OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyODoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3dhbGxldCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJoYjFTYURYSjFUMThZcXFYYkNleGd0ZlNtTVF5ZjQ2OGlWRThXeFJFIjtzOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ1O30=', 1739871424);
+('62XYpLsFJcyzRqfLJwgiyAYfoXMkgfeI4AGesjAw', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoidVdjYXR5bnREVkFlSUwyT0taQzF4UFBoU1dQRFBrbkJFRnZkN0Z4RiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRsNi4wM1ViN3pNL2R3TEpYWGhEbjIuU2dzSk04MDR3NlFjajE4L3QxVWlWeG9BZU1zS0ZIaSI7czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0NTt9', 1739952642);
 
 -- --------------------------------------------------------
 
@@ -435,21 +443,21 @@ INSERT INTO `wallets` (`id`, `userid`, `serviceid`, `transactionid`, `amount`, `
 (38, '45', NULL, NULL, 2000, 'credit', 'online', NULL, NULL, NULL, NULL, '0', '2024-12-26 07:59:52', '2025-01-30 12:58:11'),
 (39, '45', NULL, NULL, 1000, 'credit', 'online', NULL, NULL, NULL, NULL, '0', '2024-12-26 08:03:31', '2025-01-30 12:58:13'),
 (40, '45', NULL, NULL, 200, 'credit', 'online', NULL, NULL, NULL, NULL, '0', '2024-12-26 08:34:11', '2025-01-30 12:58:16'),
-(41, '51', NULL, NULL, 10000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbn08dvKdiC89n\",\"razorpay_order_id\":\"order_Pbmzlcn6h0p2MK\",\"razorpay_signature\":\"54b03b7887b11ce1820b9879c4c236b018bdca9035ae22397d1fa9ed12a7194b\"}', NULL, NULL, NULL, '0', '2024-12-26 11:32:19', '2024-12-26 11:32:19'),
-(53, '51', '222', '56', 1000, 'debit', 'serviceorder', NULL, '2024refer45', '100', NULL, '0', '2024-12-28 10:02:17', '2024-12-28 10:35:25'),
-(58, '45', NULL, NULL, 100, 'credit', 'commission', NULL, NULL, NULL, '53', '0', '2024-12-28 10:35:25', '2025-01-30 12:58:18'),
+(41, '51', NULL, NULL, 10000, 'credit', 'online', '{\"razorpay_payment_id\":\"pay_Pbn08dvKdiC89n\",\"razorpay_order_id\":\"order_Pbmzlcn6h0p2MK\",\"razorpay_signature\":\"54b03b7887b11ce1820b9879c4c236b018bdca9035ae22397d1fa9ed12a7194b\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2024-12-26 11:32:19', '2025-02-19 06:29:55'),
+(53, '51', '222', '56', 1000, 'debit', 'serviceorder', NULL, '2024refer45', '100', NULL, 'PAYMENT_SUCCESS', '2024-12-28 10:02:17', '2025-02-19 06:29:51'),
+(58, '45', NULL, NULL, 100, 'credit', 'commission', NULL, NULL, NULL, '53', 'PAYMENT_SUCCESS', '2024-12-28 10:35:25', '2025-02-19 06:29:48'),
 (59, '52', NULL, '1234', 50, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'withdrawn', '2025-01-18 09:26:47', '2025-01-18 11:11:19'),
 (60, '52', NULL, NULL, 50, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'requested', '2025-01-18 09:27:39', '2025-01-18 09:46:21'),
-(61, '45', NULL, NULL, 149.2, 'credit', 'commission', NULL, NULL, NULL, '34', '0', '2025-01-20 07:32:49', '2025-01-30 12:58:21'),
-(62, '45', NULL, '679b7a007398b', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679b7a007398b\"}', NULL, NULL, NULL, '0', '2025-01-30 13:09:21', '2025-01-30 13:09:21'),
-(63, '45', NULL, '679b7a1399a7f', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679b7a1399a7f\"}', NULL, NULL, NULL, '0', '2025-01-30 13:09:40', '2025-01-30 13:09:40'),
-(64, '45', NULL, '679b7a9a8c314', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679b7a9a8c314\"}', NULL, NULL, NULL, '0', '2025-01-30 13:11:54', '2025-01-30 13:11:54'),
-(65, '45', NULL, '679b7aa183d9e', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679c62d63e90c\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, '0', '2025-01-30 13:12:01', '2025-01-31 08:16:52'),
-(66, '45', NULL, '67b2ed9548950', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b2ed9548950\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, '0', '2025-02-17 08:04:37', '2025-02-17 08:04:37'),
-(67, '45', NULL, '67b303031af1a', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b303031af1a\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, '0', '2025-02-17 09:36:03', '2025-02-17 09:36:03'),
-(68, '45', NULL, '67b303aaacfc4', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b303aaacfc4\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, '0', '2025-02-17 09:38:51', '2025-02-17 09:38:51'),
-(69, '45', NULL, '67b3073b645fc', 0, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b3073b645fc\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, 'processing', '2025-02-17 09:54:03', '2025-02-17 09:54:03'),
-(70, '45', NULL, '67b311976339c', 0, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b311976339c\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, 'processing', '2025-02-17 10:38:15', '2025-02-17 10:38:15');
+(61, '45', NULL, NULL, 149.2, 'credit', 'commission', NULL, NULL, NULL, '34', 'PAYMENT_SUCCESS', '2025-01-20 07:32:49', '2025-02-19 06:29:45'),
+(62, '45', NULL, '679b7a007398b', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679b7a007398b\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-01-30 13:09:21', '2025-02-19 06:29:33'),
+(63, '45', NULL, '679b7a1399a7f', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679b7a1399a7f\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-01-30 13:09:40', '2025-02-19 06:29:40'),
+(64, '45', NULL, '679b7a9a8c314', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679b7a9a8c314\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-01-30 13:11:54', '2025-02-19 06:29:42'),
+(65, '45', NULL, '679b7aa183d9e', 100, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"679c62d63e90c\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-01-30 13:12:01', '2025-02-19 06:29:31'),
+(66, '45', NULL, '67b2ed9548950', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b2ed9548950\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-02-17 08:04:37', '2025-02-19 06:29:28'),
+(67, '45', NULL, '67b303031af1a', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b303031af1a\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-02-17 09:36:03', '2025-02-19 06:29:26'),
+(68, '45', NULL, '67b303aaacfc4', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b303aaacfc4\",\"status\":\"PAYMENT_INITIATED\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-02-17 09:38:51', '2025-02-19 06:29:23'),
+(69, '45', NULL, '67b3073b645fc', 1, 'credit', 'online', '{\"amount\":\"1\",\"transaction_id\":\"67b3073b645fc\",\"status\":\"PAYMENT_ERROR\"}', NULL, NULL, NULL, 'PAYMENT_ERROR', '2025-02-17 09:54:03', '2025-02-19 07:04:18'),
+(70, '45', NULL, '67b311976339c', 1, 'credit', 'online', '{\"amount\":\"100\",\"transaction_id\":\"67b311976339c\",\"status\":\"PAYMENT_ERROR\"}', NULL, NULL, NULL, 'PAYMENT_ERROR', '2025-02-17 10:38:15', '2025-02-19 07:13:51');
 
 --
 -- Indexes for dumped tables

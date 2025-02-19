@@ -64,7 +64,7 @@ class UserStores extends Controller
             $data->update([
                 'refercode' => Carbon::now()->year . 'dba' . $data->id,
             ]);
-            // $this->SendOTP($rq->mobilenumber,$otp);
+            $this->SendOTP($rq->mobilenumber,$otp);
             return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp]]);
         } catch (Exception $e) {
             return response()->json(['msg' => 'failure']);
@@ -117,7 +117,7 @@ class UserStores extends Controller
             $data->update([
                 'otp' => $otp,
             ]);
-            // $this->SendOTP($request->mobilenumber,$otp);
+            $this->SendOTP($request->mobilenumber,$otp);
             return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp, 'mobilenumber' => $credentials]]);
         } else {
             return redirect()->route('userloginpage')->with('error', 'Invalid credentials');
