@@ -173,11 +173,11 @@
                             <div class="card card-height-100">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">
-                                       Customer Wallet History
+                                        Customer Wallet History
                                     </h4>
                                 </div>
 
-                               <div class="card-body">
+                                <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="example" class="table table-bordered  hover dt-responsive nowrap" style="width: 100%;">
                                             <thead>
@@ -185,8 +185,8 @@
                                                     <th>SNo.</th>
                                                     <th>Date</th>
                                                     <th>Customer Name</th>
-                                                    <th>Amount</th>
                                                     <th>Transaction Type</th>
+                                                    <th>Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="table-body">
@@ -195,14 +195,16 @@
                                                     <th>{{$index + 1}}</th>
                                                     <td>{{$data->created_at->format('d M Y | h:i A') }}</td>
                                                     <td>{{$data->customername}}</td>
-                                                    <td>₹ {{$data->amount}}/-</td>
                                                     <td>
-                                                        @if($data->transactiontype == 'online')
-                                                        Wallet Recharged
-                                                        @else
-                                                        {{ ucfirst($data->transactiontype)}}
+                                                        @if($data->transactiontype == 'Wallet Recharged')
+                                                            Wallet Recharged
+                                                        @elseif($data->transactiontype == 'serviceorder')
+                                                           Service Order
+                                                        @elseif($data->transactiontype == 'commission')
+                                                            Commission Received
                                                         @endif
                                                     </td>
+                                                    <td>₹ {{$data->amount}}/-</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -214,14 +216,14 @@
                     </div>
 
                     <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                 <div class="card-header align-items-center d-flex">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">
-                                       Recent Orders
+                                        Recent Orders
                                     </h4>
                                 </div>
-                                     <div class="card-body">
+                                <div class="card-body">
                                     <div class="table-responsive table-card">
                                         <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                             <thead class="text-muted table-light">
@@ -267,8 +269,8 @@
                                         </table>
                                     </div>
                                 </div>
-                                </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -283,27 +285,28 @@
             google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
-                 var holds = {{$ordershold}};
-                 var inprocess = {{$orderspending}};
-                 var completed = {{$orderscompleted}};
-                 var cancelled = {{$orderscompleted}};
+                var holds = {{$ordershold}};
+                var inprocess = {{ $orderspending }};
+                var completed = {{$orderscompleted}};
+                var cancelled = {{$orderscompleted}};
+                
                 var data = google.visualization.arrayToDataTable([
                     ['Task', 'Hours per Day']
-                    , ['On Hold',   holds]
+                    , ['On Hold', holds]
                     , ['In Process', inprocess]
-                    , ['Cancelled',cancelled]
+                    , ['Cancelled', cancelled]
                     , ['Completed', completed]
                 ]);
 
                 var options = {
-            pieHole: 0.4, // Donut chart style
-            colors: [
-                '#FFC107', // Yellow for "On Hold"
-                '#17A2B8', // Blue for "In Process"
-                '#DC3545', // Red for "Cancelled"
-                '#28A745'  // Green for "Completed"
-            ],
-        };
+                    pieHole: 0.4, // Donut chart style
+                    colors: [
+                        '#FFC107', // Yellow for "On Hold"
+                        '#17A2B8', // Blue for "In Process"
+                        '#DC3545', // Red for "Cancelled"
+                        '#28A745' // Green for "Completed"
+                    ]
+                , };
 
                 var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
                 chart.draw(data, options);

@@ -31,7 +31,7 @@
             <div class="balance text-white">
                 Current Balance
                 <div class="wallet-amount">
-                    <i class='bx bx-rupee'></i>{{ $walletamount }}
+                    <i class='bx bx-rupee'></i>{{ $walletamount }} /-
                 </div>
             </div>
             <form id="walletform" action="{{ route('phonepe.payment')}}" method="GET">

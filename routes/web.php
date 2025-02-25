@@ -51,6 +51,7 @@ Route::controller(AdminViews::class)->group(function () {
     Route::get('admin/allcommissionslist', 'allcommissionslist')->name('allcommissionslist');
     Route::post('admin/datefiltercommissions', 'datefiltercommissions')->name('datefiltercommissions');
     Route::get('admin/cancelledtransactions', 'cancelledtransactions')->name('cancelledtransactions');
+    Route::get('admin/profile', 'profile')->name('admin.profile');
 
 });
 
@@ -79,6 +80,7 @@ Route::controller(AdminStores::class)->group(function () {
     Route::get('/aprrovedwithdraw/{id}', 'aprrovedwithdraw')->name('aprrovedwithdraw');
     Route::post('/approvedwithdraw/{id}', 'approvedwithdraw')->name('approvedwithdraw');
     Route::post('admin/udpatereferincome', 'udpatereferincome')->name('udpatereferincome');
+    Route::post('admin/updateAdminProfile', 'updateAdminProfile')->name('updateAdminProfile');
 });
 
 

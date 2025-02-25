@@ -2,7 +2,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="/" class="logo logo-dark">
+        <a href="{{ route('admindashboard')}}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ asset('assets/images/dfavicon.png') }}" alt="" height="60" />
             </span>
@@ -11,7 +11,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="/" class="logo logo-light">
+        <a href="{{ route('admindashboard')}}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{ asset('assets/images/dfavicon.png') }}" alt="" height="40" />
             </span>
@@ -67,7 +67,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('pricingdetails') }}">
                         <img class="" src="{{ asset('assets/images/details.png') }}" alt=""
-                            height="20" />&nbsp;&nbsp;<span class="fs-5">Add Service Details</span>
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">Add Service</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -110,7 +110,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('referedusers') }}">
                         <img class="" src="{{ asset('assets/images/exchanging.png') }}" alt=""
-                            height="20" />&nbsp;&nbsp;<span class="fs-5">My Refered Users</span>
+                            height="20" />&nbsp;&nbsp;<span class="fs-5">Referred Users</span>
                     </a>
                 </li>
                 

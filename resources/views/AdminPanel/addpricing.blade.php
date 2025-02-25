@@ -3,6 +3,10 @@
 <x-app-layout>
     @section('title', 'Add Pricing Details')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+
+
     <style>
         table.dataTable th.dt-type-numeric,
         table.dataTable th.dt-type-date,
@@ -71,7 +75,7 @@
                                     <input class="form-control" placeholder="postal code" name="coverimage"
                                         type="file" value="" id="example-email-input">
                                 </div>
-                                <div class="col-lg-2 mt-3">
+                                <div class="col-lg-6  mt-3">
                                     <label class="form-label">Documets to be Uploaded</label>
                                     <select name="documents[]" class="select2 form-control select2-multiple mb-3"
                                         multiple="multiple" data-placeholder="Choose Documents.......">
@@ -186,7 +190,9 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <script>
         function confirmDelete(id, title) {
             Swal.fire({
@@ -227,25 +233,7 @@
             });
         });
 
-        //This function is for Modal
-        $(document).on('change', '#servicetypeidnew', function() {
-            var selectedtype = $(this).val();
-            console.log(selectedtype);
-            $.ajax({
-                url: "/filtertype/" + selectedtype,
-                type: "GET",
-                success: function(data) {
-                    console.log(data);
-                    var dropdown1 = $('#servicemainidnew');
-                    dropdown1.empty();
-                    dropdown1.append($('<option selected>Choose...</option>'));
-                    data.forEach(function(item) {
-                        dropdown1.append($('<option value="' + item.id + '">' + item.label +
-                            '</option>'));
-                    });
-                }
-            });
-        });
+        
 
 
         // DataTable Initialization
@@ -272,93 +260,136 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-    </script>
+    </script>  
+
     <script>
-        //Edit Functionality
-        var data = @json($masterdata);
-        var services = @json($services);
-        $('#table-body').on('click', '.editbtnmodal', function() {
-            const pricingdata = $(this).data('pricing');
-            console.log(pricingdata);
-            const imageSrc = pricingdata.coverimage ? '{{ asset('assets/images/Services/') }}/' + pricingdata.coverimage : '';
-            console.log(imageSrc);
-            const selectedDocuments = JSON.parse(pricingdata.documents || "[]");
-            console.log("Documents : " + selectedDocuments);
-            $('#modalbodyedit').empty();
+    $(document).ready(function() {
+            // Function for Modal Service Type Change
+            $(document).on('change', '#servicetypeidnew', function() {
+                var selectedtype = $(this).val();
+                console.log("Selected Type: ", selectedtype);
 
-            // Create documents options with selected values
-            const documentsOptions = data.map(value => `
-                    <option value="${value.label}" ${selectedDocuments.includes(value.label) ? 'selected' : ''}>${value.label}</option>
-                `).join('');
+                $.ajax({
+                    url: "/filtertype/" + selectedtype,
+                    type: "GET",
+                    success: function(data) {
+                        console.log("Service Data: ", data);
 
-            // //Services Dropdown
-            // const servicesdrop = services.map(value => `
-        //         <option value="${value.id}" ${value.label == pricingdata.servicename ? 'selected' : ''}>${value.label}</option>
-        //     `).join('');
+                        var dropdown1 = $('#servicemainidnew');
+                        dropdown1.empty();
+                        dropdown1.append('<option selected>Choose...</option>');
 
+                        data.forEach(function(item) {
+                            dropdown1.append(`<option value="${item.id}">${item.label}</option>`);
+                        });
+                    }
+                });
+            });
 
-            const modalbody = `
-                    <div class="mb-3 row">
-                    <div class="col-lg-6">
-                        <div class="">
-                                    <label for="labelid">Select Service Type</label>
-                                    <select name="servicetype" class="form-select" id="servicetypeidnew" required>
-                                        <option value="Services" ${pricingdata.servicetype == 'Services' ?'selected' : '' }>Services</option>
-                                        <option value="Consulting" ${pricingdata.servicetype == 'Consulting' ?'selected' : '' }>Consulting</option>
-                                    </select>
-                                </div>
-                            <div class="mt-3">
-                                <label for="labelid">Select Service</label>
-                                    <select name="serviceid" class="form-select" id="servicemainidnew" required>
-                                          <option value="">--select service--</option>
-                                         <!-- Options will be populated by AJAX call -->
-                                    </select>
-                            </div>
-                    <div class="mt-2 mb-2">
-                            <label for="labelid">Price</label>
-                            <input class="form-control" value="${pricingdata.price}" placeholder="Enter Price" name="price" type="text" id="labelid">
-                             <input type="hidden" name="pricingid" value="${pricingdata.id}" id="">
+            // Initialize Select2 inside modal properly
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#documentselect').select2({
+                    placeholder: "Select fruits...",
+                    allowClear: true,
+                    dropdownParent: $('#myModal')
+                });
+            });
+
+    var masterdata = @json($masterdata);
+    var services = @json($services);
+
+    $('#table-body').on('click', '.editbtnmodal', function() {
+        const pricingdata = $(this).data('pricing');
+        console.log("Pricing Data: ", pricingdata);
+
+        const imageSrc = pricingdata.coverimage ? '{{ asset('assets/images/Services/') }}/' + pricingdata.coverimage : '';
+        const selectedDocuments = Array.isArray(pricingdata.documents) 
+            ? pricingdata.documents 
+            : JSON.parse(pricingdata.documents || "[]");
+
+        console.log("Selected Documents: ", selectedDocuments);
+        
+        $('#modalbodyedit').empty();
+
+        const modalbody = `
+            <div class="mb-3 row">
+                <div class="col-lg-6">
+                    <label for="servicetypeidnew">Select Service Type</label>
+                    <select name="servicetype" class="form-select" id="servicetypeidnew" required>
+                        <option value="Services" ${pricingdata.servicetype == 'Services' ? 'selected' : '' }>Services</option>
+                        <option value="Consulting" ${pricingdata.servicetype == 'Consulting' ? 'selected' : '' }>Consulting</option>
+                    </select>
+                    <div class="mt-3">
+                        <label for="servicemainidnew">Select Service</label>
+                        <select name="serviceid" class="form-select" id="servicemainidnew" required>
+                            <option value="">--Select Service--</option>
+                            ${services.map(service => 
+                                `<option value="${service.id}" ${service.id == pricingdata.serviceid ? 'selected' : ''}>${service.label}</option>`
+                            ).join('')}
+                        </select>
                     </div>
-                    <div class="mt-2 mb-2">
-                         <label for="disprice">Discount Price</label>
-                        <input class="form-control" value="${pricingdata.disprice}" placeholder="Enter Discount Price" name="disprice" type="text" id="labelid">
+                     <div class="mt-2 mb-2">
+                        <label for="price">Price</label>
+                        <input class="form-control" value="${pricingdata.price}" placeholder="Enter Price" name="price" type="text">
+                        <input type="hidden" name="pricingid" value="${pricingdata.id}">
                     </div>
+                    
+                    <div class="mt-2 mb-2">
+                        <label for="disprice">Discount Price</label>
+                        <input class="form-control" value="${pricingdata.disprice}" placeholder="Enter Discount Price" name="disprice" type="text">
+                    </div>
+                    
                     <div class="mt-2 mb-2">
                         <label for="duration">Duration</label>
-                        <input class="form-control" value="${pricingdata.duration}" placeholder="Enter Duration" name="duration" type="text" id="valueid">
+                        <input class="form-control" value="${pricingdata.duration}" placeholder="Enter Duration" name="duration" type="text">
                     </div>
                     <div class="mt-2 mb-2">
                         <label class="form-label">Documents to be Uploaded</label>
                         <select name="documents[]" id="documentselect" class="select2 form-control select2-multiple mb-3" multiple="multiple" data-placeholder="Choose Documents...">
-                            ${documentsOptions}
+                            ${masterdata.map(doc => 
+                                `<option value="${doc.label}" ${selectedDocuments.includes(doc.label) ? 'selected' : ''}>${doc.label}</option>`
+                            ).join('')}
                         </select>
                     </div>
                     <div class="mt-2 mb-2">
                         <label for="iconimage">Upload Cover Image</label>
-                        <input class="form-control" onchange="readURL(this);" placeholder="enter value" name="coverimage" type="file" value="">
+                        <input class="form-control" onchange="readURL(this);" placeholder="Enter value" name="coverimage" type="file">
                     </div>
                 </div>
-                <div class="col-lg-6">
-                        <div class="img-pre">
-                            <img id="imagemain" class="img-fluid" src="${imageSrc}" alt="">
-                        </div>
+                 <div class="col-lg-6">
+                    <div class="img-pre">
+                        <img id="imagemain" class="img-fluid" src="${imageSrc}" alt="Cover Image">
                     </div>
+                </div>
             </div>
-            <div class="row">
+
+              <div class="row">
                 <div class="col-lg-12 mt-2">
-                    <label for="example-email-input" class="form-label">Details</label>
+                    <label class="form-label">Details</label>
                     <textarea rows="4" name="details" class="form-control resize-none" placeholder="Your Details...">${pricingdata.details}</textarea>
                 </div>
                 <div class="col-lg-12 mt-2">
-                    <label for="example-email-input" class="form-label">Note & Requirement</label>
+                    <label class="form-label">Note & Requirement</label>
                     <textarea rows="4" name="notereq" class="form-control resize-none" placeholder="Your Notes...">${pricingdata.notereq}</textarea>
                 </div>
             </div>
         `;
-            $('#modalbodyedit').append(modalbody);
-            setTimeout(function() {
-                $('#documentselect').select2();
-            }, 500);
+
+        $('#modalbodyedit').append(modalbody);
+
+        // Initialize Select2 again inside modal after appending content
+        $('#documentselect').select2({
+            placeholder: "Select fruits...",
+            allowClear: true,
+            dropdownParent: $('#myModal')
         });
-    </script>
+
+        // Update main dropdown when modal dropdown changes
+        $('#documentselect').on('change', function() {
+            var updatedFruits = $(this).val();
+            $('#fruitSelect').val(updatedFruits).trigger('change');
+        });
+    });
+});
+ </script>
 </x-app-layout>

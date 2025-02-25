@@ -39,7 +39,8 @@
     <link
         href="{{ asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/libs/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{asset('assets/libs/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" /> --}}
+
 </head>
 
 <body>
@@ -125,8 +126,13 @@
                             <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user"
-                                        src="{{asset('assets/images/defaultuser.png')}}" alt="Header Avatar" />
+                                    @if (Auth::user() && Auth::user()->profile_photo_path)
+                                        <img class="rounded-circle header-profile-user"
+                                            src="{{ asset('assets/images/Admin/' . Auth::user()->profile_photo_path) }}" alt="Header Avatar" />
+                                    @else
+                                        <img class="rounded-circle header-profile-user"
+                                            src="{{ asset('assets/images/defaultuser.png') }}" alt="Header Avatar" />
+                                    @endif
                                     <span class="text-start ms-xl-2">
                                         @if (Auth::user())
                                         <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
@@ -141,7 +147,7 @@
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="pages-profile.html"><i
+                                <a class="dropdown-item" href="{{ route('admin.profile') }}"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                                     <span class="align-middle">My Profile</span></a>
                                 <form method="POST" action="{{route('logoutuser')}}" x-data>
@@ -244,7 +250,7 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.13.2/dist/sweetalert2.all.min.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script> --}}
-    <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script> --}}
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.0/js/dataTables.buttons.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.dataTables.js"></script>

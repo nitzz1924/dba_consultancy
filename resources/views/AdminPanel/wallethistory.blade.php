@@ -86,15 +86,17 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($data->transactiontype == 'online')
-                                            Wallet Recharged
+                                            @if ($data->transactiontype == 'Wallet Recharged')
+                                                Wallet Recharged
                                             @else
-                                            {{ ucfirst($data->transactiontype) }}
+                                                {{ ucwords($data->transactiontype) }}
                                             @endif
                                         </td>
                                         <td>
                                             @if ($data->status != '0')
-                                            {{ ucfirst($data->status) }}
+                                                {{ ucfirst($data->status) }}
+                                            @else
+                                                N/A
                                             @endif
                                         </td>
                                         <td>

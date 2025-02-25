@@ -30,12 +30,6 @@ class UserStores extends Controller
                 'email' => 'required',
             ]);
 
-            // Check if the user already exists using the mobile number
-            $existingUser = RegisterUser::where('mobilenumber', $rq->mobilenumber)->first();
-            if ($existingUser) {
-                return back()->with('error', 'User already exists with this mobile number.');
-            }
-
             $user = RegisterUser::create([
                 'username' => $rq->username,
                 'mobilenumber' => $rq->mobilenumber,
@@ -57,6 +51,15 @@ class UserStores extends Controller
                 'mobilenumber' => 'required',
                 'email' => 'required',
             ]);
+
+            // Check if the user already exists using the mobile number
+            $existingUser = RegisterUser::where('mobilenumber', $rq->mobilenumber)->first();
+            if ($existingUser) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User already exists with this mobile number.',
+                ]);
+            }
 
             $data = RegisterUser::create([
                 'username' => $rq->username,
@@ -364,8 +367,6 @@ class UserStores extends Controller
             return redirect()->route('proceedtopay')->with('error', $e->getMessage());
         }
     }
-
-
     public function updateprofile(Request $request)
     {
         $loggedinuser = Auth::guard('customer')->user();

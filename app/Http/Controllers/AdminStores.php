@@ -7,6 +7,7 @@ use App\Models\PricingDetail;
 use App\Models\PurchaseService;
 use App\Models\ReferIncome;
 use App\Models\RegisterUser;
+use App\Models\User;
 use App\Models\FormAttribute;
 use Exception;
 use App\Models\SubMaster;
@@ -449,6 +450,33 @@ class AdminStores extends Controller
             return response()->json(['success' => true, 'message' => "Request Approved!"]);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+    public function updateAdminProfile(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $user = auth()->user();
+            $filename="";
+            if ($request->hasFile('dp')) {
+                $request->validate([
+                    'dp' => 'image|mimes:jpeg,png,jpg',
+                ]);
+                $file = $request->file('dp');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/images/Admin'), $filename);
+            }
+            $admin = User::where('id',$request->adminid)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phonenumber' => $request->phonenumber,
+                'companyname' => $request->companyname,
+                'profile_photo_path' => $filename == null ? $user->profile_photo_path : $filename,
+            ]);
+            return back()->with('success', 'Profile Updated..!!!!');
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }

@@ -8,6 +8,7 @@ use App\Models\PricingDetail;
 use App\Models\PurchaseService;
 use App\Models\ReferIncome;
 use App\Models\RegisterUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Wallet;
@@ -30,10 +31,11 @@ class AdminViews extends Controller
             $credithistory = Wallet::join('register_users', 'wallets.userid', 'register_users.id')
             ->select('register_users.username as customername', 'wallets.*')
             ->orderby('wallets.created_at', 'DESC')
-            ->where('wallets.paymenttype', 'credit')
             ->where(function ($query) {
                 $query->where('wallets.transactiontype', 'commission')
-                    ->orWhere('wallets.transactiontype', 'online');
+                    ->orWhere('wallets.transactiontype', 'Wallet Recharged')
+                    ->orWhere('wallets.transactiontype', 'withdraw')
+                    ->orWhere('wallets.transactiontype', 'serviceorder');
             })
             ->get();
             return view('AdminPanel.dashboard', compact('allorderscnt', 'registerusercnt', 'ordershold', 'orderscompleted', 'orderspending','orders','orderscancelled','credithistory'));
@@ -157,8 +159,9 @@ class AdminViews extends Controller
             // ->where('wallets.paymenttype', 'credit')
             ->where(function ($query) {
                 $query->where('wallets.transactiontype', 'commission')
-                    ->orWhere('wallets.transactiontype', 'online')
-                    ->orWhere('wallets.transactiontype', 'withdraw');
+                    ->orWhere('wallets.transactiontype', 'Wallet Recharged')
+                    ->orWhere('wallets.transactiontype', 'withdraw')
+                    ->orWhere('wallets.transactiontype', 'serviceorder');
             })
             ->get();
         return view('AdminPanel.wallethistory', compact('credithistory'));
@@ -218,5 +221,10 @@ class AdminViews extends Controller
         ->orderBy('created_at', 'Desc')
         ->get();
         return view('AdminPanel.cancelledtransactions', compact('cancelledorders'));
+    }
+
+    public function profile(){
+        $profiledata = User::first();
+        return view('AdminPanel.adminprofile',compact('profiledata'));
     }
 }

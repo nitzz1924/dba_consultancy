@@ -45,6 +45,7 @@
                             </div>
                             @endif
                             <p class="text-muted text-center">Fill Up Details to continue</p>
+                            <div class="text-center" id="error-message" style="display: none; color: red; margin-bottom: 10px;"></div>
                         </div>
                         @csrf
                         <div class="mb-3">
@@ -89,20 +90,19 @@
                             <p>Please enter the 6 digit code sent to <span class="fw-semibold" id="dynamicnumber"></span></p>
                         </div>
                         <div class="row">
-                            @for ($i = 1; $i <= 6; $i++)
-                                <div class="col-2">
-                                    <input type="text" class="form-control py-2 px-0 form-control-lg bg-light border-light text-center otp-input" maxlength="1" pattern="[0-9]" name="otptest{{ $i }}" title="Please enter a number." required>
-                                </div>
-                            @endfor
+                            @for ($i = 1; $i <= 6; $i++) <div class="col-2">
+                                <input type="text" class="form-control py-2 px-0 form-control-lg bg-light border-light text-center otp-input" maxlength="1" pattern="[0-9]" name="otptest{{ $i }}" title="Please enter a number." required>
                         </div>
-                        <input type="hidden" name="registerid" value="" id="registerid">
-                        <div class="mt-3">
-                            <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
-                        </div>
-                    </form>
+                        @endfor
                 </div>
-             </div>
+                <input type="hidden" name="registerid" value="" id="registerid">
+                <div class="mt-3">
+                    <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
+                </div>
+                </form>
+            </div>
         </div>
+    </div>
 </div>
 </div>
 </div>
@@ -130,10 +130,11 @@
                     , borderRadius: "10px"
                     , textAlign: "center"
                 }
-                , duration: 5000
+                , duration: 3000
             }).showToast();
             return false;
         }
+
         var data = jQuery('#registerform').serialize();
         jQuery.ajax({
             url: "{{ url('proceedtootp') }}"
@@ -142,26 +143,42 @@
             , headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-            , success: function(data) {
-                if (data.msg == 'success') {
+            , success: function(response) {
+                if (response.status === "success") {
                     jQuery('#registerform').hide();
                     jQuery('#loginformotp').show();
-                    jQuery('#registerid').val(data.data.id);
-                    $('#dynamicnumber').html("+91-" + data.data.mobilenumber);
-                } else {
+                    jQuery('#registerid').val(response.data.id);
+                    $('#dynamicnumber').html("+91-" + response.data.mobilenumber);
+                } else if (response.status === "error") {
                     Toastify({
-                        text: "User already exists with this mobile number",
-                        gravity: "top",
-                        position: "center",
-                        style: {
-                            background: "#fa7823",
-                            color: "#ffffff",
-                            whiteSpace: "nowrap",
-                            borderRadius: "10px",
-                            textAlign: "center"
-                        },duration: 5000
+                        text: response.message
+                        , gravity: "top"
+                        , position: "center"
+                        , style: {
+                            background: "red"
+                            , color: "#ffffff"
+                            , whiteSpace: "nowrap"
+                            , borderRadius: "10px"
+                            , textAlign: "center"
+                        }
+                        , duration: 3000
                     }).showToast();
                 }
+            }
+            , error: function() {
+                Toastify({
+                    text: "Something went wrong. Please try again."
+                    , gravity: "top"
+                    , position: "center"
+                    , style: {
+                        background: "#fa7823"
+                        , color: "#ffffff"
+                        , whiteSpace: "nowrap"
+                        , borderRadius: "10px"
+                        , textAlign: "center"
+                    }
+                    , duration: 3000
+                }).showToast();
             }
         });
     });
