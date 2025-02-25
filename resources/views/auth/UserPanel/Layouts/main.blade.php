@@ -33,6 +33,8 @@
     <script src="{{asset('assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
     <script src="{{asset('assets/js/pages/password-addon.init.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </body>
 
 </html>

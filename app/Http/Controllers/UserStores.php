@@ -30,16 +30,21 @@ class UserStores extends Controller
                 'email' => 'required',
             ]);
 
+            // Check if the user already exists using the mobile number
+            $existingUser = RegisterUser::where('mobilenumber', $rq->mobilenumber)->first();
+            if ($existingUser) {
+                return back()->with('error', 'User already exists with this mobile number.');
+            }
+
             $user = RegisterUser::create([
                 'username' => $rq->username,
                 'mobilenumber' => $rq->mobilenumber,
                 'email' => $rq->email,
                 'parentreferid' => $rq->parentreferid,
             ]);
-            return back()->with('success', 'Registration Successfull..!!!!');
+            return response()->json(['msg' => 'success', 'Registration Successful..!!!!']);
         } catch (Exception $e) {
             return redirect()->route('createform')->with('error', $e->getMessage());
-            //return redirect()->route('createform')->with('error', 'Not Added Try Again...!!!!');
         }
     }
 
@@ -59,20 +64,20 @@ class UserStores extends Controller
                 'email' => $rq->email,
                 'otp' => $otp,
                 'parentreferid' => $rq->parentreferid,
-            ]); 
+            ]);
             //This is current user's referid
             $data->update([
                 'refercode' => Carbon::now()->year . 'dba' . $data->id,
             ]);
-            $this->SendOTP($rq->mobilenumber,$otp);
-            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp]]);
+            $this->SendOTP($rq->mobilenumber, $otp);
+            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp, 'mobilenumber' => $rq->mobilenumber]]);
         } catch (Exception $e) {
-            return response()->json(['msg' => 'failure']);
+            return response()->json(['msg' => 'Invalid Credentials']);
         }
     }
-    public function SendOTP($mobilenumber,$otpnumber)
+    public function SendOTP($mobilenumber, $otpnumber)
     {
-       
+
         $name = "DBA CONSULTANCY";
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -84,7 +89,7 @@ class UserStores extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array('sender_id' => 'PTPSMS', 'dlt_template_id' => '1207168605001414924', 'message' => 'Hi Your User OTP is:' .$otpnumber. 'Thank you ! ' .$name. ' PTPSMS', 'mobile_no' => $mobilenumber),
+            CURLOPT_POSTFIELDS => array('sender_id' => 'PTPSMS', 'dlt_template_id' => '1207168605001414924', 'message' => 'Hi Your User OTP is:' . $otpnumber . 'Thank you ! ' . $name . ' PTPSMS', 'mobile_no' => $mobilenumber),
             CURLOPT_HTTPHEADER => array(
                 'Authorization: Bearer ' . env('SMS_KEY')
             ),
@@ -110,17 +115,17 @@ class UserStores extends Controller
 
     public function signup_user_otp(Request $request)
     {
-        $credentials = $request->only('mobilenumber');
-        $data = RegisterUser::where('mobilenumber', '=', $credentials)->first();
+        $mobilenumber = $request->input('mobilenumber');
+        $data = RegisterUser::where('mobilenumber', '=', $mobilenumber)->first();
         if ($data) {
             $otp = rand(100000, 999999);
             $data->update([
                 'otp' => $otp,
             ]);
-            $this->SendOTP($request->mobilenumber,$otp);
-            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp, 'mobilenumber' => $credentials]]);
+            $this->SendOTP($request->mobilenumber, $otp);
+            return response()->json(['msg' => 'success', 'data' => ['id' => $data->id, 'otp' => $otp, 'mobilenumber' => $mobilenumber]]);
         } else {
-            return redirect()->route('userloginpage')->with('error', 'Invalid credentials');
+            return response()->json(['msg' => 'error', 'Invalid credentials']);
         }
     }
 

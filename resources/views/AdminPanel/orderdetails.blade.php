@@ -162,20 +162,29 @@
                                     @php
                                         $documents = explode(',', $orderdetails->documents);
                                     @endphp
-                                    @foreach ($documents as $document)
-                                        <li>
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <img src="{{ asset($document) }}" alt="" class="avatar-sm rounded img-fluid">
+                                        @foreach ($documents as $document)
+                                            @php
+                                                $fileExtension = pathinfo($document, PATHINFO_EXTENSION);
+                                                $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                                            @endphp
+                                            <li>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        @if (in_array(strtolower($fileExtension), $imageExtensions))
+                                                            <img src="{{ asset($document) }}" alt="" class="avatar-sm rounded img-fluid">
+                                                        @elseif (strtolower($fileExtension) === 'pdf')
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="PDF Icon" class="avatar-sm rounded img-fluid">
+                                                        @else
+                                                            <img src="{{ asset('assets/images/file-icon.png') }}" alt="File Icon" class="avatar-sm rounded img-fluid">
+                                                        @endif
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6 class="fs-14 mb-1">{{ basename($document) }}</h6>
+                                                        <a href="{{ asset($document) }}" download class="btn btn-dark btn-sm mt-2">Download</a>
+                                                    </div>
                                                 </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h6 class="fs-14 mb-1">{{ basename($document) }}</h6>
-                                                    <a href="{{ asset($document) }}" download class="btn btn-dark btn-sm mt-2">Download</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                    
+                                            </li>
+                                        @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -245,7 +254,7 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="uploadDocuments" class="form-label">Select Documents</label>
+                                <label for="uploadDocuments" class="form-label">Select Documents <span class="fw-bold">(You can select multiple documents)</span> </label>
                                 <input class="form-control" type="file" id="uploadDocuments" name="documents[]" multiple
                                     accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx">
                             </div>
@@ -271,7 +280,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Order Status-->
-    <!-- <script>
+     {{-- <script>
         $(document).ready(function () {
             $('.orderstatus').on('change', function () {
                 var selectedStatus = $(this).val();
@@ -321,5 +330,5 @@
                 });
             });
         });
-    </script> -->
+    </script> --}}
 </x-app-layout>

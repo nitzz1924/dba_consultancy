@@ -254,10 +254,11 @@
                                                 <input type="hidden" name="file_{{ $data['label'] }}"
                                                     value="{{ $data['value'] }}">
                                             </div>
+                                              <div id="filePreview" style="margin-top: 20px;"></div>
                                             <div class="text-center mb-3">
                                                 <!-- Image Preview -->
                                                 <img id="imagePreview"
-                                                    src="{{ asset('assets/images/users/' . $data['value']) }}"
+                                                    src="{{ !empty($data['value']) && in_array(pathinfo($data['value'], PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']) ? asset('assets/images/users/' . $data['value']) : '' }}"
                                                     alt="Profile Image Preview" class="border"
                                                     style="display: {{ !empty($data['value']) && in_array(pathinfo($data['value'], PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']) ? 'block' : 'none' }};
                                                         width: 100%;
@@ -265,14 +266,13 @@
                                                         object-fit: cover;
                                                         margin-inline: auto;">
 
-                                                <!-- Document Preview -->
-                                                <iframe id="docPreview"
-                                                    src="{{ asset('assets/images/users/' . $data['value']) }}"
-                                                    style="display: {{ !empty($data['value']) && pathinfo($data['value'], PATHINFO_EXTENSION) === 'pdf' ? 'block' : 'none' }};
-                                                        width: 100%;
-                                                        height: 200px;
-                                                        border: none;">
-                                                </iframe>
+                                                <!-- PDF Icon & Name Preview -->
+                                                <div id="pdfPreview" class="text-start"
+                                                    style="display: {{ !empty($data['value']) && pathinfo($data['value'], PATHINFO_EXTENSION) === 'pdf' ? 'block' : 'none' }};">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png"
+                                                        alt="PDF Icon" style="width: 40px; height: 40px;">
+                                                    <div>{{ basename($data['value']) }}</div>
+                                                </div>
                                             </div>
                                         @else
                                             <div class="form-floating mb-3">
@@ -309,35 +309,58 @@
     {{-- JavaScript for Image Preview --}}
     <script>
         function previewFile(event) {
-            const file = event.target.files[0];
-            const imagePreview = document.getElementById('imagePreview');
-            const docPreview = document.getElementById('docPreview');
+        const file = event.target.files[0];
+        const output = document.getElementById('filePreview');
 
-            // Reset previews
-            imagePreview.style.display = 'none';
-            docPreview.style.display = 'none';
+        // Clear previous content
+        output.innerHTML = '';
 
-            if (!file) return;
+        if (!file) return;
 
-            const fileType = file.type;
+        const fileType = file.type;
+        console.log("Selected file type:", fileType); // Debugging
 
-            if (fileType.startsWith('image/')) {
-                // Handle image preview
-                const reader = new FileReader();
-                reader.onload = function() {
-                    imagePreview.src = reader.result;
-                    imagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else if (fileType === 'application/pdf') {
-                // Handle PDF preview
-                const url = URL.createObjectURL(file);
-                docPreview.src = url;
-                docPreview.style.display = 'block';
-            } else {
-                alert('Unsupported file type. Please upload an image or a PDF.');
-            }
+        if (fileType.startsWith('image/')) {
+            // Handle image preview
+            const reader = new FileReader();
+            reader.onload = function() {
+                const img = document.createElement('img');
+                img.src = reader.result;
+                img.alt = "Image Preview";
+                img.style.maxWidth = "50px";
+                img.style.maxHeight = "150px";
+                output.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        } else if (fileType === 'application/pdf') {
+            // Show PDF icon & name instead of preview
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.display = "flex";
+            pdfContainer.style.alignItems = "center";
+            pdfContainer.style.gap = "10px";
+
+            const pdfIcon = document.createElement('img');
+            pdfIcon.src = "https://cdn-icons-png.flaticon.com/512/337/337946.png"; // PDF icon URL
+            pdfIcon.alt = "PDF Icon";
+            pdfIcon.style.width = "40px";
+            pdfIcon.style.height = "40px";
+
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            fileName.style.fontSize = "16px";
+            fileName.style.fontWeight = "bold";
+
+            pdfContainer.appendChild(pdfIcon);
+            pdfContainer.appendChild(fileName);
+
+            output.appendChild(pdfContainer);
+        } else {
+            // Fallback for unsupported file types
+            const message = document.createElement('p');
+            message.textContent = "Preview not available for this file type.";
+            output.appendChild(message);
         }
+    }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>

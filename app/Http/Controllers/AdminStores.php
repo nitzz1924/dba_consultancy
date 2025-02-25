@@ -283,7 +283,6 @@ class AdminStores extends Controller
 
     public function updateorderstatus(Request $req)
     {
-
         try {
             //Mutiple Image Upload
             $image = array();
@@ -299,17 +298,20 @@ class AdminStores extends Controller
                 }
             }
             $purchasedata = PurchaseService::where('id', $req->purchaseid)->first();
-
+           
             if ($purchasedata) {
                 // Update purchase status
                 $purchasedata->status = $req->status ?? $purchasedata->status;
+                
 
                 if ($purchasedata->status == 'Completed') {
+                    
                     // Release wallet hold
                     Wallet::where('transactionid', $purchasedata->id)
-                        ->where('status', '=', 'Hold')
-                        ->update(['status' => 0]);
-
+                    ->where('status', '=', 'Hold')
+                    ->update(['status' => 0]);
+                    //dd($purchasedata->id, gettype($purchasedata->id)); // Debugging
+                    
                     //Commission Calculation
                     $usrid = $purchasedata->userid;
                     if (!$usrid) {
@@ -319,6 +321,7 @@ class AdminStores extends Controller
 
                     if ($usrid) {
                         $parentreferid = RegisterUser::where('id', $usrid)->value('parentreferid');
+                        
                         if (!$parentreferid) {
                             Log::warning('Parent referral ID not found for User ID: ' . $usrid);
                             return back()->with('error', 'Parent referral ID missing.');

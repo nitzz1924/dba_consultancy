@@ -31,7 +31,7 @@
             <div class="balance text-white">
                 Current Balance
                 <div class="wallet-amount">
-                    <i class='bx bx-rupee'></i>{{ number_format($walletamount, 2) }}
+                    <i class='bx bx-rupee'></i>{{ $walletamount }}
                 </div>
             </div>
             <form id="walletform" action="{{ route('phonepe.payment')}}" method="GET">
@@ -104,7 +104,7 @@
                             <i class=" ri-arrow-up-circle-fill  text-success fs-1"></i>
                         </div>
                         <div class="fs-5">
-                            @if($row->transactiontype == 'online')
+                            @if($row->transactiontype == 'Wallet Recharged')
                             Wallet Recharged
                             @elseif($row->transactiontype == 'serviceorder')
                             {{$row->servicename}}
@@ -153,7 +153,7 @@
     </div>
 </div>
 <div id="myModal" class="modal zoomIn " tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-fullscreen-md-down  modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow-sm rounded-5">
             <div class="modal-header">
                 <h5 class="modal-title" id="myModalLabel fs-5 fw-bold text-black">Transaction Details</h5>
@@ -176,28 +176,30 @@
         const details = JSON.parse(trasacdata.transactiondata);
         const amount = details.amount.toString().slice(0, -2);
         $('#modalbodyedit').html(`
-                    <table class="table border-0 border-light">
-                    <tbody>
-                        <tr>
-                            <td>Amount Paid</td>
-                            <td class="text-end">
-                                <strong>Rs.<span id="amount-paid">${amount}</span></strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Transaction Id</td>
-                            <td class="text-end">
-                                <strong id="transaction-id">${details.transaction_id}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Reference Id</td>
-                            <td class="text-end">
-                                <strong id="reference-id">${details.providerReferenceId}</strong>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <div class="table-responsive">
+                        <table class="table border-0 border-light">
+                            <tbody>
+                                <tr>
+                                    <td class="fs-6">Amount Paid</td>
+                                    <td class="text-end">
+                                        <strong>Rs.<span id="amount-paid">${amount}</span></strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fs-6">Transaction Id</td>
+                                    <td class="text-end">
+                                        <strong id="transaction-id">${details.transaction_id}</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fs-6">Reference Id</td>
+                                    <td class="text-end">
+                                        <strong id="reference-id">${details.providerReferenceId}</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 `);
     });
 

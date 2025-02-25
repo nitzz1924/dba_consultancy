@@ -173,12 +173,13 @@
         const file = event.target.files[0];
         const output = document.getElementById('filePreview');
 
-        // Ensure output element is cleared for new preview
+        // Clear previous content
         output.innerHTML = '';
 
         if (!file) return;
 
         const fileType = file.type;
+        console.log("Selected file type:", fileType); // Debugging
 
         if (fileType.startsWith('image/')) {
             // Handle image preview
@@ -187,20 +188,33 @@
                 const img = document.createElement('img');
                 img.src = reader.result;
                 img.alt = "Image Preview";
-                img.style.maxWidth = "100%";
-                img.style.maxHeight = "300px";
+                img.style.maxWidth = "50px";
+                img.style.maxHeight = "150px";
                 output.appendChild(img);
             };
             reader.readAsDataURL(file);
         } else if (fileType === 'application/pdf') {
-            // Handle PDF preview
-            const url = URL.createObjectURL(file);
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.style.width = "100%";
-            iframe.style.height = "400px";
-            iframe.frameBorder = "0";
-            output.appendChild(iframe);
+            // Show PDF icon & name instead of preview
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.display = "flex";
+            pdfContainer.style.alignItems = "center";
+            pdfContainer.style.gap = "10px";
+
+            const pdfIcon = document.createElement('img');
+            pdfIcon.src = "https://cdn-icons-png.flaticon.com/512/337/337946.png"; // PDF icon URL
+            pdfIcon.alt = "PDF Icon";
+            pdfIcon.style.width = "40px";
+            pdfIcon.style.height = "40px";
+
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+            fileName.style.fontSize = "16px";
+            fileName.style.fontWeight = "bold";
+
+            pdfContainer.appendChild(pdfIcon);
+            pdfContainer.appendChild(fileName);
+
+            output.appendChild(pdfContainer);
         } else {
             // Fallback for unsupported file types
             const message = document.createElement('p');

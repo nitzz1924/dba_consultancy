@@ -66,21 +66,20 @@
                     @csrf
                     <div class="text-muted text-center mb-4 mx-lg-3">
                         <h2 class="text-center fw-bold" style="color: #fa7823">Verify Yourself</h2>
-                        <p>Please enter the 6 digit code sent to <span class="fw-semibold">example@abc.com</span></p>
+                        <p>Please enter the 6 digit code sent to <span class="fw-semibold" id="dynamicnumber"></span></p>
                     </div>
                     <div class="row">
-                        @for ($i = 1; $i <= 6; $i++)
-                        <div class="col-2">
+                        @for ($i = 1; $i <= 6; $i++) <div class="col-2">
                             <input type="text" class="form-control form-control py-2 px-0 bg-light border-light text-center  otp-input" maxlength="1" pattern="[0-9]" name="otptest{{ $i }}" title="Please enter a number." required />
-                        </div>
-                        @endfor
                     </div>
-                    <div class="text-center fs-3 text-bold mt-3" id="otpinput"></div>
-                    <input type="hidden" name="registerid" value="" id="registerid" />
-                    <div class="mt-3">
-                        <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
-                    </div>
-                </form>
+                    @endfor
+            </div>
+            <div class="text-center fs-3 text-bold mt-3" id="otpinput"></div>
+            <input type="hidden" name="registerid" value="" id="registerid" />
+            <div class="mt-3">
+                <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -96,19 +95,32 @@
         e.preventDefault();
         var data = jQuery('#loginformid').serialize();
         jQuery.ajax({
-            url: "{{ url('signup_user_otp') }}",
-            data: data,
-            type: 'post',
-            headers: {
+            url: "{{ url('signup_user_otp') }}"
+            , data: data
+            , type: 'post'
+            , headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
+            }
+            , success: function(data) {
                 console.log(data);
                 if (data.msg == 'success') {
                     jQuery('#loginformid').hide();
                     jQuery('#signinotp').show();
                     jQuery('#registerid').val(data.data.id);
-                    /*$('#otpinput').text("OTP is : " + data.data.otp);*/
+                    $('#dynamicnumber').html("+91-" + data.data.mobilenumber);
+                } else {
+                    Toastify({
+                        text: "Invalid Credentials",
+                        gravity: "top",
+                        position: "center",
+                        style: {
+                            background: "#fa7823",
+                            color: "#ffffff",
+                            whiteSpace: "nowrap",
+                            borderRadius: "10px",
+                            textAlign: "center"
+                        },duration: 5000
+                    }).showToast();
                 }
             }
         })
