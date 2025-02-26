@@ -70,7 +70,7 @@
                     </div>
                     <div class="row">
                         @for ($i = 1; $i <= 6; $i++) <div class="col-2">
-                            <input type="text" class="form-control form-control py-2 px-0 bg-light border-light text-center  otp-input" maxlength="1" pattern="[0-9]" name="otptest{{ $i }}" title="Please enter a number." required />
+                            <input type="number" class="form-control form-control py-2 px-0 bg-light border-light text-center  otp-input" maxlength="1" pattern="[0-9]" name="otptest{{ $i }}" title="Please enter a number." required />
                     </div>
                     @endfor
             </div>
