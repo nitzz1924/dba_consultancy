@@ -288,7 +288,7 @@
                 var holds = {{$ordershold}};
                 var inprocess = {{ $orderspending }};
                 var completed = {{$orderscompleted}};
-                var cancelled = {{$orderscompleted}};
+                var cancelled = {{$orderscancelled}};
                 
                 var data = google.visualization.arrayToDataTable([
                     ['Task', 'Hours per Day']

@@ -286,33 +286,35 @@ class AdminStores extends Controller
     {
         try {
             //Mutiple Image Upload
-            $image = array();
-            if ($files = $req->file('documents')) {
+            $imagestoshare = [];
+            if ($req->hasFile('documents')) {
+                $req->validate([
+                    'documents.*' => 'file|mimes:jpeg,png,jpg,pdf',
+                ]);
+                $files = $req->file('documents');
                 foreach ($files as $file) {
-                    $image_name = $file->getClientOriginalName();
-                    // $extension = strtolower($file->getClientOriginalExtension());
-                    // $image_fullname = $image_name . '.' . $extension;
-                    $uploaded_path = "public/assets/images/documents/";
-                    $image_url = $uploaded_path . $image_name;
-                    $file->move($uploaded_path, $image_name);
-                    $image[] = $image_url;
+                    $imageFullName = $file->getClientOriginalName();
+                    $uploadedPath = public_path('assets/images/documents');
+                    $file->move($uploadedPath, $imageFullName);
+                    $imagestoshare[] = 'assets/images/documents/' . $imageFullName;
                 }
             }
             $purchasedata = PurchaseService::where('id', $req->purchaseid)->first();
-           
+
+
             if ($purchasedata) {
                 // Update purchase status
                 $purchasedata->status = $req->status ?? $purchasedata->status;
-                
+
 
                 if ($purchasedata->status == 'Completed') {
-                    
+
                     // Release wallet hold
-                    Wallet::where('transactionid', $purchasedata->id)
-                    ->where('status', '=', 'Hold')
-                    ->update(['status' => 0]);
-                    //dd($purchasedata->id, gettype($purchasedata->id)); // Debugging
-                    
+                    $wallethold = Wallet::where('transactionid', strval($purchasedata->id))
+                        ->update(['status' => '0']);
+
+
+
                     //Commission Calculation
                     $usrid = $purchasedata->userid;
                     if (!$usrid) {
@@ -322,12 +324,11 @@ class AdminStores extends Controller
 
                     if ($usrid) {
                         $parentreferid = RegisterUser::where('id', $usrid)->value('parentreferid');
-                        
+
                         if (!$parentreferid) {
                             Log::warning('Parent referral ID not found for User ID: ' . $usrid);
-                            return back()->with('error', 'Parent referral ID missing.');
                         }
-                        
+
                         $childrenids = RegisterUser::where('parentreferid', $parentreferid)->get()->pluck('id');
 
                         $sums = [];
@@ -345,15 +346,19 @@ class AdminStores extends Controller
                             ]);
                             $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
                             $parentid = RegisterUser::where('refercode', $parentreferid)->value('id');
-                            $insertcommamt = $req->servicetotal / 100 * 15;
-                            $data = Wallet::create([
-                                'amount' => $insertcommamt,
-                                'userid' => $parentid,
-                                'paymenttype' => 'credit',
-                                'commissionby' => $mainwalletid,
-                                'transactiontype' => 'commission',
-                                'status' => 'PAYMENT_SUCCESS',
-                            ]);
+
+                            if ($parentid) {
+                                $insertcommamt = $req->servicetotal / 100 * 15;
+                                $data = Wallet::create([
+                                    'amount' => $insertcommamt,
+                                    'userid' => $parentid,
+                                    'paymenttype' => 'credit',
+                                    'commissionby' => $mainwalletid,
+                                    'transactiontype' => 'commission',
+                                    'status' => 'PAYMENT_SUCCESS',
+                                ]);
+                            }
+
                         } else {
                             $data = Wallet::where('transactionid', $req->purchaseid)->update([
                                 'parentreferid' => $parentreferid,
@@ -361,15 +366,17 @@ class AdminStores extends Controller
                             ]);
                             $parentid = RegisterUser::where('refercode', $parentreferid)->get()->value('id');
                             $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
-                            $insertcommamt = $req->servicetotal / 100 * 10;
-                            $data = Wallet::create([
-                                'amount' => $insertcommamt,
-                                'userid' => $parentid,
-                                'commissionby' => $mainwalletid,
-                                'paymenttype' => 'credit',
-                                'transactiontype' => 'commission',
-                                'status' => 'PAYMENT_SUCCESS',
-                            ]);
+                            if ($parentid) {
+                                $insertcommamt = $req->servicetotal / 100 * 10;
+                                $data = Wallet::create([
+                                    'amount' => $insertcommamt,
+                                    'userid' => $parentid,
+                                    'commissionby' => $mainwalletid,
+                                    'paymenttype' => 'credit',
+                                    'transactiontype' => 'commission',
+                                    'status' => 'PAYMENT_SUCCESS',
+                                ]);
+                            }
                             if ($data) {
                                 Log::info('Commission Data:', $data->toArray());
                             } else {
@@ -378,7 +385,7 @@ class AdminStores extends Controller
                         }
                     }
                 }
-                $purchasedata->documents = count($image) > 0 ? implode(',', $image) : $purchasedata->documents;
+                $purchasedata->documents = count($imagestoshare) > 0 ? implode(',', $imagestoshare) : $purchasedata->documents;
                 $purchasedata->note = $req->note == null ? $purchasedata->note : $req->note;
                 $purchasedata->update();
                 return back()->with('success', 'Status Updated..!!!!');
@@ -458,7 +465,7 @@ class AdminStores extends Controller
         // dd($request->all());
         try {
             $user = auth()->user();
-            $filename="";
+            $filename = "";
             if ($request->hasFile('dp')) {
                 $request->validate([
                     'dp' => 'image|mimes:jpeg,png,jpg',
@@ -467,7 +474,7 @@ class AdminStores extends Controller
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('assets/images/Admin'), $filename);
             }
-            $admin = User::where('id',$request->adminid)->update([
+            $admin = User::where('id', $request->adminid)->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'phonenumber' => $request->phonenumber,
