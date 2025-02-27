@@ -16,6 +16,7 @@ class RegisterUser extends Authenticatable
         'otp',
         'username',
         'refercode',
+        'password',
         'parentreferid',
         'profileimage',
         'mobilenumber',

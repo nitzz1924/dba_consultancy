@@ -32,6 +32,7 @@
             <div class="p-lg-5 p-4">
                 <div class="mt-4">
                     <form action="{{ route('registeruser') }}" method="POST" id="registerform">
+                        @csrf
                         <div>
                             <h2 class="text-center fw-bold" style="color: #fa7823">Register here !</h2>
                             @if ($mymess = Session::get('success'))
@@ -47,7 +48,6 @@
                             <p class="text-muted text-center">Fill Up Details to continue</p>
                             <div class="text-center" id="error-message" style="display: none; color: red; margin-bottom: 10px;"></div>
                         </div>
-                        @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label fs-5">Full Name</label>
                             <input type="text" name="username" class="form-control rounded-5 p-3" id="username" placeholder="Enter Full Name" required>
@@ -62,18 +62,12 @@
                         </div>
                         <div class="mb-3">
                             <label for="phn" class="form-label fs-5">Password</label>
-                            <input type="password" name="password" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Password" required>
+                            <input type="password" name="password" class="form-control rounded-5 p-3" placeholder="Enter Password" required>
                         </div>
                         <div class="mb-3">
                             <label for="phn" class="form-label fs-5">Refer Code</label>
-                            <input type="text" name="parentreferid" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Refer Code">
+                            <input type="text" name="parentreferid" class="form-control rounded-5 p-3"  placeholder="Enter Refer Code">
                         </div>
-                        {{-- <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="auth-remember-check">
-                                            <label class="form-check-label" for="auth-remember-check">Remember
-                                                me</label>
-                                        </div> --}}
                         <div class="mt-4">
                             <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Register</button>
                         </div>
@@ -98,12 +92,12 @@
                                 <input type="number" class="form-control py-2 px-0 form-control-lg bg-light border-light text-center otp-input" maxlength="1" pattern="[0-9]" name="otptest{{ $i }}" title="Please enter a number." required>
                         </div>
                         @endfor
-                </div>
-                <input type="hidden" name="registerid" value="" id="registerid">
-                <div class="mt-3">
-                    <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
-                </div>
-                </form>
+                        </div>
+                        <input type="hidden" name="registerid" value="" id="registerid">
+                        <div class="mt-3">
+                            <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Confirm</button>
+                        </div>
+                    </form>
             </div>
         </div>
     </div>
@@ -116,78 +110,82 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    //OTP Form Functionality
-    jQuery('#registerform').submit(function(e) {
+    // OTP Form Functionality
+    jQuery('#registerform').submit(function (e) {
         e.preventDefault();
+        
         var phoneNumber = $('#phn').val();
         var phonePattern = /^[0-9]{10}$/;
 
         if (!phonePattern.test(phoneNumber)) {
             Toastify({
-                text: "Please enter a valid 10-digit phone number."
-                , gravity: "top"
-                , position: "center"
-                , style: {
-                    background: "#fa7823"
-                    , color: "#ffffff"
-                    , whiteSpace: "nowrap"
-                    , borderRadius: "10px"
-                    , textAlign: "center"
-                }
-                , duration: 3000
+                text: "Please enter a valid 10-digit phone number.",
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#fa7823",
+                    color: "#ffffff",
+                    whiteSpace: "nowrap",
+                    borderRadius: "10px",
+                    textAlign: "center"
+                },
+                duration: 3000
             }).showToast();
             return false;
         }
 
         var data = jQuery('#registerform').serialize();
+        
         jQuery.ajax({
-            url: "{{ url('proceedtootp') }}"
-            , data: data
-            , type: 'post'
-            , headers: {
+            url: "{{ url('proceedtootp') }}",
+            type: 'POST',
+            data: data,
+            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-            , success: function(response) {
-                if (response.status === "success") {
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.msg === "success") {
                     jQuery('#registerform').hide();
                     jQuery('#loginformotp').show();
                     jQuery('#registerid').val(response.data.id);
                     $('#dynamicnumber').html("+91-" + response.data.mobilenumber);
+                    $('#otp').html(response.data.otp);
                 } else if (response.status === "error") {
                     Toastify({
-                        text: response.message
-                        , gravity: "top"
-                        , position: "center"
-                        , style: {
-                            background: "red"
-                            , color: "#ffffff"
-                            , whiteSpace: "nowrap"
-                            , borderRadius: "10px"
-                            , textAlign: "center"
-                        }
-                        , duration: 3000
+                        text: response.message,
+                        gravity: "top",
+                        position: "center",
+                        style: {
+                            background: "red",
+                            color: "#ffffff",
+                            whiteSpace: "nowrap",
+                            borderRadius: "10px",
+                            textAlign: "center"
+                        },
+                        duration: 3000
                     }).showToast();
                 }
-            }
-            , error: function() {
+            },
+            error: function () {
                 Toastify({
-                    text: "Something went wrong. Please try again."
-                    , gravity: "top"
-                    , position: "center"
-                    , style: {
-                        background: "#fa7823"
-                        , color: "#ffffff"
-                        , whiteSpace: "nowrap"
-                        , borderRadius: "10px"
-                        , textAlign: "center"
-                    }
-                    , duration: 3000
+                    text: "Something went wrong. Please try again.",
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "#fa7823",
+                        color: "#ffffff",
+                        whiteSpace: "nowrap",
+                        borderRadius: "10px",
+                        textAlign: "center"
+                    },
+                    duration: 3000
                 }).showToast();
             }
         });
     });
-
 </script>
+
 <script>
     setTimeout(function() {
         $('#successAlert').fadeOut('slow');

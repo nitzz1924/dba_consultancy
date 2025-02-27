@@ -331,4 +331,8 @@ class UserViews extends Controller
 
         return view('UserPanel.paymentStatus', compact('paymentData'));
     }
+
+    public function loginpassword(){
+        return view('auth.UserPanel.login-with-password');
+    }
 }

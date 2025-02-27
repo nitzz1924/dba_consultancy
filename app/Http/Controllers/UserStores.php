@@ -17,6 +17,7 @@ use Auth;
 use Exception;
 use Carbon\Carbon;
 use Log;
+use Hash;
 
 class UserStores extends Controller
 {
@@ -34,6 +35,7 @@ class UserStores extends Controller
                 'username' => $rq->username,
                 'mobilenumber' => $rq->mobilenumber,
                 'email' => $rq->email,
+                'password' => Hash::make($rq->password),
                 'parentreferid' => $rq->parentreferid,
             ]);
             return response()->json(['msg' => 'success', 'Registration Successful..!!!!']);
@@ -67,6 +69,7 @@ class UserStores extends Controller
                 'email' => $rq->email,
                 'otp' => $otp,
                 'parentreferid' => $rq->parentreferid,
+                'password' => Hash::make($rq->password),
             ]);
             //This is current user's referid
             $data->update([
@@ -417,6 +420,31 @@ class UserStores extends Controller
             return redirect()->route('userprofile')->with('success', 'Profile Updated !!!');
         } catch (Exception $e) {
             return redirect()->route('userprofile')->with('error', $e->getMessage());
+        }
+    }
+
+    public function loginwithpassword(Request $rq)
+    {
+        try {
+            $user = RegisterUser::where('email', $rq->email)->first();
+            if ($user) {
+                if (Hash::check($rq->password, $user->password)) {
+                    Auth::guard('customer')->login($user);
+                    if (Auth::guard('customer')->check()) {
+                        $user->verifystatus = 1;
+                        $user->save();
+                        return redirect('/home');
+                    } else {
+                        return back()->with('error', "Invalid Credentials..!!!");
+                    }
+                } else {
+                    return back()->with('error', "Invalid Password..!!!");
+                }
+            } else {
+                return back()->with('error', "Invalid Email..!!!");
+            }
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 

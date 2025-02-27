@@ -89,6 +89,7 @@ Route::controller(AdminStores::class)->group(function () {
 //User Panel Routes
 Route::controller(UserViews::class)->group(function () {
     Route::get('user/login', 'userloginpage')->name('userloginpage');
+    Route::get('user/login-with-password', 'loginpassword')->name('loginpassword');
     Route::get('user/registration', 'registration')->name('registration');
     Route::get('userdashboard', 'userdashboard')->name('userdashboard');
     Route::get('logoutuserpanel', 'logoutuserpanel')->name('logoutuserpanel');
@@ -124,6 +125,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('withdrawrequest', 'withdrawrequest')->name('withdrawrequest');
     Route::post('paynow', 'paynow')->name('paynow');
     Route::post('updateprofile', 'updateprofile')->name('updateprofile');
+    Route::post('loginwithpassword', 'loginwithpassword')->name('loginwithpassword');
 
 });
 

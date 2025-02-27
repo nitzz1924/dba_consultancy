@@ -44,22 +44,8 @@
                     <form action="#" method="POST" id="loginformid">
                         <div>
                             <h2 class="text-center fw-bold" style="color: #fa7823">Welcome Back !</h2>
-                            <p class="text-muted text-center">Sign in with Password</p>
                         </div>
                         @csrf
-                        <div class="mb-3">
-                            <label for="emailid" class="form-label fs-5">Email</label>
-                            <input type="email" name="email" class="form-control rounded-5 p-3" id="emailid" placeholder="Enter Your Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phn" class="form-label fs-5">Password</label>
-                            <input type="password" name="password" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Password" required>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <hr class="flex-grow-1">
-                            <div class="px-2">or</div>
-                            <hr class="flex-grow-1">
-                        </div>
                         <p class="text-muted text-center">Sign in with OTP</p>
                         <div class="mb-3">
                             <label for="username" class="form-label fs-5">Phone Number</label>
@@ -68,6 +54,16 @@
                         <div class="mt-4">
                             <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Sign
                                 In</button>
+                        </div>
+                         <div class="d-flex align-items-center">
+                            <hr class="flex-grow-1">
+                            <div class="px-2">or</div>
+                            <hr class="flex-grow-1">
+                        </div>
+                        <div class="text-center">
+                            <p class="mb-0">Sign in with
+                                <a href={{ route('loginpassword') }} class="fw-semibold text-decoration-underline" style="color: #fa7823">Password</a>
+                            </p>
                         </div>
                         <div class="mt-5 text-center">
                             <p class="mb-0">Don't have an account ?
