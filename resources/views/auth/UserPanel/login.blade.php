@@ -44,9 +44,23 @@
                     <form action="#" method="POST" id="loginformid">
                         <div>
                             <h2 class="text-center fw-bold" style="color: #fa7823">Welcome Back !</h2>
-                            <p class="text-muted text-center">Sign in to continue</p>
+                            <p class="text-muted text-center">Sign in with Password</p>
                         </div>
                         @csrf
+                        <div class="mb-3">
+                            <label for="emailid" class="form-label fs-5">Email</label>
+                            <input type="email" name="email" class="form-control rounded-5 p-3" id="emailid" placeholder="Enter Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phn" class="form-label fs-5">Password</label>
+                            <input type="password" name="password" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Password" required>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <hr class="flex-grow-1">
+                            <div class="px-2">or</div>
+                            <hr class="flex-grow-1">
+                        </div>
+                        <p class="text-muted text-center">Sign in with OTP</p>
                         <div class="mb-3">
                             <label for="username" class="form-label fs-5">Phone Number</label>
                             <input type="text" name="mobilenumber" class="form-control rounded-5 p-3" id="username" placeholder="Enter Phone Number" required>
@@ -110,16 +124,17 @@
                     $('#dynamicnumber').html("+91-" + data.data.mobilenumber);
                 } else {
                     Toastify({
-                        text: "Invalid Credentials",
-                        gravity: "top",
-                        position: "center",
-                        style: {
-                            background: "#fa7823",
-                            color: "#ffffff",
-                            whiteSpace: "nowrap",
-                            borderRadius: "10px",
-                            textAlign: "center"
-                        },duration: 5000
+                        text: "Invalid Credentials"
+                        , gravity: "top"
+                        , position: "center"
+                        , style: {
+                            background: "#fa7823"
+                            , color: "#ffffff"
+                            , whiteSpace: "nowrap"
+                            , borderRadius: "10px"
+                            , textAlign: "center"
+                        }
+                        , duration: 5000
                     }).showToast();
                 }
             }

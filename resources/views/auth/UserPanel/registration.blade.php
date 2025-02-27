@@ -54,11 +54,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="emailid" class="form-label fs-5">Email</label>
-                            <input type="email" name="email" class="form-control rounded-5 p-3" id="emailid" placeholder="Enter Your Password" required>
+                            <input type="email" name="email" class="form-control rounded-5 p-3" id="emailid" placeholder="Enter Your Email" required>
                         </div>
                         <div class="mb-3">
                             <label for="phn" class="form-label fs-5">Phone Number</label>
                             <input type="text" name="mobilenumber" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Phone Number" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phn" class="form-label fs-5">Password</label>
+                            <input type="password" name="password" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Password" required>
                         </div>
                         <div class="mb-3">
                             <label for="phn" class="form-label fs-5">Refer Code</label>
