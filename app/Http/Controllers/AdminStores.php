@@ -234,25 +234,27 @@ class AdminStores extends Controller
         // dd($request->all());
         try {
             $pricingdata = PricingDetail::find($rq->pricingid);
+            // dd( $pricingdata);
             $filename = $pricingdata->coverimage;
             if ($rq->hasFile('coverimage')) {
-                $rq->validate([
-                    'coverimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                ]);
-                $file = $rq->file('coverimage');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('assets/images/Services'), $filename);
+            $rq->validate([
+                'coverimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $file = $rq->file('coverimage');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/images/Services'), $filename);
             }
+            $documents = $rq->documents ? json_encode($rq->documents) : $pricingdata->documents;
             $attributes = PricingDetail::where('id', $rq->pricingid)->update([
-                'servicetype' => $rq->servicetype,
-                'serviceid' => $rq->serviceid,
-                'price' => $rq->price,
-                'disprice' => $rq->disprice,
-                'duration' => $rq->duration,
-                'documents' => json_encode($rq->documents),
-                'coverimage' => $filename,
-                'notereq' => $rq->notereq,
-                'details' => $rq->details,
+            'servicetype' => $rq->servicetype,
+            'serviceid' => $rq->serviceid,
+            'price' => $rq->price,
+            'disprice' => $rq->disprice,
+            'duration' => $rq->duration,
+            'documents' => $documents,
+            'coverimage' => $filename,
+            'notereq' => $rq->notereq,
+            'details' => $rq->details,
             ]);
             return back()->with('success', "Updated..!!!");
         } catch (Exception $e) {

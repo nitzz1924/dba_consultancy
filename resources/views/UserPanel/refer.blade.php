@@ -90,7 +90,10 @@
 
     function shareOnWhatsapp(referCode) {
         const message = encodeURIComponent(
-            `🎉👉 Use my referral code *${referCode}* to sign up and get a Bonus🏆`
+            `🎉👉 Use my referral code *${referCode}* to sign up and get a Bonus🏆
+            Visit our :
+            App - https://dbaconsultancy.in/user/registration
+            `
         );
         const whatsappLink = `https://api.whatsapp.com/send/?text=${message}`;
         window.open(whatsappLink, '_blank');
