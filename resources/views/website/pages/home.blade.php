@@ -550,7 +550,7 @@
                                 providing reliable legal advice.
                                 Get peace of mind with our hassle-free services tailored to your needs.</p>
                             <h6>CALL US NOW
-                                <a href="tel:+919460574344">+91 9460 574 344</a>
+                                <a href="tel:+917300300339">+91 7300300339</a>
                             </h6>
                         </div>
                     </div>

@@ -269,7 +269,7 @@ class UserViews extends Controller
     public function proceedtopay($id)
     {
         $loggedinuser = Auth::guard('customer')->user();
-        $purchasedata = PurchaseService::where('serviceid', $id)->where('userid', $loggedinuser->id)->first();
+        $purchasedata = PurchaseService::where('id', $id)->where('userid', $loggedinuser->id)->first();
         //dd( $purchasedata);
         $debitTotal = 0;
         $creditTotal = 0;
@@ -334,5 +334,9 @@ class UserViews extends Controller
 
     public function loginpassword(){
         return view('auth.UserPanel.login-with-password');
+    }
+    public function changepassoword($Email){
+        $decrypedmail = decrypt($Email);
+        return view('auth.UserPanel.changePassword', compact('decrypedmail'));
     }
 }

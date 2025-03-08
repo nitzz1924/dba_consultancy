@@ -41,7 +41,7 @@
                             @csrf
                             <div class="mb-3 row">
                                 <div class="col-lg-2">
-                                    <label for="labelid">Select Service Type</label>
+                                    <label for="labelid">Select Service Type <span class="text-danger fs-5">*</span> </label>
                                     <select name="servicetype" class="form-select" id="servicetypeid" required>
                                         <option value="" selected>--select--</option>
                                         <option value="Services">Services</option>
@@ -49,36 +49,37 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-2">
-                                    <label for="labelid">Select Service</label>
+                                    <label for="labelid">Select Service <span class="text-danger fs-5">*</span> </label>
                                     <select name="serviceid" class="form-select" id="servicemainid" required>
                                         <option value="">--select service--</option>
                                         {{-- Appends Here --}}
                                     </select>
                                 </div>
                                 <div class="col-lg-2">
-                                    <label for="labelid">Price</label>
+                                    <label for="labelid">Price <span class="text-danger fs-5">*</span> </label>
                                     <input class="form-control" placeholder="Enter Price" name="price" type="text"
                                         id="labelid" required>
                                 </div>
                                 <div class="col-lg-2">
-                                    <label for="disprice">Discount Price</label>
+                                    <label for="disprice">Discount Amount <span class="text-danger fs-5">*</span> </label>
                                     <input class="form-control" placeholder="Enter Discount Price" name="disprice"
                                         type="text" id="labelid" required>
+                                    <small class="text-danger fw-bold">(This will be deducted from the Price)</small>
                                 </div>
                                 <div class="col-lg-2">
-                                    <label for="duration">Duration</label>
+                                    <label for="duration">Duration <span class="text-danger fs-5">*</span> </label>
                                     <input class="form-control" placeholder="Enter Duration" name="duration"
                                         type="text" id="valueid" required>
                                 </div>
                                 <div class="col-lg-2">
-                                    <label for="example-email-input" class="form-label">Upload Cover Image</label>
+                                    <label for="example-email-input" class="form-label">Upload Cover Image <span class="text-danger fs-5">*</span> </label>
                                     <input class="form-control" placeholder="postal code" name="coverimage"
-                                        type="file" value="" id="example-email-input">
+                                        type="file" value="" id="example-email-input" >
                                 </div>
                                 <div class="col-lg-6  mt-3">
-                                    <label class="form-label">Documets to be Uploaded</label>
+                                    <label class="form-label">Documets to be Uploaded <span class="text-danger fs-5">*</span> </label>
                                     <select name="documents[]" class="select2 form-control select2-multiple mb-3"
-                                        multiple="multiple" data-placeholder="Choose Documents.......">
+                                        multiple="multiple" data-placeholder="Choose Documents......." required>
                                         @foreach ($masterdata as $value)
                                             <option value="{{ $value->label }}">{{ $value->label }}</option>
                                         @endforeach
@@ -87,12 +88,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 mt-3">
-                                    <label for="example-email-input" class="form-label">Details</label>
-                                    <textarea rows="4" name="details" class="form-control resize-none" placeholder="Your Details..."></textarea>
+                                    <label for="example-email-input" class="form-label">Details <span class="text-danger fs-5">*</span> </label>
+                                    <textarea rows="4" name="details" class="form-control resize-none" required placeholder="Your Details..."></textarea>
                                 </div>
                                 <div class="col-lg-12 mt-3">
-                                    <label for="example-email-input" class="form-label">Note & Requirement</label>
-                                    <textarea rows="4" name="notereq" class="form-control resize-none" placeholder="Your Notes..."></textarea>
+                                    <label for="example-email-input" class="form-label">Note & Requirement <span class="text-danger fs-5">*</span> </label>
+                                    <textarea rows="4" name="notereq" class="form-control resize-none" required placeholder="Your Notes..."></textarea>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-end mt-3">

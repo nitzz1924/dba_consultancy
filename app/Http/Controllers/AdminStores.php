@@ -206,7 +206,7 @@ class AdminStores extends Controller
                 'disprice' => $rq->disprice,
                 'duration' => $rq->duration,
                 'documents' => json_encode($rq->documents),
-                'coverimage' => $filename,
+                'coverimage' => $filename ?? 'service-bg.png',
                 'notereq' => $rq->notereq,
                 'details' => $rq->details,
             ]);

@@ -214,7 +214,13 @@ class UserStores extends Controller
         $finaldata->servicename = $servicename;
         $finaldata->servicecharge = $servicecharge;
         $finaldata->save();
-        return back()->with('success', 'Service Purchased..!!!');
+        $serviceid = $finaldata->id;
+        return response()->json([
+            'message' => "Service Purchased..!!!",
+            'data' => $finaldata,
+            'serviceid' =>  $serviceid
+        ]);
+        // return back()->with('success', 'Service Purchased..!!!')->with('id',  $serviceid);
     }
 
     public function updateserviceform(Request $request)

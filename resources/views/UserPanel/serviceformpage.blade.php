@@ -297,6 +297,7 @@
                         contentType: false
                         , success: function(data) {
                             if (data) {
+                                console.log(data);
                                 Swal.fire({
                                     title: "Success!"
                                     , text: "Service Purchased..!"
@@ -304,7 +305,7 @@
                                     , confirmButtonText: "OK"
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href = "/proceedtopay/" + serviceid;
+                                        window.location.href = "/proceedtopay/" + data.serviceid;
                                     }
                                 });
                             } else {

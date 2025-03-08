@@ -2,6 +2,7 @@
 #---------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏---------------------------”
 use App\Http\Controllers\AdminStores;
 use App\Http\Controllers\AdminViews;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PhonePeController;
 use App\Http\Controllers\RazorPayController;
 use App\Http\Controllers\UserStores;
@@ -109,6 +110,7 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('refer', 'refer')->name('refer');
     Route::get('customercommission', 'customercommission')->name('customercommission');
     Route::get('user/paymentStatus', 'paymentStatus')->name('paymentStatus');
+    Route::get('user/changepassoword/{email}', 'changepassoword')->name('changepassoword');
 
 });
 
@@ -160,3 +162,6 @@ Route::controller(PhonePeController::class)->group(function () {
 Route::get('/payment-success', function () {
     return redirect()->route('wallet')->with('success', 'Payment Successful');
 })->name('payment.success');
+
+//Mail Routes
+Route::post('send-mail', [EmailController::class,'sendMail'])->name('email.sendMail');

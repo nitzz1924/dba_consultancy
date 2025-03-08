@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="single-block phone">
                                         <h6>Phone</h6>
-                                        <p><a href="tel:+919460574344">+91 9460 574 344</a></p>
+                                        <p><a href="tel:+917300300339">+91 7300300339</a></p>
                                     </div>
                                     <div class="single-block web">
                                         <h6>Mail Us At</h6>

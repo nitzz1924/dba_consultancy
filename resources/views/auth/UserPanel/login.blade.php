@@ -53,16 +53,19 @@
                         </div>
                         <div class="mt-4">
                             <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Sign
-                                In</button>
+                                In with OTP</button>
                         </div>
-                         <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
                             <hr class="flex-grow-1">
                             <div class="px-2">or</div>
                             <hr class="flex-grow-1">
                         </div>
-                        <div class="text-center">
-                            <p class="mb-0">Sign in with
-                                <a href={{ route('loginpassword') }} class="fw-semibold text-decoration-underline" style="color: #fa7823">Password</a>
+                        <div class="mt-0">
+                            <a href={{ route('loginpassword') }} style="background-color:rgb(226 226 226 / 40%);" class="btn p-3 w-100 fs-5 rounded-5 text-black" type="submit">Sign in with Password</a>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p class="mb-0">Forgot your password?
+                                <a href="" data-bs-toggle="modal" data-bs-target="#myModal" class="fw-semibold text-decoration-underline" style="color: #fa7823">Reset Password</a>
                             </p>
                         </div>
                         <div class="mt-5 text-center">
@@ -97,6 +100,28 @@
 </div>
 </div>
 </div>
+</div>
+<div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body rounded-5">
+                <p class="text-center text-dark fs-5" id="mailmessage"></p>
+                <form action="#" method="POST" id="emailform">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control rounded-5 p-3" id="emailfield" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="mt-3">
+                        <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Send Verification Mail</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -168,5 +193,24 @@
         });
     });
 
+</script>
+<script>
+    jQuery('#emailform').submit(function(b) {
+        b.preventDefault();
+        const email = $('#emailfield').val();
+
+        $.ajax({
+            url: "{{ route('email.sendMail') }}",
+            method: 'POST',
+            data:{
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                email: email
+            },
+            success:function(response){
+                console.log(response);
+                $('#mailmessage').text(response.message + " " + response.toEmail);
+            }   
+        });
+    });
 </script>
 @endsection
