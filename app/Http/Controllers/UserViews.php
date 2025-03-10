@@ -113,12 +113,18 @@ class UserViews extends Controller
         if (Auth::guard('customer')->check()) {
             $debitTotal = 0;
             $creditTotal = 0;
-            $creditTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'credit')->sum('amount');
+            $creditTotal = Wallet::where('userid', $loggedinuser->id)
+            ->where('status', 'PAYMENT_SUCCESS')
+            ->where('paymenttype', 'credit')->sum('amount');
+
+
             $debitTotal = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->sum('amount');
             $walletamount = ($creditTotal - $debitTotal);
 
 
             $widthrawhistory = Wallet::where('userid', $loggedinuser->id)->where('paymenttype', 'debit')->where('transactiontype', 'withdraw')->get();
+
+            
             foreach ($widthrawhistory as $debit) {
                 $debit->created_date = Carbon::parse($debit->created_at)->format('d/M/Y');
             }
