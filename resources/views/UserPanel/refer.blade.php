@@ -92,7 +92,7 @@
         const message = encodeURIComponent(
             `🎉👉 Use my referral code *${referCode}* to sign up and get a Bonus🏆
             Visit our :
-            App - https://dbaconsultancy.in/user/registration
+            App - https://dbaconsultancy.in/user/registration/?refer=${referCode}
             `
         );
         const whatsappLink = `https://api.whatsapp.com/send/?text=${message}`;

@@ -19,7 +19,7 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Session;
 use Auth;
-use Cache;
+use Cache,Cookie;
 use Log;
 use Carbon\Carbon;
 
@@ -27,11 +27,20 @@ class UserViews extends Controller
 {
     public function userloginpage()
     {
+        if (Cookie::has('auth_token')) {
+            $user = RegisterUser::where('remember_token', Cookie::get('auth_token'))->first();
+            if ($user) {
+                Auth::guard('customer')->login($user);
+                return redirect('/home');
+            }
+        }
         return view('auth.UserPanel.login');
     }
-    public function registration()
+    public function registration(Request $request)
     {
-        return view('auth.UserPanel.registration');
+        $code = $request->query('refer');
+        dd( $code ); 
+        return view('auth.UserPanel.registration',compact('code'));
     }
     public function userdashboard()
     {
@@ -40,6 +49,7 @@ class UserViews extends Controller
     public function logoutuserpanel()
     {
         Session::flush();
+        Cookie::queue(Cookie::forget('auth_token'));
         Auth::guard('customer')->logout();
         return redirect()->route('userloginpage');
     }
@@ -333,6 +343,14 @@ class UserViews extends Controller
     }
 
     public function loginpassword(){
+        // dd(Cookie::get('auth_token'));
+        if (Cookie::has('auth_token')) {
+            $user = RegisterUser::where('remember_token', Cookie::get('auth_token'))->first();
+            if ($user) {
+                Auth::guard('customer')->login($user);
+                return redirect('/home');
+            }
+        }
         return view('auth.UserPanel.login-with-password');
     }
     public function changepassoword($Email){

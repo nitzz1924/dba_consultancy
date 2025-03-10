@@ -1,7 +1,7 @@
 {{-----------------------------------------------------🙏अंतः अस्ति प्रारंभः🙏-----------------------------}}
 @extends('auth.UserPanel.Layouts.main')
 @push('title')
-<title>Login with Password | DBA Consultancy</title>
+<title>Reset Passoword | DBA Consultancy</title>
 @endpush
 @section('main-section')
 <div class="auth-page-content overflow-hidden pt-lg-5">
@@ -30,34 +30,34 @@
 
         <div class="col-lg-12 align-content-center">
             <div class="p-lg-5 p-4">
-                 @if ($mymess = Session::get('success'))
-                    <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
-                        <strong>{{ $mymess }}</strong>
-                    </div>
+                @if ($mymess = Session::get('success'))
+                <div class="alert border-0 alert-success text-center" role="alert" id="successAlert">
+                    <strong>{{ $mymess }}</strong>
+                </div>
                 @endif
                 @if ($mymess = Session::get('error'))
-                    <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
-                        <strong>{{ $mymess }}</strong>
-                    </div>
+                <div class="alert border-0 alert-danger text-center" role="alert" id="dangerAlert">
+                    <strong>{{ $mymess }}</strong>
+                </div>
                 @endif
                 <div class="mt-4">
-                    <form action="#" method="POST" id="loginformid">
-                        <div>
-                            <h2 class="text-center fw-bold" style="color: #fa7823">Welcome Back !</h2>
-                            <p class="text-muted text-center">Reset your Passoword for Mail : {{$decrypedmail}}</p>
-                        </div>
+                    <form action="{{ route('updatePassword')}}" method="POST" id="loginformid">
                         @csrf
-                       <div class="mb-3">
+                        <div>
+                            <h2 class="text-center fw-bold" style="color: #fa7823">Reset your Passoword</h2>
+                            <p class="text-muted text-center">Mail : <span class="fw-bold text-black">{{$decrypedmail}}</span></p>
+                        </div>
+                        <div class="mb-3">
                             <label for="phn" class="form-label fs-5">New Password</label>
                             <input type="password" name="password" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Password" required>
+                              <input type="hidden" name="email" value="{{$decrypedmail}}">
                         </div>
                         <div class="mb-3">
                             <label for="phn" class="form-label fs-5">Confirm Password</label>
-                            <input type="password" name="password" class="form-control rounded-5 p-3" id="phn" placeholder="Enter Password" required>
+                            <input type="password" name="confirmpassword" class="form-control rounded-5 p-3" id="conpass" placeholder="Confirm Password" required>
                         </div>
-                         <div class="mt-4">
-                            <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Sign
-                                In</button>
+                        <div class="mt-4">
+                            <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Update Password</button>
                         </div>
                     </form>
                 </div>

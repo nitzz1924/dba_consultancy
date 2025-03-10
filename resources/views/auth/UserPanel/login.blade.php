@@ -112,7 +112,7 @@
                 <form action="#" method="POST" id="emailform">
                     @csrf
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
+                        <label for="email" class="form-label">Enter Your Registered Email Address</label>
                         <input type="email" class="form-control rounded-5 p-3" id="emailfield" name="email" placeholder="Enter your email" required>
                     </div>
                     <div class="mt-3">
@@ -200,17 +200,25 @@
         const email = $('#emailfield').val();
 
         $.ajax({
-            url: "{{ route('email.sendMail') }}",
-            method: 'POST',
-            data:{
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                email: email
-            },
-            success:function(response){
+            url: "{{ route('email.sendMail') }}"
+            , method: 'POST'
+            , data: {
+                _token: $('meta[name="csrf-token"]').attr('content')
+                , email: email
+            }
+            , success: function(response) {
                 console.log(response);
-                $('#mailmessage').text(response.message + " " + response.toEmail);
-            }   
+                if (response.success == true) {
+                    $('#mailmessage').text(response.message + " " + response.toEmail);
+                } else {
+                    $('#mailmessage').html(`<p class="text-center text-danger fs-5" id="mailmessage">` + response.message + `</p>`);
+                    setTimeout(function() {
+                        $('#mailmessage').fadeOut('slow');
+                    }, 3000);
+                }
+            }
         });
     });
+
 </script>
 @endsection

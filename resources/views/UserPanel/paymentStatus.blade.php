@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center h-100">
-        @if($paymentData['status'] != 'PAYMENT_SUCCESS')
+        @if($paymentData['status'] != 'PAYMENT_ERROR')
         <div class="col-md-4">
             <div class="card border-white text-center shadow-lg bg-success">
                 <div class="card-body">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        @elseif($paymentData['status'] != 'PAYMENT_ERROR')
+        @elseif($paymentData['status'] != 'PAYMENT_SUCCESS')
         <div class="col-md-4">
             <div class="card border-white text-center shadow-lg bg-danger">
                 <div class="card-body">

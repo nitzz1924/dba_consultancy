@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2025 at 02:35 PM
+-- Generation Time: Mar 10, 2025 at 12:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,8 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1740464928),
-('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1740464928;', 1740464928);
+('fcead0a5906cc844bfc585a17c65c519', 'i:1;', 1741593867),
+('fcead0a5906cc844bfc585a17c65c519:timer', 'i:1741593867;', 1741593867);
 
 -- --------------------------------------------------------
 
@@ -261,7 +261,8 @@ INSERT INTO `pricing_details` (`id`, `servicetype`, `serviceid`, `price`, `dispr
 (9, 'Services', '222', '1500', '500', '45', 'service-bg.png', '[\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:19:04', '2025-02-25 05:32:16'),
 (10, 'Services', '215', '2500', '100', '45', 'service-bg.png', '[\"Aadhar Card\",\"Bank Passbook\",\"PAN Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:04', '2025-02-25 13:06:19'),
 (11, 'Services', '223', '2000', '988', '55', 'service-bg.png', '[\"Aadhar Card\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s information to ensure you get the authenticated user from the customer guard rather than the default guard. Here’s the updated code', '2024-11-09 05:28:53', '2025-02-25 12:10:41'),
-(13, 'Consulting', '225', '75000', '7500', '45', '1731134472_service-bg.png', '[\"Aadhar Card\"]', 'Consulting Services', 'Consulting Services', '2024-11-09 06:41:12', '2024-11-09 07:16:30');
+(13, 'Consulting', '225', '75000', '7500', '45', '1731134472_service-bg.png', '[\"Aadhar Card\"]', 'Consulting Services', 'Consulting Services', '2024-11-09 06:41:12', '2024-11-09 07:16:30'),
+(15, 'Services', '214', '800', '8', '45', '1741238098_pexels-anton-8100-46924.jpg', '[\"Aadhar Card\",\"Bank Passbook\"]', 'The logic here is mostly correct, but you should specify the guard when retrieving the user\'s inform\n\n', 'dfgfdgfdgfdgfd', '2025-03-06 05:14:58', '2025-03-08 11:16:34');
 
 -- --------------------------------------------------------
 
@@ -290,9 +291,11 @@ CREATE TABLE `purchase_services` (
 --
 
 INSERT INTO `purchase_services` (`id`, `formtype`, `serviceid`, `discount`, `userid`, `servicename`, `servicecharge`, `formdata`, `documents`, `note`, `status`, `created_at`, `updated_at`) VALUES
-(57, 'Services', '214', '8', '64', 'GST No.', '1500', '[{\"label\":\"_token\",\"value\":\"2uZfCLaDBx7oYChiq9hd7B45u6lsNHYcBiPj3gXs\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Address\",\"value\":\"Panchsheel\",\"type\":\"textarea\"},{\"label\":\"Document\",\"value\":\"1740391796_dummy.pdf\",\"type\":\"file\"}]', 'public/assets/images/documents/dummy2.pdf', '90% done', 'Processing', '2025-02-24 10:09:56', '2025-02-25 05:44:11'),
-(58, 'Services', '222', '500', '64', 'Business Pan Card', '1500', '[{\"label\":\"_token\",\"value\":\"2uZfCLaDBx7oYChiq9hd7B45u6lsNHYcBiPj3gXs\",\"type\":\"text\"},{\"label\":\"Business_Name\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"},{\"label\":\"Type_of_Business\",\"value\":\"Network of BSNL\",\"type\":\"text\"},{\"label\":\"Business_Address\",\"value\":\"Savitri Girls College, Ajmer\",\"type\":\"text\"}]', NULL, NULL, 'Processing', '2025-02-25 05:26:53', '2025-02-25 05:39:25'),
-(59, 'Services', '215', '100', '65', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"zuAOxNrtrRmygTorTKHiuxBv2KLGw0DK2qtwPENE\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Nitesh File Tax Return\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"sn@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1740464931_WhatsApp Image 2025-02-22 at 4.55.30 PM (1).jpeg\",\"type\":\"file\"}]', NULL, NULL, 'Processing', '2025-02-25 06:28:51', '2025-02-25 06:31:12');
+(57, 'Services', '214', '8', '64', 'GST No.', '1500', '[{\"label\":\"_token\",\"value\":\"2uZfCLaDBx7oYChiq9hd7B45u6lsNHYcBiPj3gXs\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Address\",\"value\":\"Panchsheel\",\"type\":\"textarea\"},{\"label\":\"Document\",\"value\":\"1740391796_dummy.pdf\",\"type\":\"file\"}]', 'assets/images/documents/dummy.pdf,assets/images/documents/dummy2.pdf', 'All done', 'Completed', '2025-02-24 10:09:56', '2025-02-26 06:26:48'),
+(59, 'Services', '215', '100', '65', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"zuAOxNrtrRmygTorTKHiuxBv2KLGw0DK2qtwPENE\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Nitesh File Tax Return\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"sn@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1740464931_WhatsApp Image 2025-02-22 at 4.55.30 PM (1).jpeg\",\"type\":\"file\"}]', NULL, NULL, 'Processing', '2025-02-25 06:28:51', '2025-02-25 06:31:12'),
+(61, 'Services', '215', '100', '64', 'File Tax Return', '2500', '[{\"label\":\"_token\",\"value\":\"7VU61GbQIolidoGQZUWElq1BdHrBXfxpniF0YCAN\",\"type\":\"text\"},{\"label\":\"Name\",\"value\":\"Dummy\",\"type\":\"text\"},{\"label\":\"Email\",\"value\":\"nb@gmail.com\",\"type\":\"email\"},{\"label\":\"Document\",\"value\":\"1741434660_Anurag09.jpg\",\"type\":\"file\"}]', NULL, NULL, 'Processing', '2025-03-08 11:51:00', '2025-03-08 11:51:20'),
+(73, 'Services', '222', '500', '64', 'Business Pan Card', '1500', '[{\"label\":\"_token\",\"value\":\"7VU61GbQIolidoGQZUWElq1BdHrBXfxpniF0YCAN\",\"type\":\"text\"},{\"label\":\"Business_Name\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"},{\"label\":\"Type_of_Business\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"},{\"label\":\"Business_Address\",\"value\":\"BSNL PVT. LTD.\",\"type\":\"text\"}]', NULL, NULL, 'Processing', '2025-03-08 12:09:06', '2025-03-08 12:10:00'),
+(74, 'Services', '222', '500', '64', 'Business Pan Card', '1500', '[{\"label\":\"_token\",\"value\":\"7VU61GbQIolidoGQZUWElq1BdHrBXfxpniF0YCAN\",\"type\":\"text\"},{\"label\":\"Business_Name\",\"value\":\"new\",\"type\":\"text\"},{\"label\":\"Type_of_Business\",\"value\":\"new\",\"type\":\"text\"},{\"label\":\"Business_Address\",\"value\":\"new\",\"type\":\"text\"}]', NULL, NULL, 'Processing', '2025-03-08 12:10:27', '2025-03-08 12:10:43');
 
 -- --------------------------------------------------------
 
@@ -330,10 +333,12 @@ CREATE TABLE `register_users` (
   `mobilenumber` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `verifystatus` varchar(255) DEFAULT '0',
+  `remember_token` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `otp` varchar(22) DEFAULT NULL,
   `refercode` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `parentreferid` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `profileimage` varchar(255) DEFAULT NULL,
@@ -349,9 +354,10 @@ CREATE TABLE `register_users` (
 -- Dumping data for table `register_users`
 --
 
-INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `created_at`, `updated_at`, `otp`, `refercode`, `parentreferid`, `username`, `profileimage`, `permaddress`, `city`, `state`, `pancard`, `aadharcard`, `gstnum`) VALUES
-(64, '9429158300', 'ramkumar@gmail.com', '1', '2025-02-24 09:39:49', '2025-02-25 06:15:55', '150226', '2025dba64', NULL, 'Ram Kumar', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(65, '8209165518', 'nitzz@gmail.com', '1', '2025-02-25 06:11:17', '2025-02-25 06:52:26', '607594', '2025dba65', '2025dba64', 'Nitesh Sharma', '1740466346_music.png', 'Panchsheel', 'Ajmer', 'Rajasthan', '5454545454', '54545454545', '545454545454545434343');
+INSERT INTO `register_users` (`id`, `mobilenumber`, `email`, `verifystatus`, `remember_token`, `created_at`, `updated_at`, `otp`, `refercode`, `password`, `parentreferid`, `username`, `profileimage`, `permaddress`, `city`, `state`, `pancard`, `aadharcard`, `gstnum`) VALUES
+(64, '9429158300', 'ramkumar@gmail.com', '1', '305dc6c6f9b09c03ff9f05ea51471dd3daafde9e6a63740dfea1bed122b864e2', '2025-02-24 09:39:49', '2025-03-10 07:54:03', '150226', '2025dba64', '$2y$12$94bhVIreuDCzFo1XpZmk3eVnG7w8MVTzx8j5xyT2vH/1Jn.fgO2vS', NULL, 'Ram Kumar', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(65, '6375475956', 'nitzz@gmail.com', '1', NULL, '2025-02-25 06:11:17', '2025-02-27 05:34:46', '607594', '2025dba65', NULL, '2025dba64', 'Nitesh Sharma', '1740466346_music.png', 'Panchsheel', 'Ajmer', 'Rajasthan', '5454545454', '54545454545', '545454545454545434343'),
+(77, '8209165518', 'nitesh.yuvmedia@gmail.com', '1', '41d820e443818039e8ee2eb68a8a0b2f2b392432c9ef9d9f43594058a98866db', '2025-03-06 05:12:17', '2025-03-10 10:24:12', '315779', '2025dba77', '$2y$12$94bhVIreuDCzFo1XpZmk3eVnG7w8MVTzx8j5xyT2vH/1Jn.fgO2vS', NULL, 'Kishan', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -373,7 +379,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('WPvN5RHk93TKBlX5QMmRqBiWglIdu0Xpf5aU8cgd', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 'YTozOntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozOToiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3VzZXIvcmVnaXN0cmF0aW9uIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6ImlKdGx1clBYRzlqUXQyNGFtNmRwRHBpRGg2NGVWNEpmeE5xNUV5Q3YiO30=', 1740490409);
+('ktU9QZQl8XbxrqbIMN02AUj4GU7h3KCtVIfPBliS', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 'YTo0OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoyNzoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3JlZmVyIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IjdRNTlsUERYa3lvR1VtUmZ1MFlnc0o2cjJQdTFLc2R3R0syOFBVbDAiO3M6NTU6ImxvZ2luX2N1c3RvbWVyXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Nzc7fQ==', 1741602303);
 
 -- --------------------------------------------------------
 
@@ -435,10 +441,15 @@ CREATE TABLE `wallets` (
 
 INSERT INTO `wallets` (`id`, `userid`, `serviceid`, `transactionid`, `amount`, `paymenttype`, `transactiontype`, `transactiondata`, `parentreferid`, `commissionamt`, `commissionby`, `status`, `created_at`, `updated_at`) VALUES
 (71, '64', NULL, '67b5910585fe6', 12000, 'credit', 'Wallet Recharged', '{\"providerReferenceId\":\"M22NHRP0U0HEA\",\"checksum\":null,\"amount\":1200000,\"transaction_id\":\"OMO2502191336298121807052\",\"status\":\"PAYMENT_SUCCESS\",\"merchantOrderId\":\"67b5910585fe6\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-02-24 09:46:42', '2025-02-24 09:59:57'),
-(72, '64', '214', '57', 1492, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, '0', '2025-02-24 10:12:47', '2025-02-24 12:43:13'),
+(72, '64', '214', '57', 1492, 'debit', 'serviceorder', NULL, NULL, '149.2', NULL, '0', '2025-02-24 10:12:47', '2025-02-26 06:26:48'),
 (73, '64', '222', '58', 1000, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-02-25 05:32:37', '2025-02-25 05:32:37'),
 (74, '65', NULL, '67b5910585fe6', 10000, 'credit', 'Wallet Recharged', '{\"providerReferenceId\":\"M22NHRP0U0HEA\",\"checksum\":null,\"amount\":1000000,\"transaction_id\":\"OMO2502191336298121807052\",\"status\":\"PAYMENT_SUCCESS\",\"merchantOrderId\":\"67b5910585fe6\"}', NULL, NULL, NULL, 'PAYMENT_SUCCESS', '2025-02-24 09:46:42', '2025-02-25 06:27:30'),
-(75, '65', '215', '59', 2400, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-02-25 06:31:12', '2025-02-25 06:31:12');
+(75, '65', '215', '59', 2400, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-02-25 06:31:12', '2025-02-25 06:31:12'),
+(76, '64', '215', '61', 2400, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-03-08 11:51:20', '2025-03-08 11:51:20'),
+(77, '64', '222', '63', 1000, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-03-08 11:53:21', '2025-03-08 11:53:21'),
+(78, '64', '222', '73', 1000, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-03-08 12:10:00', '2025-03-08 12:10:00'),
+(79, '64', '222', '74', 1000, 'debit', 'serviceorder', NULL, NULL, NULL, NULL, 'Hold', '2025-03-08 12:10:43', '2025-03-08 12:10:43'),
+(80, '64', NULL, NULL, 500, 'debit', 'withdraw', NULL, NULL, NULL, NULL, 'requested', '2025-03-10 07:54:15', '2025-03-10 07:54:15');
 
 --
 -- Indexes for dumped tables
@@ -597,13 +608,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `pricing_details`
 --
 ALTER TABLE `pricing_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `purchase_services`
 --
 ALTER TABLE `purchase_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `refer_incomes`
@@ -615,7 +626,7 @@ ALTER TABLE `refer_incomes`
 -- AUTO_INCREMENT for table `register_users`
 --
 ALTER TABLE `register_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -627,7 +638,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wallets`
 --
 ALTER TABLE `wallets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

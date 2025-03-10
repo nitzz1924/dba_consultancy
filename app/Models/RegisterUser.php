@@ -17,6 +17,7 @@ class RegisterUser extends Authenticatable
         'username',
         'refercode',
         'password',
+        'remember_token',
         'parentreferid',
         'profileimage',
         'mobilenumber',

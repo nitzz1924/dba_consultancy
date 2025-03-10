@@ -19,7 +19,10 @@ class EmailController extends Controller
         try{
             $registeredUser = RegisterUser::where('email', $request->email)->first();
             if(!$registeredUser){
-                return back()->with('error', 'Email not found!');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'This Email is not Registered'
+                ]);
             }else{
                 $toEmail = $request->email;
                 $subject = "Reset Password";

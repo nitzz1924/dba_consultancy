@@ -66,7 +66,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="phn" class="form-label fs-5">Refer Code</label>
-                            <input type="text" name="parentreferid" class="form-control rounded-5 p-3"  placeholder="Enter Refer Code">
+                            <input type="text"  value="{{$code}}" name="parentreferid" class="form-control rounded-5 p-3"  placeholder="Enter Refer Code">
                         </div>
                         <div class="mt-4">
                             <button style="background-color: #fa7823" class="btn p-3 w-100 fs-5 rounded-5 text-white" type="submit">Register</button>

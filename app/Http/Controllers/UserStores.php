@@ -17,10 +17,12 @@ use Auth;
 use Exception;
 use Carbon\Carbon;
 use Log;
+use Illuminate\Support\Facades\Cookie;
 use Hash;
 
 class UserStores extends Controller
 {
+
     public function registeruser(Request $rq)
     {
 
@@ -218,7 +220,7 @@ class UserStores extends Controller
         return response()->json([
             'message' => "Service Purchased..!!!",
             'data' => $finaldata,
-            'serviceid' =>  $serviceid
+            'serviceid' => $serviceid
         ]);
         // return back()->with('success', 'Service Purchased..!!!')->with('id',  $serviceid);
     }
@@ -431,23 +433,47 @@ class UserStores extends Controller
 
     public function loginwithpassword(Request $rq)
     {
+        
         try {
             $user = RegisterUser::where('email', $rq->email)->first();
-            if ($user) {
-                if (Hash::check($rq->password, $user->password)) {
-                    Auth::guard('customer')->login($user);
-                    if (Auth::guard('customer')->check()) {
-                        $user->verifystatus = 1;
-                        $user->save();
-                        return redirect('/home');
-                    } else {
-                        return back()->with('error', "Invalid Credentials..!!!");
-                    }
-                } else {
-                    return back()->with('error', "Invalid Password..!!!");
-                }
-            } else {
+            if (!$user) {
                 return back()->with('error', "Invalid Email..!!!");
+            }
+
+            // Verify password
+            if (!Hash::check($rq->password, $user->password)) {
+                return back()->with('error', "Invalid Password..!!!");
+            }
+            // Log in the user
+            Auth::guard('customer')->login($user);
+            // Update verify status
+            $user->verifystatus = 1;
+            $user->save();
+            $minutes = 43200; // 30 days
+            $token = bin2hex(random_bytes(32)); // Generate secure token
+            Cookie::queue('auth_token', $token, $minutes);
+            Log::info('Auth token stored in cookies successfully for user: ' . $user->id);
+
+            // Save the token in the database
+            $user->remember_token = $token;
+            $user->save();
+            return redirect('/home');
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function updatePassword(Request $rq)
+    {
+        try {
+            $user = RegisterUser::where('email', $rq->email)->first();
+            // dd( $user);
+            if ($user) {
+                $user->password = Hash::make($rq->password);
+                $user->save();
+                return back()->with('success', "Password Updated Successfully..!!!");
+            } else {
+                return back()->with('error', "Password Not Updated. Try again Later..!");
             }
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());

@@ -128,6 +128,7 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('paynow', 'paynow')->name('paynow');
     Route::post('updateprofile', 'updateprofile')->name('updateprofile');
     Route::post('loginwithpassword', 'loginwithpassword')->name('loginwithpassword');
+    Route::post('updatePassword', 'updatePassword')->name('updatePassword');
 
 });
 
