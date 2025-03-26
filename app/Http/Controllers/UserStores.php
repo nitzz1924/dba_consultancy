@@ -114,7 +114,20 @@ class UserStores extends Controller
             if ($user && $user->otp == implode('', array_slice($request->all(), 1, 6))) {
                 $user->verifystatus = '1';
                 $user->save();
-                return back()->with('success', 'Registration Successfull..!!!!');
+                // Log in the user
+                Auth::guard('customer')->login($user);
+                // Update verify status
+                $user->verifystatus = 1;
+                $user->save();
+                $minutes = 43200; // 30 days
+                $token = bin2hex(random_bytes(32)); // Generate secure token
+                Cookie::queue('auth_token', $token, $minutes);
+                Log::info('Auth token stored in cookies successfully for user: ' . $user->id);
+                // Save the token in the database
+                $user->remember_token = $token;
+                $user->save();
+                return redirect('/home');
+                //return back()->with('success', 'Registration Successfull..!!!!');
             }
         } catch (Exception $e) {
             return redirect()->route('createform')->with('error', $e->getMessage());

@@ -39,7 +39,7 @@ class UserViews extends Controller
     public function registration(Request $request)
     {
         $code = $request->query('refer');
-        dd( $code ); 
+        // dd( $code ); 
         return view('auth.UserPanel.registration',compact('code'));
     }
     public function userdashboard()

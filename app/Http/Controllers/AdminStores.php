@@ -237,24 +237,24 @@ class AdminStores extends Controller
             // dd( $pricingdata);
             $filename = $pricingdata->coverimage;
             if ($rq->hasFile('coverimage')) {
-            $rq->validate([
-                'coverimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            $file = $rq->file('coverimage');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('assets/images/Services'), $filename);
+                $rq->validate([
+                    'coverimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+                $file = $rq->file('coverimage');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('assets/images/Services'), $filename);
             }
             $documents = $rq->documents ? json_encode($rq->documents) : $pricingdata->documents;
             $attributes = PricingDetail::where('id', $rq->pricingid)->update([
-            'servicetype' => $rq->servicetype,
-            'serviceid' => $rq->serviceid,
-            'price' => $rq->price,
-            'disprice' => $rq->disprice,
-            'duration' => $rq->duration,
-            'documents' => $documents,
-            'coverimage' => $filename,
-            'notereq' => $rq->notereq,
-            'details' => $rq->details,
+                'servicetype' => $rq->servicetype,
+                'serviceid' => $rq->serviceid,
+                'price' => $rq->price,
+                'disprice' => $rq->disprice,
+                'duration' => $rq->duration,
+                'documents' => $documents,
+                'coverimage' => $filename,
+                'notereq' => $rq->notereq,
+                'details' => $rq->details,
             ]);
             return back()->with('success', "Updated..!!!");
         } catch (Exception $e) {
@@ -339,15 +339,28 @@ class AdminStores extends Controller
                             $sums[$childId] = $sum;
                             $totalSum = array_sum($sums);
                         }
+                        $parentid = RegisterUser::where('refercode', $parentreferid)->get()->value('id');
+                        $grandparentrefercode = RegisterUser::where('id', $parentid)->get()->value('parentreferid');
+                        $grandparentid = RegisterUser::where('refercode', $grandparentrefercode)->get()->value('id');
 
+                        $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
+                        if ($grandparentid) {
+                            $insertcommamtfive = $req->servicetotal / 100 * 5;
+                            $data = Wallet::create([
+                                'amount' => $insertcommamtfive,
+                                'userid' => $grandparentid,
+                                'commissionby' => $mainwalletid,
+                                'paymenttype' => 'credit',
+                                'transactiontype' => 'commission',
+                                'status' => 'PAYMENT_SUCCESS',
+                            ]);
+                        }
                         if ($totalSum > 50000) {
                             $data = Wallet::where('transactionid', $req->purchaseid)->update([
                                 'parentreferid' => $parentreferid,
                                 'commissionamt' => $req->servicetotal / 100 * 15,
 
                             ]);
-                            $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
-                            $parentid = RegisterUser::where('refercode', $parentreferid)->value('id');
 
                             if ($parentid) {
                                 $insertcommamt = $req->servicetotal / 100 * 15;
@@ -366,8 +379,6 @@ class AdminStores extends Controller
                                 'parentreferid' => $parentreferid,
                                 'commissionamt' => $req->servicetotal / 100 * 10,
                             ]);
-                            $parentid = RegisterUser::where('refercode', $parentreferid)->get()->value('id');
-                            $mainwalletid = Wallet::where('transactionid', $req->purchaseid)->value('id');
                             if ($parentid) {
                                 $insertcommamt = $req->servicetotal / 100 * 10;
                                 $data = Wallet::create([
@@ -379,6 +390,7 @@ class AdminStores extends Controller
                                     'status' => 'PAYMENT_SUCCESS',
                                 ]);
                             }
+
                             if ($data) {
                                 Log::info('Commission Data:', $data->toArray());
                             } else {
@@ -422,7 +434,6 @@ class AdminStores extends Controller
         $data->delete();
         return back()->with('success', "Deleted....!!!");
     }
-
 
     public function udpatereferincome(Request $rq)
     {

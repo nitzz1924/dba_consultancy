@@ -116,7 +116,6 @@
     jQuery('#emailform').submit(function(b) {
         b.preventDefault();
         const email = $('#emailfield').val();
-
         $.ajax({
             url: "{{ route('email.sendMail') }}"
             , method: 'POST'
@@ -126,8 +125,8 @@
             }
             , success: function(response) {
                 console.log(response);
-                if (response.success == true) {
-                    $('#mailmessage').text(response.message + " " + response.toEmail);
+                  if (response.success == true) {
+                    $('#mailmessage').html(`<p class="text-center text-success fs-5" id="mailmessage">` + response.message + " " + response.toEmail +`</p>`);
                 } else {
                     $('#mailmessage').html(`<p class="text-center text-danger fs-5" id="mailmessage">` + response.message + `</p>`);
                     setTimeout(function() {

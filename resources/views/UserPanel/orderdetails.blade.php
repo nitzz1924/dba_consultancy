@@ -415,7 +415,7 @@
                                         confirmButtonText: "OK"
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            window.location.href = "/proceedtopay/" + serviceid;
+                                            window.location.href = "/proceedtopay/" + orderid;
                                         }
                                     });
                                 } else {

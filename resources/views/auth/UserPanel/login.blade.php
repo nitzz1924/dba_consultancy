@@ -198,18 +198,16 @@
     jQuery('#emailform').submit(function(b) {
         b.preventDefault();
         const email = $('#emailfield').val();
-
         $.ajax({
-            url: "{{ route('email.sendMail') }}"
-            , method: 'POST'
-            , data: {
-                _token: $('meta[name="csrf-token"]').attr('content')
-                , email: email
-            }
-            , success: function(response) {
+            url: "{{ route('email.sendMail') }}",
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                email: email
+            }, success: function(response) {
                 console.log(response);
                 if (response.success == true) {
-                    $('#mailmessage').text(response.message + " " + response.toEmail);
+                    $('#mailmessage').html(`<p class="text-center text-success fs-5" id="mailmessage">` + response.message + " " + response.toEmail +`</p>`);
                 } else {
                     $('#mailmessage').html(`<p class="text-center text-danger fs-5" id="mailmessage">` + response.message + `</p>`);
                     setTimeout(function() {
@@ -219,6 +217,5 @@
             }
         });
     });
-
 </script>
 @endsection
