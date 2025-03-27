@@ -111,7 +111,6 @@ Route::controller(UserViews::class)->group(function () {
     Route::get('customercommission', 'customercommission')->name('customercommission');
     Route::get('user/paymentStatus', 'paymentStatus')->name('paymentStatus');
     Route::get('user/changepassoword/{email}', 'changepassoword')->name('changepassoword');
-
 });
 
 
@@ -129,7 +128,6 @@ Route::controller(UserStores::class)->group(function () {
     Route::post('updateprofile', 'updateprofile')->name('updateprofile');
     Route::post('loginwithpassword', 'loginwithpassword')->name('loginwithpassword');
     Route::post('updatePassword', 'updatePassword')->name('updatePassword');
-
 });
 
 
@@ -150,6 +148,7 @@ Route::controller(WebsiteViews::class)->group(function () {
     Route::get('/privacypolicy', 'privacypolicy')->name('privacypolicy');
     Route::get('/termsandconditions', 'termsandconditions')->name('termsandconditions');
     Route::get('/returnandrefund', 'returnandrefund')->name('returnandrefund');
+    Route::get('/deletemyaccount', 'deletemyaccount')->name('deletemyaccount');
 
 });
 

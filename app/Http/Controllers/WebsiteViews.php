@@ -42,4 +42,8 @@ class WebsiteViews extends Controller
     {
         return view('website.pages.returnandrefund');
     }
+    public function deletemyaccount()
+    {
+        return view('website.pages.deleteMyAccount');
+    }
 }
